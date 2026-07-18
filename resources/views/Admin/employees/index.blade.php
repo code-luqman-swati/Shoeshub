@@ -1,207 +1,163 @@
-
-    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-        <div class="max-w-full overflow-x-auto custom-scrollbar">
-            <table class="w-full min-w-[1102px]">
-                <thead>
-    <tr class="border-b border-gray-100 white:border-gray-800">
-        <th class="px-5 py-3 text-left">Employee</th>
-        <th class="px-5 py-3 text-left">Phone</th>
-        <th class="px-5 py-3 text-left">Role</th>
-        <th class="px-5 py-3 text-left">Status</th>
-        <th class="px-5 py-3 text-left">Created</th>
-        <th class="px-5 py-3 text-center">Actions</th>
-    </tr>
-</thead>
-              
-<tbody>
-
-@forelse($employees as $employee)
-
-<tr class="border-b border-gray-100 dark:border-gray-800">
-
-    {{-- Employee --}}
-    <td class="px-5 py-4">
-
-        <div class="flex items-center gap-3">
-
-            <div class="w-10 h-10 overflow-hidden rounded-full">
-
-                @if($employee->image)
-
-                    <img src="{{ asset('storage/'.$employee->image) }}" alt="{{ $employee->name }}">
-
-                @else
-
-                    <img src="{{ asset('images/user/default-user.jpg') }}" alt="Default">
-
-                @endif
-
-            </div>
-
-            <div>
-
-                <p class="font-medium text-gray-800 dark:text-white">
-
-                    {{ $employee->name }}
-
-                </p>
-
-                <p class="text-sm text-gray-500">
-
-                    {{ $employee->email }}
-
-                </p>
-
-            </div>
-
-        </div>
-
-    </td>
-
-    {{-- Phone --}}
-    <td class="px-5 py-4">
-
-        {{ $employee->phone }}
-
-    </td>
-
-    {{-- Role --}}
-    <td class="px-5 py-4">
-
-        @if($employee->role=='admin')
-
-            <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
-                Admin
-            </span>
-
-        @elseif($employee->role=='sales')
-
-            <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
-                Sales
-            </span>
-
-        @else
-
-            <span class="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-700">
-                Inventory
-            </span>
-
-        @endif
-
-    </td>
-
-    {{-- Status --}}
-    <td class="px-5 py-4">
-
-        @if($employee->status)
-
-            <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
-                Active
-            </span>
-
-        @else
-
-            <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
-                Inactive
-            </span>
-
-        @endif
-
-    </td>
-
-    {{-- Created --}}
-    <td class="px-5 py-4">
-
-        {{ $employee->created_at->format('d M Y') }}
-
-    </td>
-
-    {{-- Actions --}}
-    <td class="px-5 py-4">
-
-        <div class="flex justify-center gap-2">
-
-            <a href="{{ route('employees.edit',$employee) }}"
-                class="rounded bg-blue-500 px-3 py-1 text-white">
-
-                Edit
-
-            </a>
-
-            <form action="{{ route('employees.destroy',$employee) }}"
-                  method="POST">
-
-                @csrf
-                @method('DELETE')
-
-                <button
-                    onclick="return confirm('Delete Employee?')"
-                    class="rounded bg-red-500 px-3 py-1 text-white">
-
-                    Delete
-
-                </button>
-
-            </form>
-
-        </div>
-
-    </td>
-
-</tr>
-
-@empty
-
-<tr>
-
-    <td colspan="6" class="py-8 text-center text-gray-500">
-
-        No employees found.
-
-    </td>
-
-</tr>
-
-@endforelse
-
-</tbody>
-
-<tbody>
-                    <template x-for="order in orders" :key="order.id">
-                        <tr class="border-b border-gray-100 dark:border-gray-800">
-                            <td class="px-5 py-4 sm:px-6" colspan="1">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 overflow-hidden rounded-full">
-                                        <img :src="order.user.image" :alt="order.user.name">
-                                    </div>
-                                    <div>
-                                        <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90" x-text="order.user.name"></span>
-                                        <span class="block text-gray-500 text-theme-xs dark:text-gray-400" x-text="order.user.role"></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-5 py-4 sm:px-6">
-                                <p class="text-gray-500 text-theme-sm dark:text-gray-400" x-text="order.projectName"></p>
-                            </td>
-                            <td class="px-5 py-4 sm:px-6">
-                                <div class="flex -space-x-2">
-                                    <template x-for="(teamImage, index) in order.team.images" :key="index">
-                                        <div class="w-6 h-6 overflow-hidden border-2 border-white rounded-full dark:border-gray-900">
-                                            <img :src="teamImage" alt="team member">
-                                        </div>
-                                    </template>
-                                </div>
-                            </td>
-                            <td class="px-5 py-4 sm:px-6">
-                                <p class="text-theme-xs inline-block rounded-full px-2 py-0.5 font-medium" :class="getStatusClass(order.status)" x-text="order.status"></p>
-                            </td>
-                            <td class="px-5 py-4 sm:px-6">
-                                <p class="text-gray-500 text-theme-sm dark:text-gray-400" x-text="order.budget"></p>
-                            </td>
-                        </tr>
-                    </template>
-                </tbody>
-            </table>
-        </div>
-    </div>
+@extends('layouts.app')
+
+@section('content')
+
+<div class="mb-6 flex items-center justify-between">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
+        Employees
+    </h2>
+
+    <a href="{{ route('employees.create') }}"
+        class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+        Add Employee
+    </a>
 </div>
+
+{{-- Success Toast --}}
+<div id="toast"
+    class="fixed top-5 right-5 hidden rounded-lg bg-green-500 px-5 py-3 text-white shadow-lg z-50">
+</div>
+
+<div class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+
+    <div class="overflow-x-auto">
+<table id="employeesTable" class="min-w-full">
+    <thead>
+        <tr class="border-b border-gray-200 dark:border-gray-700">
+            <th class="px-5 py-3 text-left">Employee</th>
+            <th class="px-5 py-3 text-left">Phone</th>
+            <th class="px-5 py-3 text-left">Email</th>
+            <th class="px-5 py-3 text-left">Role</th>
+            <th class="px-5 py-3 text-left">Status</th>
+            <th class="px-5 py-3 text-left">Created</th>
+            <th class="px-5 py-3 text-center">Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach($employees as $employee)
+            <tr id="employee-{{ $employee->id }}"
+                class="border-b border-gray-200 dark:border-gray-700">
+
+                <td class="px-5 py-4">
+                    {{ $employee->name }}
+                </td>
+
+                <td class="px-5 py-4">
+                    {{ $employee->phone }}
+                </td>
+
+                <td class="px-5 py-4">
+                    {{ $employee->email }}
+                </td>
+
+                <td class="px-5 py-4">
+                    {{ ucfirst($employee->role) }}
+                </td>
+
+                <td class="px-5 py-4">
+                    {{ $employee->status ? 'Active' : 'Inactive' }}
+                </td>
+
+                <td class="px-5 py-4">
+                    {{ $employee->created_at->format('d M Y') }}
+                </td>
+
+                <td class="px-5 py-4 text-center">
+                    <div class="flex justify-center gap-2">
+
+                        <a href="{{ route('employees.edit', $employee->id) }}"
+                           class="rounded bg-blue-500 px-3 py-1 text-white">
+                            Edit
+                        </a>
+
+                        <form action="{{ route('employees.destroy', $employee->id) }}"
+                              method="POST"
+                              class="deleteEmployeeForm"
+                              data-id="{{ $employee->id }}">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                    class="rounded bg-red-500 px-3 py-1 text-white">
+                                Delete
+                            </button>
+                        </form>
+
+                    </div>
+                </td>
+
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+
+    </div>
+
+</div>
+
+@endsection
+
+
+@push('scripts')
+
+<script>
+$(document).ready(function () {
+
+    // Initialize DataTable once
+    if (!$.fn.DataTable.isDataTable('#employeesTable')) {
+        $('#employeesTable').DataTable();
+    }
+
+    // AJAX Delete
+    $(document)
+        .off('submit', '.deleteEmployeeForm')
+        .on('submit', '.deleteEmployeeForm', function (e) {
+
+            e.preventDefault();
+
+            let form = $(this);
+            let id = form.data('id');
+
+            if (!confirm('Are you sure you want to delete this employee?')) {
+                return;
+            }
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    _method: 'DELETE'
+                },
+
+                success: function (response) {
+
+                    let table = $('#employeesTable').DataTable();
+
+                    table
+                        .row($('#employee-' + id))
+                        .remove()
+                        .draw(false);
+
+                    $('#toast')
+                        .removeClass('hidden')
+                        .text(response.message || 'Employee deleted successfully.')
+                        .fadeIn();
+
+                    setTimeout(function () {
+                        $('#toast').fadeOut();
+                    }, 3000);
+                },
+
+                error: function () {
+                    alert('Something went wrong.');
+                }
+            });
+
+        });
+
+});
+</script>
+
+@endpush

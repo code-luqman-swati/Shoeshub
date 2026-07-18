@@ -1,0 +1,957 @@
+
+<header class="header w-full">
+<!--! topHeader -->
+      <div
+        class="top-header w-screen flex flex-col items-center justify-between border-b"
+      >
+        <div class="flex w-full items-center justify-between p-4 md:px-20 border-b">
+          <div class="icons hidden lg:flex items-center gap-2">
+            <a
+              class="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center transition-all"
+              href="#"
+            >
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+            <a
+              class="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center transition-all"
+              href="#"
+            >
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+            <a
+              class="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center transition-all"
+              href="#"
+            >
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </div>
+          <h3 class="text-gray-400 font-semibold text-xs">
+            FREE SHIPPING ON ORDERS OVER - Rs. 5000
+          </h3>
+          <div class="select hidden md:flex">
+           <select class="mr-2 p-1 px-2 text-sm font-semibold" id="currency">
+    <option value="PKR">PKR Rs</option>
+    <option value="USD">USD $</option>
+</select>
+            <select class="mr-2 p-1 px-2 text-sm font-semibold" id="language">
+    <option value="English">English</option>
+    <option value="Urdu">Urdu</option>
+</select>
+          </div>
+        </div>
+        <div
+          class="gap-4 flex flex-col sm:flex-row w-full items-center justify-between p-6 md:px-24"
+        >
+         <h1 class="font-semibold text-4xl text-gray-600">
+    ShoeHub
+</h1>
+          <form class="relative w-full sm:w-3/5">
+            <input
+              class="w-full h-full p-2 border rounded-xl"
+             placeholder="Search shoes, brands..."
+              id="search"
+              type="text"
+            />
+            <label class="absolute right-2 top-2" for="search">
+              <i class="fa-solid fa-magnifying-glass cursor-pointer"></i>
+            </label>
+          </form>
+          <div class="icons hidden mr-2 text-3xl md:flex gap-8 text-gray-600">
+            <div class="relative">
+              <ion-icon name="person-outline"></ion-icon>
+            </div>
+            <div class="relative">
+              <span
+                class="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full"
+                >0</span
+              >
+              <ion-icon name="heart-outline"></ion-icon>
+            </div>
+            <div class="relative">
+              <span
+                class="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full"
+                >0</span
+              >
+              <ion-icon name="bag-handle-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--! topHeader -->
+      <!--? navbar -->
+      <!--todo desktop Navbar -->
+      <div class="desktopNavbar">
+        <nav class="my-4 hidden lg:flex justify-center">
+          <ul
+            class="desktopNavbarUl flex justify-center items-center gap-12 font-sm font-bold text-gray-600"
+          >
+            <li class="nav_items relative">
+              <a href="#Home">HOME</a>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+              ></span>
+            </li>
+            <li class="nav_items relative category_nav_item">
+              <a href="#Categories">SHOP</a>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+              ></span>
+              <!--? hoverItems -->
+             <ul
+class="categoriesItem absolute top-10 shadow-lg rounded-xl hidden grid-cols-4 p-4 gap-4 border text-gray-400 font-normal bg-white z-10"
+>
+
+<!-- Men's Shoes -->
+<li>
+    <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
+        Men's Shoes
+    </h3>
+
+    <ul class="flex flex-col items-start justify-start gap-2">
+
+        <li>
+            <a href="#">Sneakers</a>
+        </li>
+
+        <li>
+            <a href="#">Running Shoes</a>
+        </li>
+
+        <li>
+            <a href="#">Formal Shoes</a>
+        </li>
+
+        <li>
+            <a href="#">Casual Shoes</a>
+        </li>
+
+        <li>
+            <a href="#">Boots</a>
+        </li>
+
+        <li>
+            <img
+            src="{{ asset('customer/assets/images/products/1.jpg') }}"
+            alt="men shoes"
+            />
+        </li>
+        
+    </ul>
+</li>
+
+
+<!-- Women's Shoes -->
+<li>
+    <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
+        Women's Shoes
+    </h3>
+
+    <ul class="flex flex-col items-start justify-start gap-2">
+
+        <li>
+            <a href="#">Heels</a>
+        </li>
+
+        <li>
+            <a href="#">Flats</a>
+        </li>
+
+        <li>
+            <a href="#">Women's Sneakers</a>
+        </li>
+
+        <li>
+            <a href="#">Sandals</a>
+        </li>
+
+        <li>
+            <a href="#">Boots</a>
+        </li>
+
+        <li>
+            <img
+            src="{{ asset('customer/assets/images/products/2.jpg') }}"
+            alt="women shoes"
+            />
+        </li>
+
+    </ul>
+</li>
+
+
+<!-- Kids Shoes -->
+<li>
+    <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
+        Kids Shoes
+    </h3>
+
+    <ul class="flex flex-col items-start justify-start gap-2">
+
+        <li>
+            <a href="#">Boys Shoes</a>
+        </li>
+
+        <li>
+            <a href="#">Girls Shoes</a>
+        </li>
+
+        <li>
+            <a href="#">School Shoes</a>
+        </li>
+
+        <li>
+            <a href="#">Sports Shoes</a>
+        </li>
+
+        <li>
+            <a href="#">Casual Shoes</a>
+        </li>
+
+        <li>
+            <img
+            src="{{ asset('customer/assets/images/products/3.jpg') }}"
+            alt="kids shoes"
+            />
+        </li>
+
+    </ul>
+</li>
+
+
+<!-- Brands -->
+<li>
+    <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
+        Brands
+    </h3>
+
+    <ul class="flex flex-col items-start justify-start gap-2">
+
+        <li>
+            <a href="#">Nike</a>
+        </li>
+
+        <li>
+            <a href="#">Adidas</a>
+        </li>
+
+        <li>
+            <a href="#">Puma</a>
+        </li>
+
+        <li>
+            <a href="#">Bata</a>
+        </li>
+
+        <li>
+            <a href="#">Skechers</a>
+        </li>
+
+        <li>
+            <img
+            src="{{ asset('customer/assets/images/products/4.jpg') }}"
+            alt="brands"
+            />
+        </li>
+
+    </ul>
+</li>
+
+</ul>
+              <!--? hoverItems -->
+         <li class="nav_items relative men_nav_item">
+    <a href="#Men">MEN'S</a>
+    <span
+        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+    ></span>
+
+    <ul
+        class="hoveredItems w-52 absolute top-10 hidden flex-col items-start justify-start gap-2 p-4 rounded-xl shadow-lg border font-normal bg-white"
+    >
+        <li>
+            <a href="#">Sneakers</a>
+        </li>
+        <li>
+            <a href="#">Formal Shoes</a>
+        </li>
+        <li>
+            <a href="#">Running Shoes</a>
+        </li>
+        <li>
+            <a href="#">Casual Shoes</a>
+        </li>
+        <li>
+            <a href="#">Boots</a>
+        </li>
+    </ul>
+</li>
+
+
+<li class="nav_items relative women_nav_item">
+    <a href="#Women">WOMEN'S</a>
+    <span
+        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+    ></span>
+
+    <ul
+        class="hoveredItems w-52 absolute top-10 hidden flex-col items-start justify-start gap-2 p-4 rounded-xl shadow-lg border font-normal bg-white"
+    >
+        <li>
+            <a href="#">Heels</a>
+        </li>
+        <li>
+            <a href="#">Flats</a>
+        </li>
+        <li>
+            <a href="#">Sandals</a>
+        </li>
+        <li>
+            <a href="#">Women's Sneakers</a>
+        </li>
+        <li>
+            <a href="#">Boots</a>
+        </li>
+    </ul>
+</li>
+
+
+<li class="nav_items relative kids_nav_item">
+    <a href="#Kids">KIDS</a>
+    <span
+        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+    ></span>
+
+    <ul
+        class="hoveredItems w-52 absolute top-10 hidden flex-col items-start justify-start gap-2 p-4 rounded-xl shadow-lg border font-normal bg-white"
+    >
+        <li>
+            <a href="#">School Shoes</a>
+        </li>
+        <li>
+            <a href="#">Boys Shoes</a>
+        </li>
+        <li>
+            <a href="#">Girls Shoes</a>
+        </li>
+        <li>
+            <a href="#">Sports Shoes</a>
+        </li>
+    </ul>
+</li>
+
+
+<li class="nav_items relative sports_nav_item">
+    <a href="#Sports">SPORTS</a>
+    <span
+        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+    ></span>
+
+    <ul
+        class="hoveredItems w-52 absolute top-10 hidden flex-col items-start justify-start gap-2 p-4 rounded-xl shadow-lg border font-normal bg-white"
+    >
+        <li>
+            <a href="#">Football Shoes</a>
+        </li>
+        <li>
+            <a href="#">Basketball Shoes</a>
+        </li>
+        <li>
+            <a href="#">Gym Shoes</a>
+        </li>
+    </ul>
+</li>
+
+
+<li class="nav_items relative">
+    <a href="#Brands">BRANDS</a>
+    <span
+        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+    ></span>
+</li>
+
+
+<li class="nav_items relative">
+    <a href="#Blog">BLOG</a>
+    <span
+        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+    ></span>
+</li>
+
+
+<li class="nav_items relative">
+    <a href="#Offers">SALE</a>
+    <span
+        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+    ></span>
+</li>
+
+<li class="nav_items relative">
+    <a href="{{ route('customer.orders') }}">My order</a>
+    <span
+        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+    ></span>
+</li>
+
+          
+
+      <!--? mobile Navbar -->
+      <div class="mobileNavbar">
+        <!--? navbar button -->
+        <div
+          style="box-shadow: 0 0 0.3rem lightgray"
+          class="z-10 bg-white w-96 lg:hidden flex justify-around items-center p-4 border rounded-t-xl fixed bottom-0 left-1/2 -translate-x-1/2 text-lg"
+        >
+          <button id="openNavbarButton" type="button">
+            <ion-icon name="menu-outline"></ion-icon>
+          </button>
+
+          <button class="relative" type="button">
+            <span
+              class="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full"
+            >
+              0
+            </span>
+            <ion-icon name="bag-handle-outline"></ion-icon>
+          </button>
+
+          <button type="button">
+            <ion-icon name="home-outline"></ion-icon>
+          </button>
+
+          <button class="relative" type="button">
+            <span
+              class="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full"
+            >
+              0
+            </span>
+            <ion-icon name="heart-outline"></ion-icon>
+          </button>
+
+          <button id="categoriesBtn" type="button">
+            <ion-icon name="grid-outline"></ion-icon>
+          </button>
+        </div>
+        <!--* overlay -->
+        <div
+          id="overlayNavbar"
+          class="hidden fixed top-0 left-0 w-screen h-screen bg-gray-500/30 z-10"
+        ></div>
+
+        <!--! sidebarNavbar -->
+        <div
+          class="fixed top-0 w-72 h-screen bg-white p-4 shadow-lg hidden flex-col justify-start gap-4 text-lg font-semibold overflow-auto z-20"
+          id="sidebarNavbar"
+        >
+          <div class="flex justify-between border-b-2 py-4">
+            <h3 class="text-red-400">Menu</h3>
+            <button class="closeButton hover:text-red-500">
+              <ion-icon name="close-circle-outline"></ion-icon>
+            </button>
+          </div>
+          <div class="mobile_navbar_item border-b pb-3 text-gray-600">Home</div>
+          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
+            <details>
+          <a href="#">Sneakers</a>
+          <a href="#">Running Shoes</a>
+          <a href="#">Casual Shoes</a>
+          <a href="#">Formal Shoes</a>
+          <a href="#">Boots</a>
+          <a href="#">Sandals</a>
+              <summary>Men's</summary>
+            </details>
+          </div>
+          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
+    <details>
+        <a href="#">Sneakers</a>
+        <a href="#">Heels</a>
+        <a href="#">Flats</a>
+        <a href="#">Sandals</a>
+        <a href="#">Boots</a>
+        <a href="#">Formal Shoes</a>
+        <summary>Women's</summary>
+    </details>
+</div>
+          
+          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
+    <details>
+        <a href="#">Boys Shoes</a>
+        <a href="#">Girls Shoes</a>
+        <a href="#">School Shoes</a>
+        <a href="#">Sports Shoes</a>
+        <a href="#">Casual Shoes</a>
+        <summary>Kids</summary>
+    </details>
+</div><div class="mobile_navbar_item border-b pb-3 text-gray-600">
+    <details>
+        <a href="#">Running Shoes</a>
+        <a href="#">Football Shoes</a>
+        <a href="#">Basketball Shoes</a>
+        <a href="#">Gym Shoes</a>
+        <a href="#">Training Shoes</a>
+        <summary>Sports</summary>
+    </details>
+</div>
+        <div class="mobile_navbar_item border-b pb-3 text-gray-600">
+    <a href="#">New Arrivals</a>
+</div>
+          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
+    <a href="#">Sale</a>
+</div>
+
+<div class="mobile_navbar_item border-b pb-3 text-gray-600">
+    <details>
+        <a href="#">Nike</a>
+        <a href="#">Adidas</a>
+        <a href="#">Puma</a>
+        <a href="#">Bata</a>
+        <a href="#">Service</a>
+        <a href="#">Skechers</a>
+        <summary>Brands</summary>
+    </details>
+</div>
+
+          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
+            <details>
+              <div class="border rounded-xl shadow-xl flex flex-col items-start">
+                <a class="border-b w-full pb-2" href="#">English</a>
+                <a class="border-b w-full pb-2" href="#">Persian</a>
+              </div>
+              <summary>Language</summary>
+            </details>
+          </div>
+          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
+            <details>
+              <div class="border rounded-xl shadow-xl flex flex-col items-start">
+             <select class="mr-2 p-1 px-2 text-sm font-semibold" id="currency">
+    <option value="PKR">PKR Rs</option>
+    <option value="USD">USD $</option>
+</select>
+              </div>
+              <summary>Currency</summary>
+            </details>
+          </div>
+
+          <div class="icons flex items-center justify-center gap-4">
+            <a
+              class="text-gray-900 bg-gray-300/50 p-2 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center"
+              href="#"
+            >
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+            <a
+              class="text-gray-900 bg-gray-300/50 p-2 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center"
+              href="#"
+            >
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+            <a
+              class="text-gray-900 bg-gray-300/50 p-2 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center"
+              href="#"
+            >
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </div>
+        </div>
+
+        <!--todo sidebarCategories -->
+        <div
+          id="sidebarCategories"
+          class="fixed top-0 w-80 h-screen bg-white p-6 shadow-lg hidden flex-col justify-start gap-4 font-semibold overflow-auto z-20"
+        >
+          <div class="categories w-full h-auto">
+            <div class="w-full flex items-center justify-between">
+              <h1 class="text-lg font-semibold mb-4">CATEGORY</h1>
+              <button class="closeButton text-xl hover:text-red-500">
+                <ion-icon name="close-circle-outline"></ion-icon>
+              </button>
+            </div>
+           <div
+  class="border-b pb-3 text-lg text-gray-600"
+>
+  <details>
+
+    <div class="flex justify-between items-baseline text-sm">
+      <a href="#">Sneakers</a>
+      <span>120</span>
+    </div>
+
+    <div class="flex justify-between items-baseline text-sm">
+      <a href="#">Running Shoes</a>
+      <span>80</span>
+    </div>
+
+    <div class="flex justify-between items-baseline text-sm">
+      <a href="#">Formal Shoes</a>
+      <span>50</span>
+    </div>
+
+    <div class="flex justify-between items-baseline text-sm">
+      <a href="#">Casual Shoes</a>
+      <span>100</span>
+    </div>
+
+    <summary>
+      <div class="flex items-center gap-2">
+        Men
+        <img
+          class="w-4 h-4"
+          src="{{ asset('customer/assets/images/icons/shoes.svg') }}"
+          alt="productPicture"
+        />
+      </div>
+    </summary>
+
+  </details>
+</div>
+           <div class="border-b pb-3 text-lg text-gray-600">
+                      <details>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">Heels</a>
+                      <span>60</span>
+                      </div>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">Flats</a>
+                      <span>90</span>
+                      </div>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">Sandals</a>
+                      <span>70</span>
+                      </div>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">Boots</a>
+                      <span>40</span>
+                      </div>
+
+
+                      <summary>
+                      <div class="flex items-center gap-2">
+                      Women
+
+                      <img
+                      class="w-4 h-4"
+                      src="{{ asset('customer/assets/images/icons/shoes.svg') }}"
+                      alt="productPicture"
+                      />
+
+                      </div>
+                      </summary>
+
+                      </details>
+                      </div>
+                                <div class="border-b pb-3 text-lg text-gray-600">
+                      <details>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">School Shoes</a>
+                      <span>100</span>
+                      </div>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">Boys Shoes</a>
+                      <span>70</span>
+                      </div>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">Girls Shoes</a>
+                      <span>80</span>
+                      </div>
+
+
+                      <summary>
+                      <div class="flex items-center gap-2">
+                      Kids
+
+                      <img
+                      class="w-4 h-4"
+                      src="{{ asset('customer/assets/images/icons/shoes.svg') }}"
+                      alt="productPicture"
+                      />
+
+                      </div>
+                      </summary>
+
+                      </details>
+                      </div>
+                                <div class="border-b pb-3 text-lg text-gray-600">
+                      <details>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">Football Shoes</a>
+                      <span>40</span>
+                      </div>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">Basketball Shoes</a>
+                      <span>30</span>
+                      </div>
+
+                      <div class="flex justify-between items-baseline text-sm">
+                      <a href="#">Gym Shoes</a>
+                      <span>50</span>
+                      </div>
+
+
+                      <summary>
+                      <div class="flex items-center gap-2">
+                      Sports
+
+                      <img
+                      class="w-4 h-4"
+                      src="{{ asset('customer/assets/images/icons/shoes.svg') }}"
+                      alt="productPicture"
+                      />
+
+                      </div>
+                      </summary>
+
+                      </details>
+                      </div>
+           <div class="border-b pb-3 text-lg text-gray-600">
+<details>
+
+<div class="flex justify-between items-baseline text-sm">
+<a href="#">Nike</a>
+<span>150</span>
+</div>
+
+<div class="flex justify-between items-baseline text-sm">
+<a href="#">Adidas</a>
+<span>120</span>
+</div>
+
+<div class="flex justify-between items-baseline text-sm">
+<a href="#">Puma</a>
+<span>90</span>
+</div>
+
+<div class="flex justify-between items-baseline text-sm">
+<a href="#">Bata</a>
+<span>80</span>
+</div>
+
+
+<summary>
+<div class="flex items-center gap-2">
+Brands
+
+<img
+class="w-4 h-4"
+src="{{ asset('customer/assets/images/icons/shoes.svg') }}"
+alt="productPicture"
+/>
+
+</div>
+</summary>
+
+</details>
+</div>
+</div>
+
+         <div
+class="bestsellers w-full h-auto mt-2 flex flex-col items-start justify-start gap-4"
+>
+
+<h2 class="text-lg font-semibold">
+    BEST SELLERS
+</h2>
+
+
+<!-- Shoe 1 -->
+<div class="flex items-center justify-start gap-2">
+
+<div class="w-20 h-20 p-2 border shadow-lg bg-gray-300/20 rounded-md">
+<img
+class="w-full h-full"
+src="{{ asset('customer/assets/images/products/1.jpg') }}"
+alt="Nike Air Max"
+/>
+</div>
+
+<div class="text-gray-700">
+
+<h4 class="text-gray-900">
+Nike Air Max
+</h4>
+
+<div class="stars text-yellow-500">
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star-half-outline"></ion-icon>
+</div>
+
+<div class="flex items-center justify-start gap-4">
+<s class="text-gray-500">
+Rs. 18000
+</s>
+<strong>
+Rs. 15000
+</strong>
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Shoe 2 -->
+<div class="flex items-center justify-start gap-2">
+
+<div class="w-20 h-20 p-2 border shadow-lg bg-gray-300/20 rounded-md">
+
+<img
+class="w-full h-full"
+src="{{ asset('customer/assets/images/products/2.jpg') }}"
+alt="Adidas Running Shoes"
+/>
+
+</div>
+
+
+<div class="text-gray-700">
+
+<h4 class="text-gray-900">
+Adidas Running Shoes
+</h4>
+
+
+<div class="stars text-yellow-500">
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star-half-outline"></ion-icon>
+<ion-icon name="star-outline"></ion-icon>
+</div>
+
+
+<div class="flex items-center justify-start gap-4">
+
+<s class="text-gray-500">
+Rs. 14000
+</s>
+
+<strong>
+Rs. 11000
+</strong>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+<!-- Shoe 3 -->
+<div class="flex items-center justify-start gap-2">
+
+<div class="w-20 h-20 p-2 border shadow-lg bg-gray-300/20 rounded-md">
+
+<img
+class="w-full h-full"
+src="{{ asset('customer/assets/images/products/3.jpg') }}"
+alt="Puma Sneakers"
+/>
+
+</div>
+
+
+<div class="text-gray-700">
+
+<h4 class="text-gray-900">
+Puma Sneakers
+</h4>
+
+
+<div class="stars text-yellow-500">
+
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star-outline"></ion-icon>
+<ion-icon name="star-outline"></ion-icon>
+
+</div>
+
+
+<div class="flex items-center justify-start gap-4">
+
+<s class="text-gray-500">
+Rs. 12000
+</s>
+
+<strong>
+Rs. 9000
+</strong>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+<!-- Shoe 4 -->
+<div class="flex items-center justify-start gap-2">
+
+<div class="w-20 h-20 p-2 border shadow-lg bg-gray-300/20 rounded-md">
+
+<img
+class="w-full h-full"
+src="{{ asset('customer/assets/images/products/4.jpg') }}"
+alt="Bata Formal Shoes"
+/>
+
+</div>
+
+
+<div class="text-gray-700">
+
+<h4 class="text-gray-900">
+Bata Formal Shoes
+</h4>
+
+
+<div class="stars text-yellow-500">
+
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star"></ion-icon>
+<ion-icon name="star-half-outline"></ion-icon>
+
+</div>
+
+
+<div class="flex items-center justify-start gap-4">
+
+<s class="text-gray-500">
+Rs. 8000
+</s>
+
+<strong>
+Rs. 6500
+</strong>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+</div>
+        </div>
+</div>
+</nav>

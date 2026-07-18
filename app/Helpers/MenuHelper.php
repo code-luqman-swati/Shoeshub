@@ -11,7 +11,8 @@ class MenuHelper
                 'icon' => 'dashboard',
                 'name' => 'Dashboard',
                 'subItems' => [
-                    ['name' => 'Ecommerce', 'path' => '/'],
+                    ['name' => 'Ecommerce', 'path' => '/dashboard'],
+                    ['name' => 'Ecommerce2', 'path' => '/dashboard12']
                 ],
             ],
 
@@ -29,11 +30,104 @@ class MenuHelper
         ],
     ],
 ],
-            [
+
+        [
+    'name' => 'Categories',
+    'icon' => 'calendar',
+    'subItems' => [
+        [
+            'name' => 'Categories List',
+            'path' => '/categories',
+        ],
+        [
+            'name' => 'Add New Categories',
+            'path' => '/Admin/categories/create',
+        ],
+    ],
+],
+
+
+
+    [
+    'name' => 'Brands',
+    'icon' => 'calendar',
+    'subItems' => [
+        [
+            'name' => 'Brands List',
+            'path' => '/Brands',
+        ],
+        [
+            'name' => 'Add New Brands',
+            'path' => '/Admin/Brands/create',
+        ],
+    ],
+],
+
+[
+ 'name' => 'Shoes',
+    'icon' => 'calendar',
+    'subItems' => [
+        [
+            'name' => 'Shoes List',
+            'path' => '/shoes',
+        ],
+        [
+            'name' => 'Add New Shoes',
+            'path' => '/Admin/shoes/create',
+        ],
+    ],
+],
+
+[
                 'icon' => 'calendar',
-                'name' => 'Calendar',
+                'name' => 'calendar',
                 'path' => '/calendar',
             ],
+
+        [
+    'name' => 'Sizes',
+    'path' => '/index/sizes',
+    'route' => 'admin.sizes.index',
+    'icon' => 'ruler'
+],
+
+      [
+    'name' => 'Colour',
+    'path' => '/colours',
+    'route' => 'admin.colors.index',
+    'icon' => 'ruler'
+],
+
+    [
+    'name' => 'Variants',
+    'path' => '/shoe-variants',
+    'icon' => 'ruler'
+],
+
+   [
+    'name' => 'Inventory',
+    'path' => '/inventory',
+    'icon' => 'ruler'
+],
+
+ [
+    'name' => 'Customers',
+    'path' => '/customers',
+    'icon' => 'ruler'
+],
+
+ [
+    'name' => 'Orders',
+    'path' => '/orders',
+    'icon' => 'ruler'
+],
+
+ [
+    'name' => 'Payments',
+    'path' => '/payments',
+    'icon' => 'ruler'
+],
+            
             [
                 'icon' => 'user-profile',
                 'name' => 'User Profile',

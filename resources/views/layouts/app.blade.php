@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
-
+<html lang="en" x-data x-init="$store.theme.init()">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'Dashboard' }} | TailAdmin - Laravel Tailwind CSS Admin Dashboard Template</title>
+    <title>{{ $title ?? 'Dashboard' }} | TailAdmin</title>
 
-    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Alpine.js -->
-    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
-
-    <!-- Theme Store -->
+    <!-- Theme Script -->
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.store('theme', {
                 init() {
                     const savedTheme = localStorage.getItem('theme');
-                    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' :
-                        'light';
+                    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+                        ? 'dark'
+                        : 'light';
+
                     this.theme = savedTheme || systemTheme;
                     this.updateTheme();
                 },
+
                 theme: 'light',
+
                 toggle() {
                     this.theme = this.theme === 'light' ? 'dark' : 'light';
                     localStorage.setItem('theme', this.theme);
                     this.updateTheme();
                 },
+
                 updateTheme() {
                     const html = document.documentElement;
                     const body = document.body;
+
                     if (this.theme === 'dark') {
                         html.classList.add('dark');
                         body.classList.add('dark', 'bg-gray-900');
@@ -45,20 +46,17 @@
             });
 
             Alpine.store('sidebar', {
-                // Initialize based on screen size
-                isExpanded: window.innerWidth >= 1280, // true for desktop, false for mobile
+                isExpanded: window.innerWidth >= 1280,
                 isMobileOpen: false,
                 isHovered: false,
 
                 toggleExpanded() {
                     this.isExpanded = !this.isExpanded;
-                    // When toggling desktop sidebar, ensure mobile menu is closed
                     this.isMobileOpen = false;
                 },
 
                 toggleMobileOpen() {
                     this.isMobileOpen = !this.isMobileOpen;
-                    // Don't modify isExpanded when toggling mobile menu
                 },
 
                 setMobileOpen(val) {
@@ -66,7 +64,6 @@
                 },
 
                 setHovered(val) {
-                    // Only allow hover effects on desktop when sidebar is collapsed
                     if (window.innerWidth >= 1280 && !this.isExpanded) {
                         this.isHovered = val;
                     }
@@ -74,65 +71,41 @@
             });
         });
     </script>
-
-    <!-- Apply dark mode immediately to prevent flash -->
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('theme');
-            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            const theme = savedTheme || systemTheme;
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-                document.body.classList.add('dark', 'bg-gray-900');
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.body.classList.remove('dark', 'bg-gray-900');
-            }
-        })();
-    </script>
-    
 </head>
 
-<body
-    x-data="{ 'loaded': true}"
-    x-init="$store.sidebar.isExpanded = window.innerWidth >= 1280;
-    const checkMobile = () => {
-        if (window.innerWidth < 1280) {
-            $store.sidebar.setMobileOpen(false);
-            $store.sidebar.isExpanded = false;
-        } else {
-            $store.sidebar.isMobileOpen = false;
-            $store.sidebar.isExpanded = true;
-        }
-    };
-    window.addEventListener('resize', checkMobile);">
+<body class="bg-gray-100 dark:bg-gray-900">
 
-    {{-- preloader --}}
-    <x-common.preloader/>
-    {{-- preloader end --}}
+    <x-common.preloader />
 
     <div class="min-h-screen xl:flex">
         @include('layouts.backdrop')
         @include('layouts.sidebar')
 
         <div class="flex-1 transition-all duration-300 ease-in-out"
-            :class="{
+             :class="{
                 'xl:ml-[290px]': $store.sidebar.isExpanded || $store.sidebar.isHovered,
                 'xl:ml-[90px]': !$store.sidebar.isExpanded && !$store.sidebar.isHovered,
                 'ml-0': $store.sidebar.isMobileOpen
-            }">
-            <!-- app header start -->
+             }">
+
             @include('layouts.app-header')
-            <!-- app header end -->
+
             <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
                 @yield('content')
             </div>
         </div>
-
     </div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-</body>
+<link rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
 @stack('scripts')
+</body>
+    {{-- KEEP ONLY ONE --}}
+    @stack('scripts')
 
+</body>
 </html>
