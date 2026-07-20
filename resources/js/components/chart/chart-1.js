@@ -4,11 +4,31 @@ export const initChartOne = () => {
     const chartElement = document.querySelector('#chartOne');
     if (!chartElement) return;
 
+    
+    const monthlySales = window.monthlySales || {};
+
+const salesData = [
+    monthlySales[1] ?? 0,
+    monthlySales[2] ?? 0,
+    monthlySales[3] ?? 0,
+    monthlySales[4] ?? 0,
+    monthlySales[5] ?? 0,
+    monthlySales[6] ?? 0,
+    monthlySales[7] ?? 0,
+    monthlySales[8] ?? 0,
+    monthlySales[9] ?? 0,
+    monthlySales[10] ?? 0,
+    monthlySales[11] ?? 0,
+    monthlySales[12] ?? 0,
+];
+
     const chartOneOptions = {
-        series: [{
-            name: "Sales",
-            data: [168, 385, 201, 298, 187, 195, 291, 110, 215, 390, 280, 112],
-        },],
+       series: [
+    {
+        name: "Sales",
+        data: salesData,
+    },
+],
         colors: ["#465fff"],
         chart: {
             fontFamily: "Outfit, sans-serif",

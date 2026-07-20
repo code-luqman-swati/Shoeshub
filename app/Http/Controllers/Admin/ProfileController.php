@@ -10,7 +10,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('admin.profile.index');
+        return view('pages.profile');
     }
 
     public function update(Request $request)

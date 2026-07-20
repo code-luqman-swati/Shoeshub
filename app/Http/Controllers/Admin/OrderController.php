@@ -13,7 +13,7 @@ class OrderController extends Controller
 
     public function index()
     {
-
+           
         $orders = Order::with('customer')
             ->latest()
             ->paginate(10);

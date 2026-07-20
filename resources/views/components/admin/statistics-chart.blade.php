@@ -1,3 +1,7 @@
+@props([
+    'monthlySales' => []
+])
+
 <div
     class="rounded-2xl border border-gray-200 bg-white px-5 pb-5 pt-5 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
     <div class="flex flex-col gap-5 mb-6 sm:flex-row sm:justify-between">
@@ -14,6 +18,9 @@
             <div x-data="{ selected: 'overview' }"
                 class="inline-flex w-fit items-center gap-0.5 rounded-lg bg-gray-100 p-0.5 dark:bg-gray-900">
 
+
+
+                
                 @php
                     $options = [
                         ['value' => 'overview', 'label' => 'Overview'],

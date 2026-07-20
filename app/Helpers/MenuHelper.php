@@ -10,12 +10,8 @@ class MenuHelper
             [
                 'icon' => 'dashboard',
                 'name' => 'Dashboard',
-                'subItems' => [
-                    ['name' => 'Ecommerce', 'path' => '/dashboard'],
-                    ['name' => 'Ecommerce2', 'path' => '/dashboard12']
-                ],
+                 'path' => '/dashboard'
             ],
-
             [
     'name' => 'Employees',
     'icon' => 'user-profile',

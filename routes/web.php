@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middlware\AuthMiddleware;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -255,6 +254,10 @@ Route::patch('/orders/{order}',
 )->name('admin.orders.update');
 
 
+// admin kpi dashbord
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
 
 });
 
@@ -346,6 +349,8 @@ Route::get('/orders/{order}/invoice', [CustomerOrderController::class, 'invoice'
 
     Route::get('/customer/orders', [CustomerOrderController::class, 'index'])
         ->name('customer.orders');
+
+        
     
 });
 
@@ -427,18 +432,10 @@ Route::get('/stripe/success', [StripeController::class, 'success'])->name('strip
 
 Route::get('/stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
 
-//admin dashboard routes
-Route::middleware('auth')->group(function(){
 
-    Route::get('/dashboard', function(){
-        return view('admin.dashboard');
-    })->name('dashboard');
 
-});
 // dashboard pages
-Route::get('/dashboard12', function () {
-    return view('pages.dashboard.ecommerce', ['title' => 'E-commerce Dashboard']);
-})->name('dashboard')->middleware('auth');
+
 
 // calender pages
 Route::get('/calendar', function () {
