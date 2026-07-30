@@ -93,7 +93,7 @@
 
         {{-- Discount Price --}}
         <div>
-            <label class="mb-2 block">Discount Price</label>
+            <label class="mb-2 block">Sale Price</label>
 
             <input
                 type="number"

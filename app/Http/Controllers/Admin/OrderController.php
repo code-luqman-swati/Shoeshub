@@ -5,59 +5,103 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\OrderStatusHistory;
 
 
 class OrderController extends Controller
 {
+public function index(Request $request)
+{
+    $orders = Order::with('customer');
 
 
-    public function index()
-    {
-           
-        $orders = Order::with('customer')
-            ->latest()
-            ->paginate(10);
+    // Status filter
+    if ($request->status) {
+        $orders->where('order_status', $request->status);
+    }
 
 
-        return view('admin.order.index', compact('orders'));
+    // Search
+    if ($request->search) {
+
+        $orders->where(function ($query) use ($request) {
+
+            $query->where('order_number', 'like', "%{$request->search}%")
+                  ->orWhere('order_status', 'like', "%{$request->search}%")
+                  ->orWhereHas('customer', function ($customer) use ($request) {
+
+                      $customer->where('name', 'like', "%{$request->search}%")
+                               ->orWhere('email', 'like', "%{$request->search}%");
+
+                  });
+
+        });
 
     }
 
+
+    $orders = $orders->latest()->get();
+
+
+    // AJAX response
+    if ($request->ajax()) {
+
+        return view(
+            'admin.order.table',
+            compact('orders')
+        );
+
+    }
+
+
+    return view(
+        'admin.order.index',
+        compact('orders')
+    );
+}
 
 
     public function show(Order $order)
-    {
+{
+    $order->load([
+        'customer',
+        'items.shoeVariant.shoe',
+        'payment',
+        'statusHistories'
+    ]);
 
-        $order->load([
-            'customer',
-            'items.shoeVariant.shoe',
-            'payment'
-        ]);
+    return view('admin.order.show', compact('order'));
+}
+
+   
 
 
-        return view('admin.order.show', compact('order'));
 
-    }
+
 public function update(Request $request, Order $order)
 {
-
     $request->validate([
-
-        'order_status'=>'required|in:pending,processing,shipped,delivered,cancelled'
-
+        'status' => 'required'
     ]);
 
 
+    // Update order status
     $order->update([
-
-        'order_status'=>$request->order_status
-
+        'order_status' => $request->status
     ]);
 
 
-    return back()
-        ->with('success','Order status updated successfully');
+    // Save status history
+    OrderStatusHistory::create([
+        'order_id' => $order->id,
+        'status' => $request->status
+    ]);
 
+
+    return back()->with(
+        'success',
+        'Order status updated successfully.'
+    );
 }
 
 }

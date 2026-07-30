@@ -16,19 +16,42 @@ class ShoeController extends Controller
     /**
      * Display all shoes
      */
-  public function index()
+
+
+public function index(Request $request)
 {
     $shoes = Shoe::with([
         'category',
         'brand',
         'images'
-    ])->get();
+    ]);
 
+    if ($request->ajax()) {
 
-    return view(
-        'Admin.shoes.index',
-        compact('shoes')
-    );
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+
+            $shoes->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('price', 'like', "%{$search}%")
+                      ->orWhereHas('category', function ($q) use ($search) {
+                          $q->where('name', 'like', "%{$search}%");
+                      })
+                      ->orWhereHas('brand', function ($q) use ($search) {
+                          $q->where('name', 'like', "%{$search}%");
+                      });
+            });
+        }
+
+        $shoes = $shoes->latest()->get();
+
+        return view('Admin.shoes.table', compact('shoes'));
+    }
+
+    $shoes = $shoes->latest()->get();
+
+    return view('Admin.shoes.index', compact('shoes'));
 }
 
 

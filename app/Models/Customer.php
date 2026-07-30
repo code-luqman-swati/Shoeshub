@@ -22,8 +22,20 @@ class Customer extends Authenticatable
         'password',
     ];
 
-    public function cart()
+    public function cartItems()
 {
     return $this->hasOne(Cart::class);
+
+
+}
+
+public function wishlists()
+{
+    return $this->hasMany(Wishlist::class);
+}
+
+public function reviews()
+{
+    return $this->hasMany(Review::class);
 }
 }

@@ -21,4 +21,13 @@ class AdminMiddleware
 
         return $next($request);
     }
+
+    protected function redirectTo(Request $request): ?string
+{
+    if ($request->is('customer/*') || $request->is('orders/*') || $request->is('payment/*')) {
+        return route('customer.login');
+    }
+
+    return route('customer.login');
+}
 }

@@ -14,10 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
 ->withMiddleware(function (Middleware $middleware) {
 
 
-    $middleware->alias([
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-    ]);
-
+ $middleware->alias([
+    'admin' => \App\Http\Middleware\AdminMiddleware::class,
+    'prevent.mixed' => \App\Http\Middleware\PreventMixedLogin::class,
+]);
 
     $middleware->redirectGuestsTo(function ($request) {
 
@@ -26,13 +26,14 @@ return Application::configure(basePath: dirname(__DIR__))
             $request->is('cart') ||
             $request->is('checkout') ||
             $request->is('orders/*') ||
+            $request->is('products') ||
             $request->is('payment/*')
         ) {
             return route('customer.login');
         }
 
 
-        return route('login');
+        return route('customer.login');
 
 
     });

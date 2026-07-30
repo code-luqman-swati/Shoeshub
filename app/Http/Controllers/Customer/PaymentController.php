@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Customer;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationMail;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use App\Jobs\SendOrderConfirmationEmail;
 
 class PaymentController extends Controller
 {
@@ -50,7 +52,13 @@ class PaymentController extends Controller
         $item->shoeVariant->decrement('stock', $item->quantity);
     }
 }
-
+$order->load([
+    'customer',
+    'items.shoeVariant.shoe',
+    'items.shoeVariant.size',
+    'items.shoeVariant.color'
+]);
+       SendOrderConfirmationEmail::dispatch($order);
 
     // update order status
     $order->update([

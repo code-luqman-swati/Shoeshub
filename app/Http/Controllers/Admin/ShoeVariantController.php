@@ -11,11 +11,43 @@ use Illuminate\Http\Request;
 
 class ShoeVariantController extends Controller
 {
-     
-public function index(){
-     $variants = ShoeVariant::all();
-    return view('Admin.variants.index',compact('variants'));
 
+public function index(Request $request)
+{
+    $variants = ShoeVariant::with([
+        'shoe',
+        'size',
+        'color'
+    ]);
+
+    if ($request->ajax()) {
+
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+
+            $variants->where(function ($query) use ($search) {
+                $query->orWhereHas('shoe', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                ->orWhereHas('size', function ($q) use ($search) {
+                    $q->where('size', 'like', "%{$search}%");
+                })
+                ->orWhereHas('color', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                ->orWhere('stock', 'like', "%{$search}%");
+            });
+        }
+
+        $variants = $variants->latest()->get();
+
+        return view('Admin.variants.table', compact('variants'));
+    }
+
+    $variants = $variants->latest()->get();
+
+    return view('Admin.variants.index', compact('variants'));
 }
 public function create()
 {

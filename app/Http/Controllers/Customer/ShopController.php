@@ -25,7 +25,8 @@ class ShopController extends Controller
             'brand',
             'category',
             'variants.size',
-            'variants.color'
+            'variants.color',
+            'images'
         ]);
 
         return view('customer.shop.show', compact('shoe'));

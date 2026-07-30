@@ -1,34 +1,75 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="grid grid-cols-12 gap-4 md:gap-6">
-    <div class="col-span-12 space-y-6 xl:col-span-7">
-  <x-admin.ecommerce-metrics
-    :totalOrders="$totalOrders"
-    :totalCustomers="$totalCustomers"
-    :customerGrowth="$customerGrowth"
-    :orderGrowth="$orderGrowth"
-/>
-      <x-admin.monthly-sale
-      />
+
+
+
+
+
+@if(session('error'))
+
+<div class="mb-4 rounded-lg bg-red-100 p-4 text-red-700">
+    {{ session('error') }}
+</div>
+
+@endif
+
+<div class="grid grid-cols-12 gap-6">
+
+
+    <!-- KPI Cards -->
+    <div class="col-span-12">
+        <x-admin.ecommerce-metrics
+            :totalCustomers="$totalCustomers"
+            :totalOrders="$totalOrders"
+            :totalRevenue="$totalRevenue"
+            :totalProducts="$totalProducts"
+
+            :pendingOrders="$pendingOrders"
+            :completedOrders="$completedOrders"
+            :lowStockProducts="$lowStockProducts"
+
+            :customerGrowth="$customerGrowth"
+            :orderGrowth="$orderGrowth"
+            :revenueGrowth="$revenueGrowth"
+        />
     </div>
-    <div class="col-span-12 xl:col-span-5">
+
+
+
+    <!-- Monthly Sales -->
+    <div class="col-span-12 xl:col-span-8">
+        <x-admin.monthly-sale
+            :monthly-sales="$monthlySales"
+        />
+    </div>
+
+
+    <!-- Monthly Target -->
+    <div class="col-span-12 xl:col-span-4">
         <x-admin.monthly-target />
     </div>
-<script>
+
+
+
+    <!-- Statistics Chart -->
+    <div class="col-span-12">
+          {{-- Statistics Chart --}}
+    <script>
     window.monthlySales = @json($monthlySales);
 </script>
    <x-admin.statistics-chart 
     :monthly-sales="$monthlySales"
 />
+</div>
 
-    <div class="col-span-12 xl:col-span-5">
-      <x-admin.customer-demographic />
-    </div>
 
-    <div class="col-span-12 xl:col-span-7">
-      <x-admin.recent-orders
-       />
-    </div>
-  </div>
+    <!-- Recent Orders -->
+    <!-- <div class="col-span-12">
+        <x-admin.recent-orders />
+    </div> -->
+
+
+</div>
+
 @endsection

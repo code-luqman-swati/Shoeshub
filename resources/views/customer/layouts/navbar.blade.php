@@ -1,7 +1,7 @@
 
 <header class="header w-full">
 <!--! topHeader -->
-      <div
+      <!-- <div
         class="top-header w-screen flex flex-col items-center justify-between border-b"
       >
         <div class="flex w-full items-center justify-between p-4 md:px-20 border-b">
@@ -38,7 +38,7 @@
     <option value="Urdu">Urdu</option>
 </select>
           </div>
-        </div>
+        </div> -->
         <div
           class="gap-4 flex flex-col sm:flex-row w-full items-center justify-between p-6 md:px-24"
         >
@@ -46,35 +46,331 @@
     ShoeHub
 </h1>
           <form class="relative w-full sm:w-3/5">
-            <input
-              class="w-full h-full p-2 border rounded-xl"
-             placeholder="Search shoes, brands..."
-              id="search"
-              type="text"
-            />
-            <label class="absolute right-2 top-2" for="search">
-              <i class="fa-solid fa-magnifying-glass cursor-pointer"></i>
-            </label>
-          </form>
-          <div class="icons hidden mr-2 text-3xl md:flex gap-8 text-gray-600">
-            <div class="relative">
-              <ion-icon name="person-outline"></ion-icon>
+
+    <input
+        class="w-full h-full p-2 border rounded-xl"
+        placeholder="Search shoes, brands..."
+        id="search"
+        type="text"
+        autocomplete="off"
+    />
+
+
+    <label class="absolute right-2 top-2" for="search">
+        <i class="fa-solid fa-magnifying-glass cursor-pointer"></i>
+    </label>
+
+
+
+    {{-- Search Result Dropdown --}}
+    <div
+        id="searchResults"
+        class="
+        absolute
+        top-12
+        left-0
+        w-full
+        bg-white
+        shadow-lg
+        rounded-xl
+        hidden
+        z-50
+        "
+    >
+
+    </div>
+
+
+</form>
+         <div class="icons hidden mr-2 text-3xl md:flex gap-8 text-gray-600">
+
+    <div class="relative group">
+
+        @if(Auth::guard('customer')->check())
+
+            {{-- User Button --}}
+            <button
+                class="
+                flex
+                items-center
+                gap-2
+                hover:text-black
+                transition
+                "
+            >
+
+                <div
+                    class="
+                    w-10
+                    h-10
+                    rounded-full
+                    bg-gray-100
+                    flex
+                    items-center
+                    justify-center
+                    "
+                >
+
+                    <ion-icon 
+                        name="person-outline"
+                        class="text-2xl"
+                    ></ion-icon>
+
+                </div>
+
+
+                <span class="
+                    text-sm
+                    font-semibold
+                    text-gray-700
+                ">
+                    {{ Auth::guard('customer')->user()->name }}
+                </span>
+
+
+                <ion-icon 
+                    name="chevron-down-outline"
+                    class="text-sm"
+                ></ion-icon>
+
+
+            </button>
+
+
+
+            {{-- Dropdown --}}
+            <div
+            class="
+            hidden
+            group-hover:block
+            absolute
+            right-0
+            top-full
+            mt-3
+            w-56
+            bg-white
+            rounded-2xl
+            shadow-xl
+            border
+            border-gray-100
+            overflow-hidden
+            z-50
+            "
+            >
+
+
+                {{-- Header --}}
+                <div class="
+                    px-5
+                    py-4
+                    bg-gray-50
+                    border-b
+                ">
+
+                    <p class="font-bold text-gray-800">
+                        {{ Auth::guard('customer')->user()->name }}
+                    </p>
+
+                    <p class="text-xs text-gray-500">
+                        {{ Auth::guard('customer')->user()->email }}
+                    </p>
+
+                </div>
+
+
+
+                <a
+                href="#"
+                class="
+                flex
+                items-center
+                gap-3
+                px-5
+                py-3
+                text-sm
+                hover:bg-gray-100
+                transition
+                "
+                >
+
+                    <ion-icon name="person-outline"></ion-icon>
+
+                    My Profile
+
+                </a>
+
+
+
+                <a
+                href="{{ route('customer.orders') }}"
+                class="
+                flex
+                items-center
+                gap-3
+                px-5
+                py-3
+                text-sm
+                hover:bg-gray-100
+                transition
+                "
+                >
+
+                    <ion-icon name="bag-outline"></ion-icon>
+
+                    My Orders
+
+                </a>
+
+
+
+
+                <a
+                href="#"
+                class="
+                flex
+                items-center
+                gap-3
+                px-5
+                py-3
+                text-sm
+                hover:bg-gray-100
+                transition
+                "
+                >
+
+                    <ion-icon name="heart-outline"></ion-icon>
+
+                    Wishlist
+
+                </a>
+
+
+
+                <div class="border-t">
+
+
+                    <form action="{{ route('customer.logout') }}" method="POST">
+
+                        @csrf
+
+                        <button
+                        class="
+                        flex
+                        items-center
+                        gap-3
+                        w-full
+                        px-5
+                        py-3
+                        text-sm
+                        text-red-600
+                        hover:bg-red-50
+                        transition
+                        "
+                        >
+
+                            <ion-icon name="log-out-outline"></ion-icon>
+
+                            Logout
+
+                        </button>
+
+
+                    </form>
+
+
+                </div>
+
+
             </div>
+
+
+        @else
+
+
+            <a 
+            href="{{ route('customer.login') }}"
+            class="
+            hover:text-black
+            transition
+            "
+            >
+
+                <div
+                class="
+                w-10
+                h-10
+                rounded-full
+                bg-gray-100
+                flex
+                items-center
+                justify-center
+                "
+                >
+
+                    <ion-icon 
+                        name="person-outline"
+                        class="text-2xl"
+                    ></ion-icon>
+
+                </div>
+
+            </a>
+
+
+        @endif
+
+
+    </div>
+
+</div>
+          <div class="relative">
+
+    @if($wishlistCount > 0)
+
+    <span
+    class="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full"
+    >
+        {{ $wishlistCount }}
+    </span>
+
+    @endif
+
+    <a href="{{ route('wishlist.index') }}">
+        <ion-icon name="heart-outline"></ion-icon>
+    </a>
+
+</div>
             <div class="relative">
-              <span
-                class="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full"
-                >0</span
-              >
-              <ion-icon name="heart-outline"></ion-icon>
-            </div>
-            <div class="relative">
-              <span
-                class="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full"
-                >0</span
-              >
-              <ion-icon name="bag-handle-outline"></ion-icon>
-            </div>
-          </div>
+
+    @if($cartCount > 0)
+
+    <span
+    class="
+    text-xs
+    text-center
+    font-semibold
+    text-white
+    absolute
+    -top-2
+    -right-2
+    w-4
+    h-4
+    bg-red-400
+    rounded-full
+    "
+    >
+        {{ $cartCount }}
+    </span>
+
+    @endif
+
+
+    <a href="{{ route('cart.index') }}">
+        <ion-icon name="bag-handle-outline"></ion-icon>
+    </a>
+
+</div>
+         
         </div>
       </div>
       <!--! topHeader -->
@@ -86,7 +382,7 @@
             class="desktopNavbarUl flex justify-center items-center gap-12 font-sm font-bold text-gray-600"
           >
             <li class="nav_items relative">
-              <a href="#Home">HOME</a>
+              <a href="{{ route ('customer.shop') }}">HOME</a>
               <span
                 class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
               ></span>
@@ -97,277 +393,146 @@
                 class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
               ></span>
               <!--? hoverItems -->
-             <ul
-class="categoriesItem absolute top-10 shadow-lg rounded-xl hidden grid-cols-4 p-4 gap-4 border text-gray-400 font-normal bg-white z-10"
+        <ul
+class="
+categoriesItem 
+absolute 
+top-10 
+shadow-lg 
+rounded-xl 
+hidden 
+grid-cols-3 
+p-6 
+gap-8 
+border 
+text-gray-400 
+font-normal 
+bg-white 
+z-10
+"
 >
+
 
 <!-- Men's Shoes -->
 <li>
+
     <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
         Men's Shoes
     </h3>
 
+
     <ul class="flex flex-col items-start justify-start gap-2">
 
-        <li>
-            <a href="#">Sneakers</a>
-        </li>
+        @foreach($navCategories as $category)
 
-        <li>
-            <a href="#">Running Shoes</a>
-        </li>
+            @if($category->slug == 'men')
 
-        <li>
-            <a href="#">Formal Shoes</a>
-        </li>
+                @foreach($category->children as $child)
 
-        <li>
-            <a href="#">Casual Shoes</a>
-        </li>
+                    <li>
+                        <a 
+                        class="hover:text-red-400"
+                        href="{{ route('category.show',$child->slug) }}">
+                            {{ $child->name }}
+                        </a>
+                    </li>
 
-        <li>
-            <a href="#">Boots</a>
-        </li>
+                @endforeach
 
-        <li>
-            <img
-            src="{{ asset('customer/assets/images/products/1.jpg') }}"
-            alt="men shoes"
-            />
-        </li>
-        
+            @endif
+
+        @endforeach
+
     </ul>
+
 </li>
+
+
 
 
 <!-- Women's Shoes -->
 <li>
+
     <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
         Women's Shoes
     </h3>
 
+
     <ul class="flex flex-col items-start justify-start gap-2">
 
-        <li>
-            <a href="#">Heels</a>
-        </li>
 
-        <li>
-            <a href="#">Flats</a>
-        </li>
+        @foreach($navCategories as $category)
 
-        <li>
-            <a href="#">Women's Sneakers</a>
-        </li>
+            @if($category->slug == 'women')
 
-        <li>
-            <a href="#">Sandals</a>
-        </li>
+                @foreach($category->children as $child)
 
-        <li>
-            <a href="#">Boots</a>
-        </li>
+                    <li>
+                        <a 
+                        class="hover:text-red-400"
+                        href="{{ route('category.show',$child->slug) }}">
+                            {{ $child->name }}
+                        </a>
+                    </li>
 
-        <li>
-            <img
-            src="{{ asset('customer/assets/images/products/2.jpg') }}"
-            alt="women shoes"
-            />
-        </li>
+                @endforeach
+
+            @endif
+
+        @endforeach
+
 
     </ul>
+
 </li>
+
+
 
 
 <!-- Kids Shoes -->
 <li>
+
     <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
         Kids Shoes
     </h3>
 
+
     <ul class="flex flex-col items-start justify-start gap-2">
 
-        <li>
-            <a href="#">Boys Shoes</a>
-        </li>
 
-        <li>
-            <a href="#">Girls Shoes</a>
-        </li>
+        @foreach($navCategories as $category)
 
-        <li>
-            <a href="#">School Shoes</a>
-        </li>
+            @if($category->slug == 'children')
 
-        <li>
-            <a href="#">Sports Shoes</a>
-        </li>
+                @foreach($category->children as $child)
 
-        <li>
-            <a href="#">Casual Shoes</a>
-        </li>
+                    <li>
+                        <a 
+                        class="hover:text-red-400"
+                        href="{{ route('category.show',$child->slug) }}">
+                            {{ $child->name }}
+                        </a>
+                    </li>
 
-        <li>
-            <img
-            src="{{ asset('customer/assets/images/products/3.jpg') }}"
-            alt="kids shoes"
-            />
-        </li>
+                @endforeach
+
+            @endif
+
+        @endforeach
+
 
     </ul>
+
 </li>
+
+
+</ul>
 
 
 <!-- Brands -->
-<li>
-    <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
-        Brands
-    </h3>
 
-    <ul class="flex flex-col items-start justify-start gap-2">
-
-        <li>
-            <a href="#">Nike</a>
-        </li>
-
-        <li>
-            <a href="#">Adidas</a>
-        </li>
-
-        <li>
-            <a href="#">Puma</a>
-        </li>
-
-        <li>
-            <a href="#">Bata</a>
-        </li>
-
-        <li>
-            <a href="#">Skechers</a>
-        </li>
-
-        <li>
-            <img
-            src="{{ asset('customer/assets/images/products/4.jpg') }}"
-            alt="brands"
-            />
-        </li>
-
-    </ul>
-</li>
-
-</ul>
               <!--? hoverItems -->
-         <li class="nav_items relative men_nav_item">
-    <a href="#Men">MEN'S</a>
-    <span
-        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
-    ></span>
-
-    <ul
-        class="hoveredItems w-52 absolute top-10 hidden flex-col items-start justify-start gap-2 p-4 rounded-xl shadow-lg border font-normal bg-white"
-    >
-        <li>
-            <a href="#">Sneakers</a>
-        </li>
-        <li>
-            <a href="#">Formal Shoes</a>
-        </li>
-        <li>
-            <a href="#">Running Shoes</a>
-        </li>
-        <li>
-            <a href="#">Casual Shoes</a>
-        </li>
-        <li>
-            <a href="#">Boots</a>
-        </li>
-    </ul>
-</li>
-
-
-<li class="nav_items relative women_nav_item">
-    <a href="#Women">WOMEN'S</a>
-    <span
-        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
-    ></span>
-
-    <ul
-        class="hoveredItems w-52 absolute top-10 hidden flex-col items-start justify-start gap-2 p-4 rounded-xl shadow-lg border font-normal bg-white"
-    >
-        <li>
-            <a href="#">Heels</a>
-        </li>
-        <li>
-            <a href="#">Flats</a>
-        </li>
-        <li>
-            <a href="#">Sandals</a>
-        </li>
-        <li>
-            <a href="#">Women's Sneakers</a>
-        </li>
-        <li>
-            <a href="#">Boots</a>
-        </li>
-    </ul>
-</li>
-
-
-<li class="nav_items relative kids_nav_item">
-    <a href="#Kids">KIDS</a>
-    <span
-        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
-    ></span>
-
-    <ul
-        class="hoveredItems w-52 absolute top-10 hidden flex-col items-start justify-start gap-2 p-4 rounded-xl shadow-lg border font-normal bg-white"
-    >
-        <li>
-            <a href="#">School Shoes</a>
-        </li>
-        <li>
-            <a href="#">Boys Shoes</a>
-        </li>
-        <li>
-            <a href="#">Girls Shoes</a>
-        </li>
-        <li>
-            <a href="#">Sports Shoes</a>
-        </li>
-    </ul>
-</li>
-
-
-<li class="nav_items relative sports_nav_item">
-    <a href="#Sports">SPORTS</a>
-    <span
-        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
-    ></span>
-
-    <ul
-        class="hoveredItems w-52 absolute top-10 hidden flex-col items-start justify-start gap-2 p-4 rounded-xl shadow-lg border font-normal bg-white"
-    >
-        <li>
-            <a href="#">Football Shoes</a>
-        </li>
-        <li>
-            <a href="#">Basketball Shoes</a>
-        </li>
-        <li>
-            <a href="#">Gym Shoes</a>
-        </li>
-    </ul>
-</li>
-
-
-<li class="nav_items relative">
-    <a href="#Brands">BRANDS</a>
-    <span
-        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
-    ></span>
-</li>
-
+      
 
 <li class="nav_items relative">
     <a href="#Blog">BLOG</a>
@@ -378,7 +543,7 @@ class="categoriesItem absolute top-10 shadow-lg rounded-xl hidden grid-cols-4 p-
 
 
 <li class="nav_items relative">
-    <a href="#Offers">SALE</a>
+  <a href="{{ route('sale') }}">Sale</a>
     <span
         class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
     ></span>
@@ -955,3 +1120,119 @@ Rs. 6500
         </div>
 </div>
 </nav>
+
+
+<script>
+
+const search = document.getElementById('search');
+const results = document.getElementById('searchResults');
+
+
+search.addEventListener('keyup', function(){
+
+
+    let query = this.value;
+
+
+    if(query.length < 2){
+
+        results.innerHTML = '';
+        results.classList.add('hidden');
+
+        return;
+
+    }
+
+
+
+    fetch(`/search/products?query=${query}`)
+
+    .then(response => response.json())
+
+    .then(products => {
+
+
+        results.innerHTML = '';
+
+
+        if(products.length === 0){
+
+            results.innerHTML = `
+            <div class="p-4 text-gray-500">
+                No products found
+            </div>
+            `;
+
+        }
+
+
+
+        products.forEach(product => {
+
+
+            results.innerHTML += `
+
+<a 
+href="/products/${product.id}"
+class="
+flex
+items-center
+gap-4
+p-3
+hover:bg-gray-100
+rounded-xl
+"
+>
+
+
+<img
+src="/storage/${product.image}"
+class="
+w-14
+h-14
+rounded-lg
+object-cover
+"
+/>
+
+
+
+<div>
+
+<div class="font-semibold text-gray-800">
+${product.name}
+</div>
+
+
+<div class="text-sm text-gray-500">
+${product.brand.name}
+</div>
+
+
+<div class="font-bold text-sm mt-1">
+Rs ${product.price}
+</div>
+
+
+</div>
+
+
+</a>
+
+`;
+
+
+        });
+
+
+
+        results.classList.remove('hidden');
+
+
+    });
+
+
+});
+
+
+</script>

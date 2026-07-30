@@ -43,4 +43,28 @@ public function variants()
 {
     return $this->hasMany(ShoeVariant::class);
 }
+
+public function wishlists()
+{
+    return $this->hasMany(Wishlist::class);
+}
+
+public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
+
+public function getSoldPercentageAttribute()
+{
+    $totalStock = $this->variants->sum('stock') 
+                    + $this->variants->sum('sold_quantity');
+
+    if($totalStock == 0){
+        return 0;
+    }
+
+    return round(
+        ($this->variants->sum('sold_quantity') / $totalStock) * 100
+    );
+}
 }

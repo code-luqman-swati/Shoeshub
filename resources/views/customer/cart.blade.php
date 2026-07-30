@@ -171,60 +171,87 @@
 
 
 
-<script>
 
+
+<script>
+.then(data => {
+
+    console.log(data);
+
+})
 function updateCart(id, action)
 {
 
-    let quantity = parseInt(
-        document.getElementById('qty-'+id).innerHTML
-    );
+    let quantityElement = document.getElementById('qty-' + id);
+
+    let quantity = parseInt(quantityElement.innerText);
 
 
     if(action === 'plus')
     {
         quantity++;
     }
-    else
+
+
+    if(action === 'minus')
     {
         quantity--;
     }
 
 
 
-    fetch('/cart/update/'+id, {
+    fetch('/cart/update/' + id, {
 
-        method:'POST',
+        method: 'POST',
 
-        headers:{
-            'Content-Type':'application/json',
-            'X-CSRF-TOKEN':'{{ csrf_token() }}'
+        headers: {
+
+            'Content-Type': 'application/json',
+
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+
         },
 
 
-        body:JSON.stringify({
+        body: JSON.stringify({
 
             quantity: quantity
 
         })
 
+
     })
 
 
-    .then(response=>response.json())
+    .then(response => response.json())
 
 
-    .then(data=>{
+    .then(data => {
 
 
         if(data.status)
         {
 
-            document.getElementById('qty-'+id)
-            .innerHTML = data.quantity;
+
+            document.getElementById(
+                'qty-' + id
+            ).innerText = data.quantity;
+
+
+
+            document.getElementById(
+                'subtotal-' + id
+            ).innerText = data.subtotal;
+
+
+
+            document.getElementById(
+                'cart-total'
+            ).innerText = data.total;
 
 
         }
+
         else
         {
 
@@ -232,6 +259,13 @@ function updateCart(id, action)
 
         }
 
+
+    })
+
+
+    .catch(error => {
+
+        console.log(error);
 
     });
 

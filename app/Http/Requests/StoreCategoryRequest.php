@@ -11,13 +11,15 @@ class StoreCategoryRequest extends FormRequest
         return true;
     }
 
-    public function rules()
-    {
-        return [
-            'name' => 'required|string|max:255|unique:categories,name',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'status' => 'boolean'
-        ];
-    }
+  public function rules()
+{
+    return [
+        'name' => 'required|string|max:255',
+
+        'description' => 'nullable|string',
+        'parent_id' => 'nullable|exists:categories,id',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        'status' => 'boolean',
+    ];
+}
 }

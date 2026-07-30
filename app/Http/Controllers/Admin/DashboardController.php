@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalSales = Order::where('payment_status', 'paid')->sum('total');
+        $totalRevenue = Order::where('payment_status', 'paid')->sum('total');
 
         $totalOrders = Order::count();
 
@@ -63,11 +63,30 @@ $lastOrders = Order::whereMonth(
 )->count();
 
 
+
+$currentRevenue = Order::where('payment_status', 'paid')
+    ->whereMonth('created_at', now()->month)
+    ->whereYear('created_at', now()->year)
+    ->sum('total');
+
+
+$lastRevenue = Order::where('payment_status', 'paid')
+    ->whereMonth('created_at', now()->subMonth()->month)
+    ->whereYear('created_at', now()->subMonth()->year)
+    ->sum('total');
+
+
+$revenueGrowth = $lastRevenue > 0
+    ? (($currentRevenue - $lastRevenue) / $lastRevenue) * 100
+    : 0;
+
+
 $orderGrowth = $lastOrders > 0
     ? (($currentOrders - $lastOrders) / $lastOrders) * 100
     : 0;
         return view('Admin.dashboard.dashboard', compact(
-            'totalSales',
+            'totalRevenue',
+            'revenueGrowth',
             'monthlySales',
             'totalOrders',
             'totalCustomers',
@@ -79,5 +98,7 @@ $orderGrowth = $lastOrders > 0
             'orderGrowth',
             'customerGrowth'
         ));
+
+        
     }
 }

@@ -8,34 +8,96 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
  use Illuminate\Http\Request;
+ use Illuminate\Support\Str;
 
 
 class CategoryController extends Controller
 {
-    public function index()
-    {
-        $categories = Category::all();
-        return view('admin.categories.index', compact('categories'));
+public function index(Request $request)
+{
+    $categories = Category::query();
+
+
+    if($request->search){
+
+        $categories->where('name','like',"%{$request->search}%");
+
     }
 
-    public function create()
-    {
-        return view('admin.categories.create');
+
+    $categories = $categories->paginate(10);
+
+
+
+    if($request->ajax()){
+
+        return view(
+            'admin.categories.table',
+            compact('categories')
+        );
+
     }
 
-    public function store(StoreCategoryRequest $request)
-    {
-        $data = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('categories', 'public');
-        }
+    return view(
+        'admin.categories.index',
+        compact('categories')
+    );
+}
+public function create()
+{
+    $categories = Category::whereNull('parent_id')->get();
 
-        Category::create($data);
+    return view('admin.categories.create', compact('categories'));
+}
 
-        return redirect()->route('admin.categories.index')
-            ->with('success', 'Category created successfully.');
+
+
+public function store(StoreCategoryRequest $request)
+{
+    $data = $request->validated();
+
+
+    // Generate slug
+    if ($request->parent_id) {
+
+        $parent = Category::find($request->parent_id);
+
+        $slug = Str::slug($parent->name . '-' . $request->name);
+
+    } else {
+
+        $slug = Str::slug($request->name);
+
     }
+
+
+    // Make slug unique
+    $originalSlug = $slug;
+    $counter = 1;
+
+    while (Category::where('slug', $slug)->exists()) {
+
+        $slug = $originalSlug . '-' . $counter;
+        $counter++;
+
+    }
+
+    $data['slug'] = $slug;
+
+
+    if ($request->hasFile('image')) {
+        $data['image'] = $request->file('image')->store('categories', 'public');
+    }
+
+
+    Category::create($data);
+
+
+    return redirect()
+        ->route('admin.categories.index')
+        ->with('success', 'Category created successfully.');
+}
 
     public function edit($id)
     {

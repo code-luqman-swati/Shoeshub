@@ -11,20 +11,39 @@ class CustomerController extends Controller
 {
 
 
-    public function index()
-    {
+public function index(Request $request)
+{
+    $customers = Customer::query();
 
-        $customers = Customer::latest()->paginate(10);
+    if ($request->search) {
 
+        $customers->where('name','like',"%{$request->search}%")
+                  ->orWhere('email','like',"%{$request->search}%");
+
+    }
+
+    $customers = $customers->paginate(10);
+
+
+    if($request->ajax()){
 
         return view(
-            'Admin.customers.index',
+            'admin.customers.table',
             compact('customers')
         );
 
+    }
+
+
+    return view(
+        'admin.customers.index',
+        compact('customers')
+    );
+}
+
        
 
-    }
+    
 
 
 

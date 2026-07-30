@@ -8,17 +8,45 @@ use App\Http\Requests\UpdateBrandRequest;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+ use Illuminate\Support\Str;
+
 
 class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-       $brands =Brand::all();
-       return view('admin.brands.index',compact('brands'));
+ public function index(Request $request)
+{
+    $brands = Brand::query();
+
+
+    if ($request->search) {
+
+        $brands->where('name','like',"%{$request->search}%");
+
     }
+
+
+    $brands = $brands->get();
+
+
+
+    if($request->ajax()){
+
+        return view(
+            'admin.brands.table',
+            compact('brands')
+        );
+
+    }
+
+
+    return view(
+        'admin.brands.index',
+        compact('brands')
+    );
+}
 
     /**
      * Show the form for creating a new resource.
@@ -31,20 +59,32 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBrandRequest $request)
-    {
-        $data = $request->validated();
+   
 
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('brands', 'public');
-        }
+public function store(StoreBrandRequest $request)
+{
+    $data = $request->validated();
 
-        Brand::create($data);
 
-        return redirect()
-            ->route('admin.brands.index')
-            ->with('success', 'Brand created successfully.');
+    $data['slug'] = Str::slug($request->name);
+
+
+    if($request->hasFile('logo')){
+
+        $data['logo'] = $request
+            ->file('logo')
+            ->store('brands','public');
+
     }
+
+
+    Brand::create($data);
+
+
+    return redirect()
+        ->route('admin.brands.index')
+        ->with('success','Brand created successfully');
+}
 
     /**
      * Display the specified resource.
@@ -62,30 +102,45 @@ class BrandController extends Controller
         $brand = Brand::find($id);
         return view('admin.brands.edit', compact('brand'));
     }
+    
 
-    /**
-     * Update the specified resource in storage.
-     */
- public function update(UpdateBrandRequest $request, $id)
+
+public function update(UpdateBrandRequest $request, $id)
 {
     $brand = Brand::findOrFail($id);
 
+
     $data = $request->validated();
+
+
+    $data['slug'] = Str::slug($request->name);
+
+
 
     if ($request->hasFile('logo')) {
 
-        if ($brand->logo && Storage::disk('public')->exists($brand->logo)) {
+
+        if($brand->logo && Storage::disk('public')->exists($brand->logo)){
+
             Storage::disk('public')->delete($brand->logo);
+
         }
 
-        $data['logo'] = $request->file('logo')->store('brands', 'public');
+
+        $data['logo'] = $request
+            ->file('logo')
+            ->store('brands','public');
+
     }
+
 
     $brand->update($data);
 
+
+
     return redirect()
         ->route('admin.brands.index')
-        ->with('success', 'Brand updated successfully.');
+        ->with('success','Brand updated successfully');
 }
 
     /**

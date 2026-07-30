@@ -4,68 +4,101 @@
     <title>ShoeHub Invoice</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            color: #333;
-        }
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    color: #333;
+}
 
-        .invoice-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
 
-        .company h1 {
-            margin: 0;
-            color: #111;
-        }
+.company h1 {
+    margin: 0;
+    color: #111;
+}
 
-        .invoice-info {
-            text-align: right;
-        }
+.invoice-info {
+    text-align: right;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
 
-        table, th, td {
-            border: 1px solid #ddd;
-        }
+h3 {
+    margin-top: 25px;
+}
 
-        th, td {
-            padding: 12px;
-            text-align: center;
-        }
 
-        th {
-            background: #f5f5f5;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
 
-        .total {
-            margin-top: 20px;
-            width: 300px;
-            margin-left: auto;
-        }
 
-        .total p {
-            display: flex;
-            justify-content: space-between;
-        }
+table, th, td {
+    border: 1px solid #ddd;
+}
 
-        .print-btn {
-            margin-top: 30px;
-        }
 
-        @media print {
-            .print-btn {
-                display: none;
-            }
-        }
+th, td {
+    padding: 12px;
+    text-align: center;
+}
 
-    </style>
+
+th {
+    background: #f5f5f5;
+}
+
+
+.total {
+    margin-top: 20px;
+    width: 300px;
+    margin-left: auto;
+}
+
+
+.total p {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.history {
+    border-left: 4px solid #2563eb;
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+
+
+.history strong {
+    font-size: 16px;
+}
+
+
+.history p {
+    color: #777;
+    margin: 5px 0;
+}
+
+
+.print-btn {
+    margin-top: 30px;
+}
+
+
+@media print {
+
+    .print-btn {
+        display:none;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
@@ -235,6 +268,33 @@ Order Status:
 {{ ucfirst($order->order_status) }}
 </strong>
 </p>
+
+
+
+<h3>
+    Order History
+</h3>
+
+
+@foreach($order->statusHistories as $history)
+
+<div class="history">
+
+    <strong>
+        {{ ucfirst($history->status) }}
+    </strong>
+
+
+    <p>
+        {{ $history->created_at->format('d M Y h:i A') }}
+    </p>
+
+</div>
+
+@endforeach
+</div>
+
+
 
 
 </body>

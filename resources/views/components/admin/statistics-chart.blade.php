@@ -1,4 +1,4 @@
-@props([
+<!-- @props([
     'monthlySales' => []
 ])
 
@@ -77,4 +77,4 @@
         <div id="chartThree" class="-ml-4 min-w-[700px] pl-2 xl:min-w-full"></div>
     </div>
 </div>
-
+ -->

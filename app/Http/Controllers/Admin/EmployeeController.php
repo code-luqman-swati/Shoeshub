@@ -47,11 +47,42 @@ class EmployeeController extends Controller
             ->with('success', 'Employee added successfully.');
     }
 
-    public function index()
-    {
-        $employees = User::whereIn('role', ['admin', 'staff'])->get();
-        return view('admin.employees.index', compact('employees'));
+   public function index(Request $request)
+{
+    $employees = User::whereIn('role', ['admin', 'staff']);
+
+
+    if($request->search){
+
+        $employees->where(function($query) use ($request){
+
+            $query->where('name','like',"%{$request->search}%")
+                  ->orWhere('email','like',"%{$request->search}%");
+
+        });
+
     }
+
+
+    $employees = $employees->latest()->paginate(10);
+
+
+
+    if($request->ajax()){
+
+        return view(
+            'admin.employees.table',
+            compact('employees')
+        );
+
+    }
+
+
+    return view(
+        'admin.employees.index',
+        compact('employees')
+    );
+}
     public function edit($id)
     {
         $employee = User::findOrFail($id);

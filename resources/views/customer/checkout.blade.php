@@ -239,7 +239,7 @@
 
                             Size:
 
-                            {{ $item->shoeVariant->size->name }}
+                            {{ $item->shoeVariant->size->size }}
 
                         </p>
 

@@ -29,7 +29,7 @@ class MenuHelper
 
         [
     'name' => 'Categories',
-    'icon' => 'calendar',
+    'icon' => 'catogories',
     'subItems' => [
         [
             'name' => 'Categories List',
@@ -46,7 +46,7 @@ class MenuHelper
 
     [
     'name' => 'Brands',
-    'icon' => 'calendar',
+    'icon' => 'brand',
     'subItems' => [
         [
             'name' => 'Brands List',
@@ -61,7 +61,7 @@ class MenuHelper
 
 [
  'name' => 'Shoes',
-    'icon' => 'calendar',
+    'icon' => 'shopping-bag',
     'subItems' => [
         [
             'name' => 'Shoes List',
@@ -74,11 +74,7 @@ class MenuHelper
     ],
 ],
 
-[
-                'icon' => 'calendar',
-                'name' => 'calendar',
-                'path' => '/calendar',
-            ],
+
 
         [
     'name' => 'Sizes',
@@ -91,37 +87,37 @@ class MenuHelper
     'name' => 'Colour',
     'path' => '/colours',
     'route' => 'admin.colors.index',
-    'icon' => 'ruler'
+    'icon' => 'palette'
 ],
 
     [
     'name' => 'Variants',
     'path' => '/shoe-variants',
-    'icon' => 'ruler'
+    'icon' => 'layers'
 ],
 
    [
     'name' => 'Inventory',
     'path' => '/inventory',
-    'icon' => 'ruler'
+    'icon' => 'archive'
 ],
 
  [
     'name' => 'Customers',
     'path' => '/customers',
-    'icon' => 'ruler'
+    'icon' => 'users'
 ],
 
  [
     'name' => 'Orders',
     'path' => '/orders',
-    'icon' => 'ruler'
+    'icon' => 'clipboard-check'
 ],
 
  [
     'name' => 'Payments',
     'path' => '/payments',
-    'icon' => 'ruler'
+    'icon' => 'credit-card'
 ],
             
             [
@@ -130,62 +126,19 @@ class MenuHelper
                 'path' => '/profile',
             ],
             
-            [
-                'name' => 'Forms',
-                'icon' => 'forms',
-                'subItems' => [
-                    ['name' => 'Luqman Ahmad', 'path' => '/form-elements', 'pro' => false],
-                ],
-            ],
-            [
-                'name' => 'Tables',
-                'icon' => 'tables',
-                'subItems' => [
-                    ['name' => 'Basic Tables', 'path' => '/basic-tables', 'pro' => false]
-                ],
-            ],
-            [
-                'name' => 'Pages',
-                'icon' => 'pages',
-                'subItems' => [
-                    ['name' => 'Blank Page', 'path' => '/blank', 'pro' => false],
-                    ['name' => '404 Error', 'path' => '/error-404', 'pro' => false]
-                ],
-            ],
+          
+        
+        
+        
         ];
     }
 
     public static function getOthersItems()
     {
         return [
-            [
-                'icon' => 'charts',
-                'name' => 'Charts',
-                'subItems' => [
-                    ['name' => 'Line Chart', 'path' => '/line-chart', 'pro' => false],
-                    ['name' => 'Bar Chart', 'path' => '/bar-chart', 'pro' => false]
-                ],
-            ],
-            [
-                'icon' => 'ui-elements',
-                'name' => 'UI Elements',
-                'subItems' => [
-                    ['name' => 'Alerts', 'path' => '/alerts', 'pro' => false],
-                    ['name' => 'Avatar', 'path' => '/avatars', 'pro' => false],
-                    ['name' => 'Badge', 'path' => '/badge', 'pro' => false],
-                    ['name' => 'Buttons', 'path' => '/buttons', 'pro' => false],
-                    ['name' => 'Images', 'path' => '/image', 'pro' => false],
-                    ['name' => 'Videos', 'path' => '/videos', 'pro' => false],
-                ],
-            ],
-            [
-                'icon' => 'authentication',
-                'name' => 'Authentication',
-                'subItems' => [
-                    ['name' => 'Sign In', 'path' => '/signin', 'pro' => false],
-                    ['name' => 'Sign Up', 'path' => '/signup', 'pro' => false],
-                ],
-            ],
+       
+     
+          
         ];
     }
 
@@ -196,10 +149,7 @@ class MenuHelper
                 'title' => 'Menu',
                 'items' => self::getMainNavItems()
             ],
-            [
-                'title' => 'Others',
-                'items' => self::getOthersItems()
-            ]
+           
         ];
     }
 
@@ -212,7 +162,60 @@ class MenuHelper
     {
         $icons = [
             'dashboard' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 3.25C4.25736 3.25 3.25 4.25736 3.25 5.5V8.99998C3.25 10.2426 4.25736 11.25 5.5 11.25H9C10.2426 11.25 11.25 10.2426 11.25 8.99998V5.5C11.25 4.25736 10.2426 3.25 9 3.25H5.5ZM4.75 5.5C4.75 5.08579 5.08579 4.75 5.5 4.75H9C9.41421 4.75 9.75 5.08579 9.75 5.5V8.99998C9.75 9.41419 9.41421 9.74998 9 9.74998H5.5C5.08579 9.74998 4.75 9.41419 4.75 8.99998V5.5ZM5.5 12.75C4.25736 12.75 3.25 13.7574 3.25 15V18.5C3.25 19.7426 4.25736 20.75 5.5 20.75H9C10.2426 20.75 11.25 19.7427 11.25 18.5V15C11.25 13.7574 10.2426 12.75 9 12.75H5.5ZM4.75 15C4.75 14.5858 5.08579 14.25 5.5 14.25H9C9.41421 14.25 9.75 14.5858 9.75 15V18.5C9.75 18.9142 9.41421 19.25 9 19.25H5.5C5.08579 19.25 4.75 18.9142 4.75 18.5V15ZM12.75 5.5C12.75 4.25736 13.7574 3.25 15 3.25H18.5C19.7426 3.25 20.75 4.25736 20.75 5.5V8.99998C20.75 10.2426 19.7426 11.25 18.5 11.25H15C13.7574 11.25 12.75 10.2426 12.75 8.99998V5.5ZM15 4.75C14.5858 4.75 14.25 5.08579 14.25 5.5V8.99998C14.25 9.41419 14.5858 9.74998 15 9.74998H18.5C18.9142 9.74998 19.25 9.41419 19.25 8.99998V5.5C19.25 5.08579 18.9142 4.75 18.5 4.75H15ZM15 12.75C13.7574 12.75 12.75 13.7574 12.75 15V18.5C12.75 19.7426 13.7574 20.75 15 20.75H18.5C19.7426 20.75 20.75 19.7427 20.75 18.5V15C20.75 13.7574 19.7426 12.75 18.5 12.75H15ZM14.25 15C14.25 14.5858 14.5858 14.25 15 14.25H18.5C18.9142 14.25 19.25 14.5858 19.25 15V18.5C19.25 18.9142 18.9142 19.25 18.5 19.25H15C14.5858 19.25 14.25 18.9142 14.25 18.5V15Z" fill="currentColor"></path></svg>',
+                 
+            'catogories' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 14H20V20H14V14Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>',
 
+'brand' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20 13L11 22L2 13V4H11L20 13Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<circle cx="7" cy="7" r="1.5" fill="currentColor"/>
+</svg>',
+
+'shopping-bag' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 8V6C7 3.79 8.79 2 11 2H13C15.21 2 17 3.79 17 6V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M5 8H19L18 20C17.95 21.1 17.05 22 15.95 22H8.05C6.95 22 6.05 21.1 6 20L5 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>',
+
+'palette' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3C7.03 3 3 7.03 3 12C3 16.42 6.58 20 11 20H13C14.66 20 16 18.66 16 17C16 16.45 15.55 16 15 16H13C10.79 16 9 14.21 9 12C9 9.79 10.79 8 13 8H17C19.21 8 21 9.79 21 12C21 16.97 16.97 21 12 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="7.5" cy="11" r="1" fill="currentColor"/>
+<circle cx="10" cy="7.5" r="1" fill="currentColor"/>
+<circle cx="15.5" cy="7.5" r="1" fill="currentColor"/>
+<circle cx="18" cy="11" r="1" fill="currentColor"/>
+</svg>',
+
+'layers' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 4L20 8L12 12L4 8L12 4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M20 12L12 16L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20 16L12 20L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>',
+
+'archive' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 7H20V20H4V7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M2 4H22V7H2V4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M10 12H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</svg>',
+
+'users' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 19V18C16 16.3431 14.6569 15 13 15H7C5.34315 15 4 16.3431 4 18V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+<circle cx="10" cy="9" r="3" stroke="currentColor" stroke-width="1.5"/>
+<path d="M20 19V18C20 16.6938 19.1652 15.5825 18 15.1707" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M15 6.1709C16.1652 6.5827 17 7.694 17 9C17 10.306 16.1652 11.4173 15 11.8291" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</svg>',
+
+'clipboard-check' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 3H15C16.1046 3 17 3.89543 17 5V6H19C20.1046 6 21 6.89543 21 8V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V8C3 6.89543 3.89543 6 5 6H7V5C7 3.89543 7.89543 3 9 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M9 6H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M8 13L10.5 15.5L16 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>',
+
+'credit-card' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+<path d="M3 9H21" stroke="currentColor" stroke-width="1.5"/>
+<path d="M7 15H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M13 15H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</svg>',
             'ai-assistant' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.75 2.42969V7.70424M9.42261 13.673C10.0259 14.4307 10.9562 14.9164 12 14.9164C13.0438 14.9164 13.9742 14.4307 14.5775 13.673M20 12V18.5C20 19.3284 19.3284 20 18.5 20H5.5C4.67157 20 4 19.3284 4 18.5V12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.75 2.42969V2.43969M9.50391 9.875L9.50391 9.885M14.4961 9.875V9.885" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
 
             'ecommerce' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.31641 4H3.49696C4.24468 4 4.87822 4.55068 4.98234 5.29112L5.13429 6.37161M5.13429 6.37161L6.23641 14.2089C6.34053 14.9493 6.97407 15.5 7.72179 15.5L17.0833 15.5C17.6803 15.5 18.2205 15.146 18.4587 14.5986L21.126 8.47023C21.5572 7.4795 20.8312 6.37161 19.7507 6.37161H5.13429Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7.7832 19.5H7.7932M16.3203 19.5H16.3303" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>',

@@ -6,7 +6,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middlware\AuthMiddleware;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Customer\CategoryController as CustomerCategoryController;
+
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ShoeController;
 use App\Http\Controllers\Admin\ShoeImageController;
@@ -23,9 +26,12 @@ use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\WishlistController;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController; 
+use App\Http\Controllers\Customer\ReviewController;
+use App\Http\Controllers\Customer\SearchController;
 
 Route::middleware(['auth','admin'])->group(function(){
 
@@ -199,34 +205,21 @@ Route::put('/inventory/{id}', [InventoryController::class, 'update'])
 
 //admin will see the payment
 
-
-
     Route::get('/payments',
         [AdminPaymentController::class,'index']
     )->name('admin.payments.index');
-
 
     Route::get('/payments/{payment}',
         [AdminPaymentController::class,'show']
     )->name('admin.payments.show');
 
-
     Route::post('/payments/{payment}/refund',
         [AdminPaymentController::class,'refund']
     )->name('admin.payments.refund');
 
-//admin profile
-Route::get('/profile',
-    [EmployeeController::class,'profile']
-)->name('profile');
-
-
 //admin see the customer details 
-
     Route::get('/customers',
     [CustomerController::class,'index'])->name('admin.customers.index');
-
-
     Route::get('/customers/{customer}',
     [CustomerController::class,'show'])
     ->name('admin.customers.show');
@@ -249,27 +242,35 @@ Route::get('/profile',
         [AdminOrderController::class,'show']
     )->name('admin.orders.show');
 
-Route::patch('/orders/{order}',
+Route::put('/orders/{order}',
     [AdminOrderController::class,'update']
 )->name('admin.orders.update');
-
 
 // admin kpi dashbord
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
-});
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])
+    //admin profile
+Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile');
+
+        Route::get('/admin/profile/edit', [AdminProfileController::class, 'edit'])
+    ->name('admin.profile.edit');
+
+    Route::put('/profile/update', [AdminProfileController::class, 'update'])
+        ->name('admin.profile.update');
+
+   
+Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
+});
+//admin login and logout
+Route::get('login', [LoginController::class, 'showLoginForm'])
     ->name('login');
 
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/logout', [LoginController::class, 'logout'])
-    ->middleware('auth')
-    ->name('logout');
-
+     
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'create'])
     ->name('password.request');
@@ -283,45 +284,26 @@ Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showNewP
 Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])
     ->name('password.update');
 
-
-
-
-
-
-
- Route::prefix('customer')->name('customer.')->group(function(){
-
 //customer registration and login
     Route::get('/register',
     [AuthController::class,'register'])
-    ->name('register');
-
-
-    Route::post('/register',
-    [AuthController::class,'store'])
-    ->name('register.store');
-
-
-    Route::get('/customer/login',
-    [AuthController::class,'login'])
-    ->name('login');
-
+    ->name('customer.register');
 
     Route::post('/customer/login',
     [AuthController::class,'authenticate'])
-    ->name('login.check');
-
+    ->name('customer.login.check');
 
     Route::post('/logout',
     [AuthController::class,'logout'])
-    ->name('logout');
+    ->name('customer.logout');
 
+  Route::post('/register',
+    [AuthController::class,'store'])
+    ->name('register.store');
 
-});
-
-
-
-
+    Route::get('/customer/login',
+    [AuthController::class,'login'])
+    ->name('customer.login');
 
 //order
 Route::middleware('auth:customer')->group(function(){
@@ -380,8 +362,38 @@ Route::get('/cart',
    Route::post('/cart/update/{id}', [CartController::class,'update'])
     ->name('cart.update');
 
+
+  Route::get('/wishlist', [WishlistController::class, 'index'])
+        ->name('wishlist.index');
+
+    Route::post('/wishlist/{shoe}', [WishlistController::class, 'store'])
+        ->name('wishlist.store');
+
+    Route::delete('/wishlist/{wishlist}', [WishlistController::class, 'destroy'])
+        ->name('wishlist.destroy');
+
+
+    Route::post('/wishlist/cart/{shoe}', [WishlistController::class, 'addToCart'])
+    ->name('wishlist.cart');
+
+    Route::get('/wishlist/cart/{shoe}/variant', [WishlistController::class, 'variant'])
+    ->name('wishlist.cart.variant');
+    
+
+    Route::post(
+        '/products/{shoe}/review',
+        [ReviewController::class,'store']
+    )->name('reviews.store');
+
 });
 
+
+
+Route::get(
+    '/search/products',
+    [SearchController::class,'search']
+)
+->name('search.products');
 //customer home page routes
 
 Route::get('/', [HomeController::class,'index'])
@@ -396,6 +408,25 @@ Route::get('/products',
 Route::get('/products/{shoe}',
     [ProductController::class,'show']
 )->name('products.show');
+
+// Brand products
+Route::get('/shop/brand/{brand}', [ProductController::class, 'brand'])
+    ->name('shop.brand');
+
+
+// Category products
+Route::get('/shop/category/{category}', [ProductController::class, 'category'])
+    ->name('shop.category');
+
+Route::get('/sale', [ProductController::class, 'sale'])
+    ->name('sale');
+
+
+
+
+Route::get('/category/{slug}', 
+    [CustomerCategoryController::class, 'show']
+)->name('category.show');
 
 //checkout for payment
 
@@ -447,10 +478,7 @@ use App\Http\Controllers\Admin\ProfileController;
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-
-    Route::put('/profile/update', [ProfileController::class, 'update'])
-        ->name('profile.update');
+ 
 
 });
 

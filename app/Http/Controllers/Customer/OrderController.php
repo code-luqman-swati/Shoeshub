@@ -11,14 +11,18 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class OrderController extends Controller
 {
 
-         public function index()
+    public function index()
     {
         $customer = Auth::guard('customer')->user();
 
-        $orders = Order::where('customer_id', $customer->id)
-            ->latest()
-            ->paginate(10);
+if (!$customer) {
+    return redirect()->route('customer.login');
+}
 
+
+$orders = Order::where('customer_id', $customer->id)
+    ->latest()
+    ->paginate(10);
         return view('customer.orders.index', compact('orders'));
     }
 
@@ -29,13 +33,13 @@ class OrderController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        $order->load([
-            'customer',
-            'payment',
-            'items.shoeVariant.shoe',
-            'items.shoeVariant.size',
-            'items.shoeVariant.color',
-        ]);
+      $order->load([
+    'items.shoeVariant.shoe',
+    'items.shoeVariant.size',
+    'items.shoeVariant.color',
+    'payment',
+    'statusHistories'
+]);
 
         return view('customer.orders.invoice', compact('order'));
     }
@@ -50,13 +54,14 @@ public function downloadInvoice(Order $order)
     }
 
 
-    $order->load([
-        'customer',
-        'payment',
-        'items.shoeVariant.shoe',
-        'items.shoeVariant.size',
-        'items.shoeVariant.color',
-    ]);
+ $order->load([
+    'customer',
+    'payment',
+    'items.shoeVariant.shoe',
+    'items.shoeVariant.size',
+    'items.shoeVariant.color',
+    'statusHistories'
+]);
 
 
     $pdf = Pdf::loadView(

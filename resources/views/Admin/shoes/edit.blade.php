@@ -12,25 +12,29 @@
 action="{{ route('admin.shoes.update',$shoe->id) }}"
 method="POST"
 enctype="multipart/form-data">
-
 @csrf
 @method('PUT')
 
 
+<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+
 {{-- Category --}}
+<div>
+
+<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Category
+</label>
+
+
 <select
 name="category_id"
 class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
 
 
-<option value="">
-Select Category
-</option>
-
-
 @foreach($categories as $category)
 
-<option 
+<option
 value="{{ $category->id }}"
 {{ old('category_id',$shoe->category_id) == $category->id ? 'selected' : '' }}
 >
@@ -44,9 +48,18 @@ value="{{ $category->id }}"
 
 </select>
 
+</div>
+
+
 
 
 {{-- Brand --}}
+<div>
+
+<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Brand
+</label>
+
 
 <select
 
@@ -55,13 +68,7 @@ name="brand_id"
 class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
 
 
-<option>
-Select Brand
-</option>
-
-
 @foreach($brands as $brand)
-
 
 <option
 
@@ -75,16 +82,24 @@ value="{{ $brand->id }}"
 
 </option>
 
-
 @endforeach
 
 
 </select>
 
+</div>
+
+
 
 
 
 {{-- Name --}}
+<div>
+
+<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Shoe Name
+</label>
+
 
 <input
 
@@ -98,8 +113,19 @@ placeholder="Shoe Name"
 
 class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
 
+</div>
+
+
+
+
 
 {{-- SKU --}}
+<div>
+
+<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    SKU
+</label>
+
 
 <input
 
@@ -113,10 +139,19 @@ placeholder="SKU"
 
 class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
 
+</div>
+
+
 
 
 
 {{-- Price --}}
+<div>
+
+<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Regular Price
+</label>
+
 
 <input
 
@@ -128,9 +163,19 @@ value="{{ old('price',$shoe->price) }}"
 
 class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
 
+</div>
+
+
+
 
 
 {{-- Discount Price --}}
+<div>
+
+<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Sale Price
+</label>
+
 
 <input
 
@@ -142,10 +187,19 @@ value="{{ old('discount_price',$shoe->discount_price) }}"
 
 class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
 
+</div>
+
+
 
 
 
 {{-- Gender --}}
+<div>
+
+<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Gender
+</label>
+
 
 <select
 
@@ -155,29 +209,38 @@ class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 d
 
 
 <option value="male"
-{{ $shoe->gender=='male'?'selected':'' }}>
+{{ old('gender',$shoe->gender)=='male'?'selected':'' }}>
 Male
 </option>
 
 
 <option value="female"
-{{ $shoe->gender=='female'?'selected':'' }}>
+{{ old('gender',$shoe->gender)=='female'?'selected':'' }}>
 Female
 </option>
 
 
 <option value="unisex"
-{{ $shoe->gender=='unisex'?'selected':'' }}>
+{{ old('gender',$shoe->gender)=='unisex'?'selected':'' }}>
 Unisex
 </option>
 
 
 </select>
 
+</div>
+
+
 
 
 
 {{-- Status --}}
+<div>
+
+<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Status
+</label>
+
 
 <select
 
@@ -187,23 +250,32 @@ class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 d
 
 
 <option value="1"
-{{ $shoe->status==1?'selected':'' }}>
+{{ old('status',$shoe->status)==1?'selected':'' }}>
 Active
 </option>
 
 
 <option value="0"
-{{ $shoe->status==0?'selected':'' }}>
+{{ old('status',$shoe->status)==0?'selected':'' }}>
 Inactive
 </option>
 
 
 </select>
 
+</div>
+
+
 
 
 
 {{-- Main Image --}}
+<div class="md:col-span-2">
+
+<label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    Main Image
+</label>
+
 
 <input
 
@@ -222,24 +294,19 @@ src="{{ asset('storage/'.$shoe->image) }}"
 
 class="h-24 w-24 rounded object-cover mt-3">
 
-
 @endif
 
 
+</div>
+
+
+</div>
 
 
 
-<textarea
-
-name="description"
-
-class="w-full rounded border p-3">
-
-{{ old('description',$shoe->description) }}
-
-</textarea>
 
 
+<div class="mt-6 flex justify-end gap-3">
 
 
 <a
@@ -264,6 +331,8 @@ Update Shoe
 
 </button>
 
+
+</div>
 
 
 </form>

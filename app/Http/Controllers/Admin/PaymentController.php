@@ -6,18 +6,52 @@ use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use Stripe\Stripe;
 use Stripe\Refund;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
 
-    public function index()
-    {
-        $payments = Payment::with('order')
-            ->latest()
-            ->get();
+ public function index(Request $request)
+{
+    $payments = Payment::with('order');
 
-        return view('Admin.payments.index', compact('payments'));
+
+    if($request->search){
+
+        $payments->where(function($query) use ($request){
+
+            $query->where('status','like',"%{$request->search}%")
+                  ->orWhereHas('order', function($q) use ($request){
+
+                      $q->where('order_number','like',"%{$request->search}%");
+
+                  });
+
+        });
+
     }
+
+
+    $payments = $payments->latest()->get();
+
+
+
+    if($request->ajax()){
+
+        return view(
+            'admin.payments.table',
+            compact('payments')
+        );
+
+    }
+
+
+
+    return view(
+        'admin.payments.index',
+        compact('payments')
+    );
+}
 
     public function show(Payment $payment)
 {

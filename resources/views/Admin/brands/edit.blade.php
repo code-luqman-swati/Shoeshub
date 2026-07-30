@@ -47,7 +47,25 @@
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
+                    
+                <!-- Brand Slug -->
+<div>
+    <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-400">
+        Brand Slug
+    </label>
 
+    <input
+        type="text"
+        name="slug"
+        value="{{ old('slug', $brand->slug) }}"
+        placeholder="nike"
+        class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+    >
+
+    @error('slug')
+        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+    @enderror
+</div>
                 <!-- Status -->
                 <div>
                     <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-400">

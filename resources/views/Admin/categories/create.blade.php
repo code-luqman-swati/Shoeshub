@@ -27,6 +27,25 @@
                     @enderror
                 </div>
 
+
+                <label>Parent Category</label>
+
+<select name="parent_id">
+
+    <option value="">
+        Main Category
+    </option>
+
+    @foreach($categories as $category)
+
+        <option value="{{ $category->id }}">
+            {{ $category->name }}
+        </option>
+
+    @endforeach
+
+</select>
+
                 <!-- Description -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>

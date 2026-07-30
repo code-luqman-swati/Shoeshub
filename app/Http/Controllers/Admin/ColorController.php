@@ -11,13 +11,36 @@ class ColorController extends Controller
 {
 
 
-public function index()
+public function index(Request $request)
 {
+    $colors = Color::query();
 
-    $colors = Color::latest()->get();
 
-    return view('Admin.colors.index',compact('colors'));
+    if($request->search){
 
+        $colors->where('name','like',"%{$request->search}%");
+
+    }
+
+
+    $colors = $colors->latest()->paginate(10);
+
+
+
+    if($request->ajax()){
+
+        return view(
+            'admin.colors.table',
+            compact('colors')
+        );
+
+    }
+
+
+    return view(
+        'admin.colors.index',
+        compact('colors')
+    );
 }
 
 

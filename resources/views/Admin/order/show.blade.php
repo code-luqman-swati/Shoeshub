@@ -169,24 +169,18 @@ Subtotal
 
 <td class="p-3">
 
-{{ $item->shoeVariant->shoe->name }}
+{{ $item->shoeVariant?->shoe?->name ?? 'Product Removed' }}
 
 </td>
 
 
 
 <td class="p-3">
-
-{{ $item->shoeVariant->size->size }}
-
+    {{ $item->shoeVariant?->size?->size ?? '-' }}
 </td>
 
-
-
 <td class="p-3">
-
-{{ $item->shoeVariant->color->name }}
-
+    {{ $item->shoeVariant?->color?->name ?? '-' }}
 </td>
 
 
@@ -282,7 +276,31 @@ Total:
 
 
 
+<h3 class="text-xl font-bold mt-6">
+    Order Status History
+</h3>
 
+
+<div class="mt-4 space-y-3">
+
+@foreach($order->statusHistories as $history)
+
+<div class="border rounded-lg p-3">
+
+    <div class="font-semibold">
+        {{ ucfirst($history->status) }}
+    </div>
+
+
+    <div class="text-sm text-gray-500">
+        {{ $history->created_at->format('d M Y h:i A') }}
+    </div>
+
+</div>
+
+@endforeach
+
+</div>
 
 <!-- Update Status -->
 
@@ -307,67 +325,45 @@ Update Order Status
 
 
 
-<form action="{{ route('admin.orders.update',$order->id) }}"
-method="POST">
+<form action="{{ route('admin.orders.update', $order->id) }}" method="POST">
+
+    @csrf
+    @method('PUT')
+
+    <select name="status" class="border rounded p-2">
+
+        <option value="pending"
+        {{ $order->order_status == 'pending' ? 'selected' : '' }}>
+            Pending
+        </option>
 
 
-@csrf
-@method('PATCH')
+        <option value="processing"
+        {{ $order->order_status == 'processing' ? 'selected' : '' }}>
+            Processing
+        </option>
 
 
-<label class="font-semibold">
-Order Status
-</label>
+        <option value="delivered"
+        {{ $order->order_status == 'delivered' ? 'selected' : '' }}>
+            Delivered
+        </option>
 
 
-<select name="order_status"
-class="mt-2 rounded border p-2">
+        <option value="cancelled"
+        {{ $order->order_status == 'cancelled' ? 'selected' : '' }}>
+            Cancelled
+        </option>
+
+    </select>
 
 
-<option value="pending"
-{{ $order->order_status == 'pending' ? 'selected' : '' }}>
-Pending
-</option>
-
-
-<option value="processing"
-{{ $order->order_status == 'processing' ? 'selected' : '' }}>
-Processing
-</option>
-
-
-<option value="shipped"
-{{ $order->order_status == 'shipped' ? 'selected' : '' }}>
-Shipped
-</option>
-
-
-<option value="delivered"
-{{ $order->order_status == 'delivered' ? 'selected' : '' }}>
-Delivered
-</option>
-
-
-<option value="cancelled"
-{{ $order->order_status == 'cancelled' ? 'selected' : '' }}>
-Cancelled
-</option>
-
-
-</select>
-
-
-
-<button
-class="ml-3 rounded bg-blue-600 px-5 py-2 text-white">
-
-Update
-
-</button>
-
+    <button type="submit"
+        class="bg-blue-600 text-white px-4 py-2 rounded">
+        Update
+    </button>
 
 </form>
-
 
 
 </div>

@@ -30,7 +30,7 @@ class CartController extends Controller
         {
             foreach($cart->items as $item)
             {
-                $total += $item->price * $item->quantity;
+             $total += $item->price * $item->quantity;
             }
         }
 
@@ -141,7 +141,7 @@ class CartController extends Controller
 
                 'quantity'=>$request->quantity,
 
-                'price'=>$variant->shoe->price
+             'price' => $variant->shoe->discount_price ?? $variant->shoe->price
 
             ]);
 

@@ -11,18 +11,32 @@ class SizeController extends Controller
 {
 
 
-    public function index()
-    {
-
-        $sizes = Size::all();
 
 
-        return view(
-            'Admin.sizes.index',
-            compact('sizes')
-        );
+public function index(Request $request)
+{
+    $sizes = Size::query();
 
+    if ($request->ajax()) {
+
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+
+            $sizes->where(function ($query) use ($search) {
+                $query->where('size', 'like', "%{$search}%");
+            });
+        }
+
+        $sizes = $sizes->latest()->get();
+
+        return view('Admin.sizes.table', compact('sizes'));
     }
+
+    $sizes = $sizes->latest()->get();
+
+    return view('Admin.sizes.index', compact('sizes'));
+}
 
 
 

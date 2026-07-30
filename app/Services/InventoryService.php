@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-
+use App\Models\ShoeVariant;
 use App\Repositories\Interfaces\InventoryRepositoryInterface;
 
 class InventoryService
@@ -42,4 +42,15 @@ class InventoryService
 
         return 'In Stock';
     }
+
+    public function getLowStockInventory()
+{
+    return ShoeVariant::with([
+            'shoe',
+            'size',
+            'color'
+        ])
+        ->where('stock','<=',5)
+        ->get();
+}
 }

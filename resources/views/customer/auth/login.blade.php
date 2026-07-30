@@ -2,10 +2,16 @@
 
 @section('content')
 
+@if(session('error'))
+
+<div class="mb-4 rounded-lg bg-red-100 p-4 text-red-700">
+    {{ session('error') }}
+</div>
+
+@endif
 <div class="relative z-1 bg-white p-6 sm:p-0 dark:bg-gray-900">
     <div class="relative flex h-screen w-full flex-col justify-center lg:flex-row dark:bg-gray-900">
 
-```
     <!-- Left Side -->
     <div class="flex w-full flex-1 flex-col">
         <div class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center">

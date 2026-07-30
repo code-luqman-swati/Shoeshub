@@ -54,7 +54,7 @@ class AuthController extends Controller
 
 
         return redirect()
-            ->route('customer/login')
+            ->route('customer.login')
             ->with('success','Account created successfully');
 
     }
@@ -106,22 +106,11 @@ class AuthController extends Controller
 
 
 
+public function logout(Request $request)
+{
+    Auth::guard('customer')->logout();
 
-    public function logout(Request $request)
-    {
-
-        Auth::guard('customer')->logout();
-
-
-        $request->session()->invalidate();
-
-
-        $request->session()->regenerateToken();
-
-
-        return redirect()
-            ->route('customer.login');
-
-    }
+    return redirect()->route('customer.login');
+}
 
 }
