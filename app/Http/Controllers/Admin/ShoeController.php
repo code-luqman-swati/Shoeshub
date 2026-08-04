@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\ShoeVariant;
+
+
+
 
 class ShoeController extends Controller
 {
@@ -276,4 +282,103 @@ public function update(Request $request, $id)
         ]);
 
     }
+
+    public function ajaxStore(Request $request)
+{
+
+    $request->validate([
+
+        'name' => 'required',
+        'brand_id' => 'required',
+        'category_id' => 'required',
+        'gender' => 'required',
+        'price' => 'required',
+        'size_id' => 'required',
+        'color_id' => 'required',
+
+    ]);
+
+
+    DB::beginTransaction();
+
+
+    try {
+
+
+        $slug = Str::slug($request->name);
+
+
+        $shoe = Shoe::create([
+
+            'category_id' => $request->category_id,
+
+            'brand_id' => $request->brand_id,
+
+            'name' => $request->name,
+
+            'slug' => $slug,
+
+            'sku' => 'SKU-'.time(),
+
+            'price' => $request->price,
+
+            'gender' => $request->gender,
+
+            'status' => 1,
+
+        ]);
+
+
+
+        $variant = ShoeVariant::create([
+
+            'shoe_id' => $shoe->id,
+
+            'size_id' => $request->size_id,
+
+            'color_id' => $request->color_id,
+
+            'stock' => 0,
+
+            'sold_quantity' => 0,
+
+        ]);
+
+
+
+        DB::commit();
+
+
+
+        return response()->json([
+
+            'success'=>true,
+
+            'shoe'=>$shoe,
+
+            'variant'=>$variant
+
+        ]);
+
+
+
+    } catch(\Exception $e){
+
+
+        DB::rollBack();
+
+
+        return response()->json([
+
+            'success'=>false,
+
+            'message'=>$e->getMessage()
+
+        ],500);
+
+
+    }
+
+}
+
 }

@@ -74,8 +74,19 @@ class MenuHelper
     ],
 ],
 
+[
+    'name' => 'Suppliers',
+    'path' => '/suppliers',
+    'route' => 'admin.suppliers.index',
+    'icon' => 'truck'
+],
 
-
+[
+    'name' => 'Purchases',
+    'path' => '/purchases',
+    'route' => 'admin.purchases.index',
+    'icon' => 'shopping-cart'
+],
         [
     'name' => 'Sizes',
     'path' => '/index/sizes',
@@ -118,6 +129,12 @@ class MenuHelper
     'name' => 'Payments',
     'path' => '/payments',
     'icon' => 'credit-card'
+],
+
+ [
+    'name' => 'Sales Report',
+    'path' => '/sales-report',
+    'icon' => 'sales'
 ],
             
             [
@@ -177,6 +194,19 @@ class MenuHelper
 <path d="M5 8H19L18 20C17.95 21.1 17.05 22 15.95 22H8.05C6.95 22 6.05 21.1 6 20L5 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
 </svg>',
 
+'shopping-cart' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 3H5L7.4 14.4C7.58 15.2 8.3 15.75 9.12 15.75H17.5C18.33 15.75 19.05 15.2 19.23 14.4L21 7H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="10" cy="20" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="17" cy="20" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+</svg>',
+
+'truck' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 6H13V16H3V6Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 10H17L21 14V16H13V10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7 20C8.10457 20 9 19.1046 9 18C9 16.8954 8.10457 16 7 16C5.89543 16 5 16.8954 5 18C5 19.1046 5.89543 20 7 20Z" stroke="currentColor" stroke-width="1.5"/>
+<path d="M17 20C18.1046 20 19 19.1046 19 18C19 16.8954 18.1046 16 17 16C15.8954 16 15 16.8954 15 18C15 19.1046 15.8954 20 17 20Z" stroke="currentColor" stroke-width="1.5"/>
+</svg>',
+
 'palette' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M12 3C7.03 3 3 7.03 3 12C3 16.42 6.58 20 11 20H13C14.66 20 16 18.66 16 17C16 16.45 15.55 16 15 16H13C10.79 16 9 14.21 9 12C9 9.79 10.79 8 13 8H17C19.21 8 21 9.79 21 12C21 16.97 16.97 21 12 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="7.5" cy="11" r="1" fill="currentColor"/>
@@ -202,6 +232,12 @@ class MenuHelper
 <circle cx="10" cy="9" r="3" stroke="currentColor" stroke-width="1.5"/>
 <path d="M20 19V18C20 16.6938 19.1652 15.5825 18 15.1707" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 <path d="M15 6.1709C16.1652 6.5827 17 7.694 17 9C17 10.306 16.1652 11.4173 15 11.8291" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</svg>',
+
+'sales' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 3V21H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7 16L11 12L14 15L20 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16 8H20V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>',
 
 'clipboard-check' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

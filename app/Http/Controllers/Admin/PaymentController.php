@@ -7,6 +7,8 @@ use App\Models\Payment;
 use Stripe\Stripe;
 use Stripe\Refund;
 use Illuminate\Http\Request;
+use App\Models\ShoeVariant;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -64,48 +66,37 @@ class PaymentController extends Controller
 
 public function refund(Payment $payment)
 {
+    Stripe::setApiKey(config('services.stripe.secret'));
 
-    Stripe::setApiKey(
-        config('services.stripe.secret')
-    );
+    DB::transaction(function () use ($payment) {
 
-
-    $refund = Refund::create([
-
-        'payment_intent' => $payment->stripe_payment_id
-
-    ]);
-
-
-
-    if($refund->status == 'succeeded')
-    {
-
-
-        $payment->update([
-
-            'status'=>'refunded'
-
+        $refund = Refund::create([
+            'payment_intent' => $payment->stripe_payment_id
         ]);
 
+        if ($refund->status == 'succeeded') {
 
+            $payment->update([
+                'status' => 'refunded'
+            ]);
 
-        $payment->order->update([
+            $payment->order->update([
+                'payment_status' => 'refunded',
+                'order_status' => 'cancelled'
+            ]);
 
-            'payment_status'=>'refunded',
+            foreach ($payment->order->items as $item) {
 
-            'order_status'=>'cancelled'
+                $variant = ShoeVariant::find($item->shoe_variant_id);
 
-        ]);
+                if ($variant) {
+                    $variant->increment('stock', $item->quantity);
+                }
+            }
+        }
 
+    });
 
-
-    }
-
-
-
-    return back()
-        ->with('success','Payment refunded successfully');
-
+    return back()->with('success', 'Payment refunded successfully');
 }
 }

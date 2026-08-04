@@ -11,7 +11,8 @@ class ShoeVariant extends Model
         'shoe_id',
         'size_id',
         'color_id',
-        'stock'
+        'stock',
+         'sold_quantity'
     ];
 
 
@@ -34,8 +35,17 @@ class ShoeVariant extends Model
     }
 
 
+    public function purchaseItems()
+{
+    return $this->hasMany(PurchaseItem::class);
+}
 
-
-
+public function priceHistories()
+{
+    return $this->hasMany(
+        PurchasePriceHistory::class,
+        'shoe_variant_id'
+    );
+}
 
 }

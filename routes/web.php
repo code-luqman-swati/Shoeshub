@@ -32,6 +32,10 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController; 
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\SearchController;
+use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\PurchaseController;
+use App\Http\Controllers\Admin\SalesReportController;
+use App\Http\Controllers\Admin\SalesController;
 
 Route::middleware(['auth','admin'])->group(function(){
 
@@ -40,8 +44,8 @@ Route::middleware(['auth','admin'])->group(function(){
         return view('admin.dashboard');
     })->name('dashboard');
 
-    Route::get('employees', [EmployeeController::class, 'index'])->name('admin.employees.index');
-Route::get('/Admin/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('admin.employees.index');
+Route::get('Admin/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
 Route::post('/Admin/employees/store', [EmployeeController::class, 'store'])->name('admin.employees.store');
 Route::get('/Admin/employees/{id}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
 Route::put('/Admin/employees/{id}', [EmployeeController::class, 'update'])->name('admin.employees.update');
@@ -263,6 +267,29 @@ Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile'
 
    
 Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
+
+//supplierroutes
+
+Route::resource('/suppliers', SupplierController::class)
+    ->names('admin.suppliers');
+
+    Route::post('/suppliers/ajax-store', [SupplierController::class, 'ajaxStore'])
+    ->name('admin.suppliers.ajax.store');
+
+    //pusrchase routes
+
+    Route::resource('purchases', PurchaseController::class)->names('admin.purchases');
+
+    Route::post(
+    '/shoes/ajax-store',
+    [ShoeController::class,'ajaxStore']
+)->name('admin.shoes.ajax.store');
+
+Route::get(
+    'purchases/{purchase}/price-history',
+    [PurchaseController::class,'priceHistory']
+)->name('admin.purchases.price.history');
+
 });
 //admin login and logout
 Route::get('login', [LoginController::class, 'showLoginForm'])
@@ -332,7 +359,12 @@ Route::get('/orders/{order}/invoice', [CustomerOrderController::class, 'invoice'
     Route::get('/customer/orders', [CustomerOrderController::class, 'index'])
         ->name('customer.orders');
 
-        
+       Route::get('/sales-report', [SalesReportController::class, 'index'])
+    ->name('sales.report');
+
+Route::get('/sales', [SalesController::class,'index'])
+    ->name('sales.index');
+
     
 });
 
