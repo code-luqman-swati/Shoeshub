@@ -76,10 +76,13 @@ public function index(Request $request)
    
 
 
-
-
 public function update(Request $request, Order $order)
 {
+
+    // Policy check
+    $this->authorize('update', $order);
+
+
     $request->validate([
         'status' => 'required'
     ]);
@@ -103,5 +106,4 @@ public function update(Request $request, Order $order)
         'Order status updated successfully.'
     );
 }
-
 }

@@ -29,7 +29,7 @@
                 </td>
 
                 <td class="px-5 py-4">
-                    {{ ucfirst($employee->role) }}
+                    {{ ucfirst($employee->role?->name) }}
                 </td>
 
                 <td class="px-5 py-4">

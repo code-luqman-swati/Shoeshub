@@ -16,9 +16,11 @@
                 <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 dark:text-gray-400">
                     Status
                 </th>
-                <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Actions
-                </th>
+               @can('manage', App\Models\Category::class)
+    <th class="px-6 py-3">
+        Action
+    </th>
+@endcan
             </tr>
         </thead>
 
@@ -61,30 +63,35 @@
                 </span>
             </td>
 
-            <td class="px-5 py-4 text-center">
-                    <div class="flex justify-center gap-2">
+      @can('manage', App\Models\Category::class)
+<td class="px-5 py-4 text-center">
+    <div class="flex justify-center gap-2">
 
-                        <a href="{{ route('admin.categories.edit', $category->id) }}"
-                           class="rounded bg-blue-500 px-3 py-1 text-white">
-                            Edit
-                        </a>
+        @can('update', $category)
+            <a href="{{ route('admin.categories.edit', $category->id) }}"
+               class="rounded bg-blue-500 px-3 py-1 text-white">
+                Edit
+            </a>
+        @endcan
 
-                        <form action="{{ route('admin.categories.destroy', $category->id) }}"
-                              method="POST"
-                              class="deleteCategoryForm"
-                              data-id="{{ $category->id }}">
-                            @csrf
-                            @method('DELETE')
+        @can('delete', $category)
+            <form action="{{ route('admin.categories.destroy', $category->id) }}"
+                  method="POST"
+                  class="deleteCategoryForm"
+                  data-id="{{ $category->id }}">
+                @csrf
+                @method('DELETE')
 
-                            <button type="submit"
-                                    class="rounded bg-red-500 px-3 py-1 text-white">
-                                Delete
-                            </button>
-                        </form>
+                <button type="submit"
+                        class="rounded bg-red-500 px-3 py-1 text-white">
+                    Delete
+                </button>
+            </form>
+        @endcan
 
-                    </div>
-                </td>
-
+    </div>
+</td>
+@endcan
         </tr>
     @endforeach
 </tbody>

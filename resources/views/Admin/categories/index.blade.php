@@ -7,11 +7,12 @@
         Categories
     </h2>
 
-
-<a href="{{ route('admin.categories.create') }}"
-   class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
-    Add New Category
-</a>
+@can('create', App\Models\Category::class)
+    <a href="{{ route('admin.categories.create') }}"
+       class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+        Add New Category
+    </a>
+@endcan
 
 
 </div>

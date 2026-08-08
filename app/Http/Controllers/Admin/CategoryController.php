@@ -15,6 +15,8 @@ class CategoryController extends Controller
 {
 public function index(Request $request)
 {
+      $this->authorize('viewAny', Category::class);
+
     $categories = Category::query();
 
 
@@ -45,7 +47,10 @@ public function index(Request $request)
     );
 }
 public function create()
+
 {
+    $this->authorize('create', Category::class);
+
     $categories = Category::whereNull('parent_id')->get();
 
     return view('admin.categories.create', compact('categories'));
@@ -55,6 +60,8 @@ public function create()
 
 public function store(StoreCategoryRequest $request)
 {
+             $this->authorize('create', Category::class);
+
     $data = $request->validated();
 
 
@@ -100,7 +107,8 @@ public function store(StoreCategoryRequest $request)
 }
 
     public function edit($id)
-    {
+    {  
+            $this->authorize('update', Category::class);
            $category = Category::find($id);
 
         return view('admin.categories.edit', compact('category'));
@@ -112,6 +120,7 @@ public function store(StoreCategoryRequest $request)
 
 public function update(Request $request, $id)
 {
+        $this->authorize('update', Category::class);
     $category = Category::findOrFail($id);
 
     $category->update([
@@ -142,6 +151,8 @@ public function update(Request $request, $id)
 
 public function destroy($id)
 {
+         $this->authorize('delete', Category::class);
+
        $category = Category::findorfail($id);
          $category->delete();
 

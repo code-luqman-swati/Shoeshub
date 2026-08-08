@@ -59,7 +59,7 @@
         </p>
 
         <span class="inline-flex rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
-            {{ ucfirst(auth()->user()->role) }}
+            {{ ucfirst(auth()->user()->role->name) }}
         </span>
     </div>
 

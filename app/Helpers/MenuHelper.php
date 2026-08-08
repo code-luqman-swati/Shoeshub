@@ -8,21 +8,25 @@ class MenuHelper
     {
         return [
             [
-                'icon' => 'dashboard',
-                'name' => 'Dashboard',
-                 'path' => '/dashboard'
-            ],
-            [
-    'name' => 'Employees',
-    'icon' => 'user-profile',
-    'subItems' => [
-        [
-            'name' => 'Employee List',
-            'path' => '/employees',
-        ],
+    'icon' => 'dashboard',
+    'name' => 'Dashboard',
+    'path' => '/dashboard',
+    'permission' => 'dashboard.view'
+],
+                    [
+            'name' => 'Employees',
+            'icon' => 'user-profile',
+    'permission' => 'employee.view',
+            'subItems' => [
+                [
+                    'name' => 'Employee List',
+                    'path' => '/employees',
+                    'permission' => 'employee.view',
+                ],
         [
             'name' => 'Add Employee',
             'path' => 'Admin/employees/create',
+            'permission' => 'employee.manage',
         ],
     ],
 ],
@@ -30,14 +34,17 @@ class MenuHelper
         [
     'name' => 'Categories',
     'icon' => 'catogories',
+    'permission' => 'category.view',
     'subItems' => [
         [
             'name' => 'Categories List',
             'path' => '/categories',
+            'permission' => 'category.view',
         ],
         [
             'name' => 'Add New Categories',
             'path' => '/Admin/categories/create',
+            'permission' => 'category.manage',
         ],
     ],
 ],
@@ -47,14 +54,17 @@ class MenuHelper
     [
     'name' => 'Brands',
     'icon' => 'brand',
+    'permission' => 'brand.view',
     'subItems' => [
         [
             'name' => 'Brands List',
             'path' => '/Brands',
+            'permission' => 'brand.view',
         ],
         [
             'name' => 'Add New Brands',
             'path' => '/Admin/Brands/create',
+            'permission' => 'brand.manage',
         ],
     ],
 ],
@@ -66,10 +76,12 @@ class MenuHelper
         [
             'name' => 'Shoes List',
             'path' => '/shoes',
+            'permission' => 'shoe.view',
         ],
         [
             'name' => 'Add New Shoes',
             'path' => '/Admin/shoes/create',
+            'permission' => 'shoe.manage',
         ],
     ],
 ],
@@ -91,56 +103,65 @@ class MenuHelper
     'name' => 'Sizes',
     'path' => '/index/sizes',
     'route' => 'admin.sizes.index',
-    'icon' => 'ruler'
+    'icon' => 'ruler',
+    'permission' => 'size.view'
 ],
 
       [
     'name' => 'Colour',
     'path' => '/colours',
     'route' => 'admin.colors.index',
-    'icon' => 'palette'
+    'icon' => 'palette',
+    'permission' => 'color.view'
 ],
 
     [
     'name' => 'Variants',
     'path' => '/shoe-variants',
-    'icon' => 'layers'
+    'icon' => 'layers',
+    'permission' => 'variant.view'
 ],
 
    [
     'name' => 'Inventory',
     'path' => '/inventory',
-    'icon' => 'archive'
+    'icon' => 'archive',
+    'permission' => 'inventory.view'
 ],
 
  [
     'name' => 'Customers',
     'path' => '/customers',
-    'icon' => 'users'
+    'icon' => 'users',
+    'permission' => 'customer.view'
 ],
 
  [
     'name' => 'Orders',
     'path' => '/orders',
-    'icon' => 'clipboard-check'
+    'icon' => 'clipboard-check',
+    'permission' => 'order.view'
 ],
 
  [
     'name' => 'Payments',
     'path' => '/payments',
-    'icon' => 'credit-card'
+    'icon' => 'credit-card',
+    'permission' => 'payment.view'
 ],
 
  [
     'name' => 'Sales Report',
     'path' => '/sales-report',
-    'icon' => 'sales'
+    'icon' => 'sales',
+    'permission' => 'sales.view'
 ],
             
             [
                 'icon' => 'user-profile',
                 'name' => 'User Profile',
                 'path' => '/profile',
+                'permission' => 'profile.view'
             ],
             
           
@@ -164,7 +185,7 @@ class MenuHelper
         return [
             [
                 'title' => 'Menu',
-                'items' => self::getMainNavItems()
+                'items' => self::getFilteredMainNavItems()
             ],
            
         ];
@@ -283,4 +304,57 @@ class MenuHelper
 
         return $icons[$iconName] ?? '<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>';
     }
+
+    public static function filterByPermission($items)
+{
+    if(!auth()->check()){
+        return [];
+    }
+
+
+    return collect($items)->filter(function($item){
+
+        // Check main menu permission
+        if(isset($item['permission'])){
+
+            if(!auth()->user()->hasPermission($item['permission'])){
+                return false;
+            }
+
+        }
+
+
+        // Check sub menus
+        if(isset($item['subItems'])){
+
+            $item['subItems'] = collect($item['subItems'])
+                ->filter(function($sub){
+
+                    return !isset($sub['permission']) 
+                    || auth()->user()->hasPermission($sub['permission']);
+
+                })
+                ->values()
+                ->toArray();
+
+
+            return count($item['subItems']) > 0;
+
+        }
+
+
+        return true;
+
+
+    })
+    ->values()
+    ->toArray();
+}
+
+public static function getFilteredMainNavItems()
+{
+    return self::filterByPermission(
+        self::getMainNavItems()
+    );
+}
 }

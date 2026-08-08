@@ -70,23 +70,34 @@
                             class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                         >
                     </div>
+                  <!-- Role -->
+<div>
+    <label class="mb-2 block text-sm text-gray-700 dark:text-gray-400">
+        Role
+    </label>
 
-                    <!-- Role -->
-                    <div>
-                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                            Role
-                        </label>
+    <select
+        name="role_id"
+        class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+    >
 
-                        <select
-                            name="role"
-                            class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                        >
-                            <option value="">Select Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="staff">Staff</option>
-                            <option value="customer">Customer</option>
-                        </select>
-                    </div>
+        <option value="">
+            Select Role
+        </option>
+
+        @foreach($roles as $role)
+
+            <option 
+                value="{{ $role->id }}"
+                {{ old('role_id') == $role->id ? 'selected' : '' }}
+            >
+                {{ $role->name }}
+            </option>
+
+        @endforeach
+
+    </select>
+</div>
 
                     <!-- Status -->
                     <div>

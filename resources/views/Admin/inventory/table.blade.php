@@ -37,26 +37,30 @@
                     <tr>
 
                         <td class="px-6 py-4 text-sm text-gray-800 dark:text-white">
-                            {{ $variant->shoe->name }}
+                           {{ $variant->shoe?->name ?? 'N/A' }}
                         </td>
 
                         <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
-                            {{ $variant->shoe->brand->name }}
+                          {{ $variant->shoe?->brand?->name ?? 'N/A' }}
                         </td>
 
                         <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
-                            {{ $variant->size->size }}
+                           {{ $variant->size?->size ?? 'N/A' }}
                         </td>
 
                         <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
-                            <span class="inline-flex items-center gap-2">
-                                <span
-                                    class="h-4 w-4 rounded-full border"
-                                    style="background-color: {{ $variant->color->hex_code }}">
-                                </span>
+                           
+                             <span class="inline-flex items-center gap-2">
 
-                                {{ $variant->color->name }}
-                            </span>
+    <span
+        class="h-4 w-4 rounded-full border"
+        style="background-color: {{ $variant->color?->hex_code ?? '#cccccc' }}">
+    </span>
+
+    {{ $variant->color?->name ?? 'N/A' }}
+
+</span>
+
                         </td>
 
                         <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">

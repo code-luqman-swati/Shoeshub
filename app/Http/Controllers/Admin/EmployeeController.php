@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Role;
 
 class EmployeeController extends Controller
 {
@@ -14,10 +15,12 @@ class EmployeeController extends Controller
     /**
      * Show Add Employee page
      */
-    public function create()
-    {
-        return view('admin.employees.create');
-    }
+ public function create()
+{
+    $roles = Role::all();
+
+    return view('admin.employees.create', compact('roles'));
+}
 
     /**
      * Store employee in database
@@ -28,7 +31,7 @@ class EmployeeController extends Controller
             'name'     => 'required|string|max:191',
             'email'    => 'required|email|max:191|unique:users,email',
             'phone'    => 'nullable|string|max:191',
-            'role'     => 'required|in:admin,staff,customer',
+            'role_id' => 'required|exists:roles,id',
             'status'   => 'required|boolean',
             'password' => 'required|confirmed|min:8',
         ]);
@@ -37,7 +40,7 @@ class EmployeeController extends Controller
             'name'     => $request->name,
             'email'    => $request->email,
             'phone'    => $request->phone,
-            'role'     => $request->role,
+     'role_id' => $request->role_id,
             'status'   => $request->status,
             'password' => Hash::make($request->password),
         ]);
@@ -49,7 +52,16 @@ class EmployeeController extends Controller
 
    public function index(Request $request)
 {
-    $employees = User::whereIn('role', ['admin', 'staff']);
+  $employees = User::whereHas('role', function($query){
+
+    $query->whereIn('name', [
+        'Admin',
+        'Finance',
+        'Inventory',
+        'Sales'
+    ]);
+
+});
 
 
     if($request->search){
@@ -83,10 +95,18 @@ class EmployeeController extends Controller
         compact('employees')
     );
 }
+    
     public function edit($id)
-    {
-        $employee = User::findOrFail($id);
-        return view('admin.employees.edit', compact('employee'));
+{
+    $employee = User::findOrFail($id);
+
+    $roles = Role::all();
+
+    return view(
+        'admin.employees.edit',
+        compact('employee','roles')
+    );
+
     }
 
 
@@ -99,7 +119,7 @@ public function update(Request $request, $id)
         'name'   => $request->name,
         'email'  => $request->email,
         'phone'  => $request->phone,
-        'role'   => $request->role,
+        'role_id' => $request->role_id,
         'status' => $request->status,
     ]);
 

@@ -37,219 +37,332 @@ use App\Http\Controllers\Admin\PurchaseController;
 use App\Http\Controllers\Admin\SalesReportController;
 use App\Http\Controllers\Admin\SalesController;
 
-Route::middleware(['auth','admin'])->group(function(){
+Route::middleware('auth')->group(function(){
 
 
-    Route::get('/dashboard', function(){
-        return view('admin.dashboard');
-    })->name('dashboard');
+   Route::get('/dashboard', function(){
+    return view('admin.dashboard');
+})
+->middleware('permission:dashboard.view')
+->name('dashboard');
 
-    Route::get('/employees', [EmployeeController::class, 'index'])->name('admin.employees.index');
-Route::get('Admin/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
-Route::post('/Admin/employees/store', [EmployeeController::class, 'store'])->name('admin.employees.store');
-Route::get('/Admin/employees/{id}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
-Route::put('/Admin/employees/{id}', [EmployeeController::class, 'update'])->name('admin.employees.update');
-Route::delete('/Admin/employees/{id}', [EmployeeController::class, 'destroy'])->name('employees.destroy');
 
-//catogories route
+Route::get('/employees', [EmployeeController::class, 'index'])
+->middleware('permission:employee.view')
+->name('admin.employees.index');
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
-Route::get('/Admin/categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
-Route::post('/Admin/categories/store', [CategoryController::class, 'store'])->name('admin.categories.store');
-Route::get('/Admin/categories/{id}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
-Route::put('/Admin/categories/{id}', [CategoryController::class, 'update'])->name('admin.categories.update');
-Route::delete('/Admin/categories/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
 
-//brands routes
-Route::get('/Brands', [BrandController::class, 'index'])->name('admin.brands.index');
-Route::get('/Admin/Brands/create', [BrandController::class, 'create'])->name('admin.brands.create');
-Route::post('/admin/brands', [BrandController::class, 'store'])->name('admin.brands.store');
-Route::get('/admin/brands/{id}/edit', [BrandController::class, 'edit'])->name('admin.brands.edit');
-Route::put('/admin/brands/{id}', [BrandController::class, 'update'])->name('admin.brands.update');
-Route::delete('/admin/brands/{id}', [BrandController::class, 'destroy'])->name('admin.brands.destroy');
+Route::get('Admin/employees/create', [EmployeeController::class, 'create'])
+->middleware('permission:employee.create')
+->name('employees.create');
 
+
+Route::post('/Admin/employees/store', [EmployeeController::class, 'store'])
+->middleware('permission:employee.create')
+->name('admin.employees.store');
+
+
+Route::get('/Admin/employees/{id}/edit', [EmployeeController::class, 'edit'])
+->middleware('permission:employee.edit')
+->name('employees.edit');
+
+
+Route::put('/Admin/employees/{id}', [EmployeeController::class, 'update'])
+->middleware('permission:employee.edit')
+->name('admin.employees.update');
+
+
+Route::delete('/Admin/employees/{id}', [EmployeeController::class, 'destroy'])
+->middleware('permission:employee.delete')
+->name('employees.destroy');
+
+//categories
+   
+Route::get('/categories', [CategoryController::class, 'index'])
+->middleware('permission:category.view')
+->name('admin.categories.index');
+
+
+Route::get('/categories/create', [CategoryController::class, 'create'])
+->middleware('permission:category.create')
+->name('admin.categories.create');
+
+
+Route::post('/categories/store', [CategoryController::class, 'store'])
+->middleware('permission:category.create')
+->name('admin.categories.store');
+
+
+Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])
+->middleware('permission:category.edit')
+->name('admin.categories.edit');
+
+
+Route::put('/categories/{id}', [CategoryController::class, 'update'])
+->middleware('permission:category.edit')
+->name('admin.categories.update');
+
+
+Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])
+->middleware('permission:category.delete')
+->name('admin.categories.destroy');
+
+//brands routes 
+ Route::get('/Brands', [BrandController::class, 'index'])
+->middleware('permission:brand.view')
+->name('admin.brands.index');
+
+
+Route::get('/Admin/Brands/create', [BrandController::class, 'create'])
+->middleware('permission:brand.create')
+->name('admin.brands.create');
+
+
+Route::post('/admin/brands', [BrandController::class, 'store'])
+->middleware('permission:brand.create')
+->name('admin.brands.store');
+
+
+Route::get('/admin/brands/{id}/edit', [BrandController::class, 'edit'])
+->middleware('permission:brand.edit')
+->name('admin.brands.edit');
+
+
+Route::put('/admin/brands/{id}', [BrandController::class, 'update'])
+->middleware('permission:brand.edit')
+->name('admin.brands.update');
+
+
+Route::delete('/admin/brands/{id}', [BrandController::class, 'destroy'])
+->middleware('permission:brand.delete')
+->name('admin.brands.destroy');
 // Shoes Routes
-
 Route::get('/shoes', [ShoeController::class, 'index'])
+    ->middleware('permission:product.view')
     ->name('admin.shoes.index');
 
+
 Route::get('/Admin/shoes/create', [ShoeController::class, 'create'])
+    ->middleware('permission:product.create')
     ->name('admin.shoes.create');
 
+
 Route::post('/admin/shoes', [ShoeController::class, 'store'])
+    ->middleware('permission:product.create')
     ->name('admin.shoes.store');
 
+
 Route::get('/admin/shoes/{id}/edit', [ShoeController::class, 'edit'])
+    ->middleware('permission:product.edit')
     ->name('admin.shoes.edit');
 
+
 Route::put('/admin/shoes/{id}', [ShoeController::class, 'update'])
+    ->middleware('permission:product.edit')
     ->name('admin.shoes.update');
 
-Route::delete('/admin/shoes/{id}', [ShoeController::class, 'destroy'])
-    ->name('admin.shoes.destroy');
 
+Route::delete('/admin/shoes/{id}', [ShoeController::class, 'destroy'])
+    ->middleware('permission:product.delete')
+    ->name('admin.shoes.destroy');
 //showimage routes 
 
 
 
 Route::post(
-'/admin/shoes/{shoe}/images',
-[ShoeImageController::class,'store']
+    '/admin/shoes/{shoe}/images',
+    [ShoeImageController::class,'store']
 )
+->middleware('permission:product.image.manage')
 ->name('admin.shoes.images.store');
 
 
 Route::delete(
-'/admin/shoe-images/{image}',
-[ShoeImageController::class,'destroy']
+    '/admin/shoe-images/{image}',
+    [ShoeImageController::class,'destroy']
 )
+->middleware('permission:product.image.manage')
 ->name('admin.shoe-images.destroy');
 
 //size routes
-
 Route::get('/index/sizes', [SizeController::class,'index'])
+    ->middleware('permission:size.view')
     ->name('admin.sizes.index');
 
 
 Route::get('/sizes/create', [SizeController::class,'create'])
+    ->middleware('permission:size.manage')
     ->name('admin.sizes.create');
 
 
 Route::post('/sizes', [SizeController::class,'store'])
+    ->middleware('permission:size.manage')
     ->name('admin.sizes.store');
 
 
 Route::get('/sizes/{size}/edit', [SizeController::class,'edit'])
+    ->middleware('permission:size.manage')
     ->name('admin.sizes.edit');
 
 
 Route::put('/sizes/{size}', [SizeController::class,'update'])
+    ->middleware('permission:size.manage')
     ->name('admin.sizes.update');
 
 
 Route::delete('/sizes/{size}', [SizeController::class,'destroy'])
+    ->middleware('permission:size.manage')
     ->name('admin.sizes.destroy');
-
 //color routes
 Route::get('/colours',
 [ColorController::class,'index'])
+->middleware('permission:color.view')
 ->name('admin.colors.index');
 
 
 Route::get('/colors/create',
 [ColorController::class,'create'])
+->middleware('permission:color.manage')
 ->name('admin.colors.create');
 
 
 Route::post('/colors',
 [ColorController::class,'store'])
+->middleware('permission:color.manage')
 ->name('admin.colors.store');
 
 
 Route::get('/colors/{color}/edit',
 [ColorController::class,'edit'])
+->middleware('permission:color.manage')
 ->name('admin.colors.edit');
 
 
 Route::put('/colors/{color}',
 [ColorController::class,'update'])
+->middleware('permission:color.manage')
 ->name('admin.colors.update');
 
 
 Route::delete('/colors/{color}',
 [ColorController::class,'destroy'])
+->middleware('permission:color.manage')
 ->name('admin.colors.destroy');
 
 //variants routes
-
 Route::get('/shoe-variants',
 [ShoeVariantController::class,'index'])
+->middleware('permission:variant.view')
 ->name('admin.shoe-variants.index');
-
 
 
 Route::get('/shoe-variants/create',
 [ShoeVariantController::class,'create'])
+->middleware('permission:variant.manage')
 ->name('admin.shoe-variants.create');
-
 
 
 Route::post('/shoe-variants',
 [ShoeVariantController::class,'store'])
+->middleware('permission:variant.manage')
 ->name('admin.shoe-variants.store');
 
 
 Route::get('/shoe-variants/edit/{id}',
 [ShoeVariantController::class,'edit'])
+->middleware('permission:variant.manage')
 ->name('admin.shoe-variants.edit');
-
 
 
 Route::put('/shoe-variants/{shoeVariant}',
 [ShoeVariantController::class,'update'])
+->middleware('permission:variant.manage')
 ->name('admin.shoe-variants.update');
-
 
 
 Route::delete('/shoe-variants/{id}',
 [ShoeVariantController::class,'destroy'])
+->middleware('permission:variant.manage')
 ->name('admin.shoe-variants.destroy');
 
-
 //inventory routes
-
 Route::get('/inventory', [InventoryController::class, 'index'])
+    ->middleware('permission:inventory.view')
     ->name('admin.inventory.index');
 
+
 Route::get('/inventory/{id}/edit', [InventoryController::class, 'edit'])
+    ->middleware('permission:inventory.update')
     ->name('inventory.edit');
 
+
 Route::put('/inventory/{id}', [InventoryController::class, 'update'])
+    ->middleware('permission:inventory.update')
     ->name('inventory.update');
 
 //admin will see the payment
-
-    Route::get('/payments',
-        [AdminPaymentController::class,'index']
-    )->name('admin.payments.index');
-
-    Route::get('/payments/{payment}',
-        [AdminPaymentController::class,'show']
-    )->name('admin.payments.show');
-
-    Route::post('/payments/{payment}/refund',
-        [AdminPaymentController::class,'refund']
-    )->name('admin.payments.refund');
-
-//admin see the customer details 
-    Route::get('/customers',
-    [CustomerController::class,'index'])->name('admin.customers.index');
-    Route::get('/customers/{customer}',
-    [CustomerController::class,'show'])
-    ->name('admin.customers.show');
+Route::get('/payments',
+    [AdminPaymentController::class,'index']
+)
+->middleware('permission:payment.view')
+->name('admin.payments.index');
 
 
-    Route::patch('/customers/{customer}/status',
-    [CustomerController::class,'status'])
-    ->name('admin.customers.status');
+Route::get('/payments/{payment}',
+    [AdminPaymentController::class,'show']
+)
+->middleware('permission:payment.view')
+->name('admin.payments.show');
+
+
+Route::post('/payments/{payment}/refund',
+    [AdminPaymentController::class,'refund']
+)
+->middleware('permission:payment.refund')
+->name('admin.payments.refund');
+
+//admin
+ Route::get('/customers',
+    [CustomerController::class,'index']
+)
+->middleware('permission:customer.view')
+->name('admin.customers.index');
+
+
+Route::get('/customers/{customer}',
+    [CustomerController::class,'show']
+)
+->middleware('permission:customer.view')
+->name('admin.customers.show');
+
+
+Route::patch('/customers/{customer}/status',
+    [CustomerController::class,'status']
+)
+->middleware('permission:customer.update')
+->name('admin.customers.status');
 
 //admin seeing the order records
 
+Route::get('/orders',
+    [AdminOrderController::class, 'index']
+)
+->middleware('permission:order.view')
+->name('admin.orders.index');
 
-    Route::get('/orders',
-        [AdminOrderController::class,'index']
-    )->name('admin.orders.index');
 
+Route::get('/orders/{order}',
+    [AdminOrderController::class, 'show']
+)
+->middleware('permission:order.view')
+->name('admin.orders.show');
 
-
-    Route::get('/orders/{order}',
-        [AdminOrderController::class,'show']
-    )->name('admin.orders.show');
 
 Route::put('/orders/{order}',
-    [AdminOrderController::class,'update']
-)->name('admin.orders.update');
-
+    [AdminOrderController::class, 'update']
+)
+->middleware('permission:order.update')
+->name('admin.orders.update');
 // admin kpi dashbord
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -373,7 +486,7 @@ Route::get('/sales', [SalesController::class,'index'])
 
 
      Route::post('/order/store',
-        [OrderController::class,'store']
+        [CustomerOrderController::class,'store']
     )->name('order.store');
 
 //cart routes

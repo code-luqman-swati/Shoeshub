@@ -18,6 +18,8 @@ class BrandController extends Controller
      */
  public function index(Request $request)
 {
+
+       $this->authorize('viewAny', Brand::class);
     $brands = Brand::query();
 
 
@@ -53,6 +55,7 @@ class BrandController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Brand::class);
         return view('admin.brands.create');
     }
 
@@ -62,7 +65,9 @@ class BrandController extends Controller
    
 
 public function store(StoreBrandRequest $request)
-{
+{   
+
+    $this->authorize('create', Brand::class);
     $data = $request->validated();
 
 
@@ -90,7 +95,9 @@ public function store(StoreBrandRequest $request)
      * Display the specified resource.
      */
     public function show(Brand $brand)
-    {
+    {   
+
+        $this->authorize('view', $brand);   
         return view('admin.brands.show', compact('brand'));
     }
 
@@ -99,6 +106,7 @@ public function store(StoreBrandRequest $request)
      */
     public function edit($id)
     {
+        $this->authorize('update', Brand::class);
         $brand = Brand::find($id);
         return view('admin.brands.edit', compact('brand'));
     }
@@ -106,7 +114,9 @@ public function store(StoreBrandRequest $request)
 
 
 public function update(UpdateBrandRequest $request, $id)
-{
+{ 
+
+        $this->authorize('update', Brand::class);
     $brand = Brand::findOrFail($id);
 
 
@@ -148,6 +158,8 @@ public function update(UpdateBrandRequest $request, $id)
      */
    public function destroy(Brand $brand)
 {
+        $this->authorize('delete', $brand);
+
     if ($brand->logo && Storage::disk('public')->exists($brand->logo)) {
         Storage::disk('public')->delete($brand->logo);
     }
