@@ -22,7 +22,7 @@
 
 
    <div id="ajax-table">
-@include('Admin.colors.table')
+@include('admin.colors.table')
 
    </div>
 

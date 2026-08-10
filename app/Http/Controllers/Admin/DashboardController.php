@@ -84,7 +84,7 @@ $revenueGrowth = $lastRevenue > 0
 $orderGrowth = $lastOrders > 0
     ? (($currentOrders - $lastOrders) / $lastOrders) * 100
     : 0;
-        return view('Admin.dashboard.dashboard', compact(
+        return view('admin.dashboard.dashboard', compact(
             'totalRevenue',
             'revenueGrowth',
             'monthlySales',

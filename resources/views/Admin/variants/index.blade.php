@@ -38,7 +38,7 @@ Add Variant
 
  <div id="ajax-table">
 
-      @include('Admin.variants.table')
+      @include('admin.variants.table')
       </div>
 
 

@@ -37,7 +37,7 @@
 
    <div id="ajax-table">
 
-      @include('Admin.payments.table')
+      @include('admin.payments.table')
       </div>
 
 </div>

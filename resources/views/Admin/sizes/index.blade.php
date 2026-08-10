@@ -34,7 +34,7 @@
 
  <div id="ajax-table">
 
-      @include('Admin.sizes.table')
+      @include('admin.sizes.table')
       </div>
 </div>
 

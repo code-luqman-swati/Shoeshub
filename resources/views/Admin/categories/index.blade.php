@@ -27,7 +27,7 @@
     <div class="max-w-full overflow-x-auto">
 
    <div id="ajax-table">
-@include('Admin.categories.table')
+@include('admin.categories.table')
 
    </div>
     

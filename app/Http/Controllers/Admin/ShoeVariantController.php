@@ -42,12 +42,12 @@ public function index(Request $request)
 
         $variants = $variants->latest()->get();
 
-        return view('Admin.variants.table', compact('variants'));
+        return view('admin.variants.table', compact('variants'));
     }
 
     $variants = $variants->latest()->get();
 
-    return view('Admin.variants.index', compact('variants'));
+    return view('admin.variants.index', compact('variants'));
 }
 public function create()
 {
@@ -117,7 +117,7 @@ public function edit($id)
     $colors = Color::all();
 
 
-    return view('Admin.variants.edit', compact(
+    return view('admin.variants.edit', compact(
         'variant',
         'shoes',
         'sizes',

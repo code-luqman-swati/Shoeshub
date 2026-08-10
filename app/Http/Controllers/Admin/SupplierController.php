@@ -42,7 +42,7 @@ class SupplierController extends Controller
 
     if($request->ajax())
     {
-        return view('Admin.suppliers.table',compact('suppliers'))->render();
+        return view('admin.suppliers.table',compact('suppliers'))->render();
     }
 
 

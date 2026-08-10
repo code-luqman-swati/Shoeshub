@@ -12,7 +12,7 @@
 
       <div id="ajax-table">
 
-      @include('Admin.inventory.table')
+      @include('admin.inventory.table')
       </div>
 
     </div>

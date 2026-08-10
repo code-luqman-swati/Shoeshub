@@ -52,12 +52,12 @@ public function index(Request $request)
 
         $shoes = $shoes->latest()->get();
 
-        return view('Admin.shoes.table', compact('shoes'));
+        return view('admin.shoes.table', compact('shoes'));
     }
 
     $shoes = $shoes->latest()->get();
 
-    return view('Admin.shoes.index', compact('shoes'));
+    return view('admin.shoes.index', compact('shoes'));
 }
 
 
@@ -163,7 +163,7 @@ public function edit($id)
     $brands = Brand::where('status',1)->get();
 
 
-    return view('Admin.shoes.edit',compact(
+    return view('admin.shoes.edit',compact(
         'shoe',
         'categories',
         'brands'

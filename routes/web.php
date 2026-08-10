@@ -427,7 +427,7 @@ Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']
 //customer registration and login
     Route::get('/register',
     [AuthController::class,'register'])
-    ->name('customer.register');
+    ->name('customer.register.store');
 
     Route::post('/customer/login',
     [AuthController::class,'authenticate'])
@@ -439,7 +439,7 @@ Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']
 
   Route::post('/register',
     [AuthController::class,'store'])
-    ->name('register.store');
+    ->name('customer.register');
 
     Route::get('/customer/login',
     [AuthController::class,'login'])

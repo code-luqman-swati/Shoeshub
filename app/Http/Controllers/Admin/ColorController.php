@@ -48,7 +48,7 @@ public function index(Request $request)
 public function create()
 {
 
-    return view('Admin.colors.create');
+    return view('admin.colors.create');
 
 }
 
@@ -94,7 +94,7 @@ return redirect()
 public function edit(Color $color)
 {
 
-    return view('Admin.colors.edit',compact('color'));
+    return view('admin.colors.edit',compact('color'));
 
 }
 

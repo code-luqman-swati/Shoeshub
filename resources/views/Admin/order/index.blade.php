@@ -37,7 +37,7 @@
 
 
 <div id="ajax-table">
-    @include('Admin.order.table')
+    @include('admin.order.table')
 </div>
 
 

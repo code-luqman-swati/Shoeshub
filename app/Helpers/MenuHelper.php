@@ -76,12 +76,12 @@ class MenuHelper
         [
             'name' => 'Shoes List',
             'path' => '/shoes',
-            'permission' => 'shoe.view',
+            'permission' => 'product.view',
         ],
         [
             'name' => 'Add New Shoes',
             'path' => '/Admin/shoes/create',
-            'permission' => 'shoe.manage',
+            'permission' => 'product.manage',
         ],
     ],
 ],

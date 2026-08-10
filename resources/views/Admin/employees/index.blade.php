@@ -22,7 +22,7 @@
 
     <div class="overflow-x-auto">
  <div id="ajax-table">
-@include('Admin.employees.table')
+@include('admin.employees.table')
 
    </div>
     </div>

@@ -30,12 +30,12 @@ public function index(Request $request)
 
         $sizes = $sizes->latest()->get();
 
-        return view('Admin.sizes.table', compact('sizes'));
+        return view('admin.sizes.table', compact('sizes'));
     }
 
     $sizes = $sizes->latest()->get();
 
-    return view('Admin.sizes.index', compact('sizes'));
+    return view('admin.sizes.index', compact('sizes'));
 }
 
 
@@ -44,7 +44,7 @@ public function index(Request $request)
     {
 
         return view(
-            'Admin.sizes.create'
+            'admin.sizes.create'
         );
 
     }
