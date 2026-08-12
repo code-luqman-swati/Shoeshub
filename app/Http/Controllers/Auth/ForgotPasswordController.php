@@ -14,7 +14,7 @@ class ForgotPasswordController extends Controller
     // Show forgot password form
     public function create()
     {
-        return view('Admin.auth.email');
+        return view('admin.auth.email');
     }
 
     // Send reset email
@@ -38,7 +38,7 @@ class ForgotPasswordController extends Controller
     // Show reset password form
     public function showNewPasswordForm(Request $request, $token)
     {
-        return view('Admin.auth.reset-password', [
+        return view('admin.auth.reset-password', [
             'token' => $token,
             'email' => $request->email,
         ]);
