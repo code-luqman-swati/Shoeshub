@@ -411,118 +411,91 @@ bg-white
 z-10
 "
 >
+{{-- Men's Shoes --}}
+@php
+    $menCategory = $navCategories->first(function ($category) {
+        return in_array(strtolower($category->name), ['men', "men's", 'mens']);
+    });
+@endphp
 
+@if($menCategory)
+    <li>
+        <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
+            Men's Shoes
+        </h3>
 
-<!-- Men's Shoes -->
-<li>
-
-    <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
-        Men's Shoes
-    </h3>
-
-
-    <ul class="flex flex-col items-start justify-start gap-2">
-
-        @foreach($navCategories as $category)
-
-            @if($category->slug == 'men')
-
-                @foreach($category->children as $child)
-
-                    <li>
-                        <a 
+        <ul class="flex flex-col items-start justify-start gap-2">
+            @foreach($menCategory->children as $child)
+                <li>
+                    <a
                         class="hover:text-red-400"
-                        href="{{ route('category.show',$child->slug) }}">
-                            {{ $child->name }}
-                        </a>
-                    </li>
-
-                @endforeach
-
-            @endif
-
-        @endforeach
-
-    </ul>
-
-</li>
+                        href="{{ route('category.show', $child->slug) }}"
+                    >
+                        {{ $child->name }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </li>
+@endif
 
 
+{{-- Women's Shoes --}}
+@php
+    $womenCategory = $navCategories->first(function ($category) {
+        return in_array(strtolower($category->name), ['women', "women's", 'womens']);
+    });
+@endphp
 
+@if($womenCategory)
+    <li>
+        <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
+            Women's Shoes
+        </h3>
 
-<!-- Women's Shoes -->
-<li>
-
-    <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
-        Women's Shoes
-    </h3>
-
-
-    <ul class="flex flex-col items-start justify-start gap-2">
-
-
-        @foreach($navCategories as $category)
-
-            @if($category->slug == 'women')
-
-                @foreach($category->children as $child)
-
-                    <li>
-                        <a 
+        <ul class="flex flex-col items-start justify-start gap-2">
+            @foreach($womenCategory->children as $child)
+                <li>
+                    <a
                         class="hover:text-red-400"
-                        href="{{ route('category.show',$child->slug) }}">
-                            {{ $child->name }}
-                        </a>
-                    </li>
-
-                @endforeach
-
-            @endif
-
-        @endforeach
-
-
-    </ul>
-
-</li>
+                        href="{{ route('category.show', $child->slug) }}"
+                    >
+                        {{ $child->name }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </li>
+@endif
 
 
+{{-- Kids Shoes --}}
+@php
+    $kidsCategory = $navCategories->first(function ($category) {
+        return in_array(strtolower($category->name), ['kids', 'kid', 'children', 'child']);
+    });
+@endphp
 
+@if($kidsCategory)
+    <li>
+        <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
+            Kids Shoes
+        </h3>
 
-<!-- Kids Shoes -->
-<li>
-
-    <h3 class="border-b py-2 mb-4 text-gray-900 font-semibold">
-        Kids Shoes
-    </h3>
-
-
-    <ul class="flex flex-col items-start justify-start gap-2">
-
-
-        @foreach($navCategories as $category)
-
-            @if($category->slug == 'children')
-
-                @foreach($category->children as $child)
-
-                    <li>
-                        <a 
+        <ul class="flex flex-col items-start justify-start gap-2">
+            @foreach($kidsCategory->children as $child)
+                <li>
+                    <a
                         class="hover:text-red-400"
-                        href="{{ route('category.show',$child->slug) }}">
-                            {{ $child->name }}
-                        </a>
-                    </li>
-
-                @endforeach
-
-            @endif
-
-        @endforeach
-
-
-    </ul>
-
+                        href="{{ route('category.show', $child->slug) }}"
+                    >
+                        {{ $child->name }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </li>
+@endif
 </li>
 
 
