@@ -26,28 +26,25 @@
         </div>
 
         {{-- FOOTWEAR --}}
-        <div class="flex flex-wrap gap-2 mr-4 text-sm lg:text-md">
+    <div class="flex flex-wrap gap-2 mr-4 text-sm lg:text-md">
 
-            <h4 class="font-semibold text-[darkgray]">
-                FOOTWEAR:
-            </h4>
+    <h4 class="font-semibold text-[darkgray]">
+        FOOTWEAR:
+    </h4>
 
-            <ul class="flex flex-col justify-start text-gray-500 gap-2">
+    @foreach($categories->take(5) as $category)
+        <a
+            href="{{ route('customer.shop', ['category' => $category->slug]) }}"
+            class="text-gray-500 hover:text-white transition"
+        >
+            {{ $category->name }}
+            @if(!$loop->last)
+                |
+            @endif
+        </a>
+    @endforeach
 
-                @foreach($categories->take(5) as $category)
-                    <li>
-                        <a
-                            href="{{ route('customer.shop', ['category' => $category->slug]) }}"
-                            class="hover:text-white transition"
-                        >
-                            {{ $category->name }}
-                        </a>
-                    </li>
-                @endforeach
-
-            </ul>
-        </div>
-
+</div>
         {{-- COLLECTIONS --}}
         <div class="flex flex-wrap gap-2 mr-4 text-sm lg:text-md">
 
