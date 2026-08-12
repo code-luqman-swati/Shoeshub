@@ -18,7 +18,7 @@ class SettingController extends Controller
     ]
 );
 
-        return view('admin.settings.edit', compact('setting'));
+        return view('Admin.settings.edit', compact('setting'));
     }
 
     public function update(Request $request)
