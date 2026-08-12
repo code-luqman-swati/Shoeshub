@@ -9,7 +9,7 @@
   </head>
   <body>
     <!--! newspaper popup -->
-    <div
+    <!-- <div
       id="newspaper"
       class="z-20 fixed w-screen h-screen hidden items-center justify-center"
     >
@@ -49,7 +49,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
 
 <header class="header w-full">
      @include('customer.layouts.navbar')

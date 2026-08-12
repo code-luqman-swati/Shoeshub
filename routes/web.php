@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Customer\CategoryController as CustomerCategoryController;
-
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ShoeController;
 use App\Http\Controllers\Admin\ShoeImageController;
@@ -36,9 +36,17 @@ use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\PurchaseController;
 use App\Http\Controllers\Admin\SalesReportController;
 use App\Http\Controllers\Admin\SalesController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Customer\ContactController;
+
 
 Route::middleware('auth')->group(function(){
 
+ Route::get('/settings', [SettingController::class, 'edit'])
+            ->name('admin.settings.edit');
+
+        Route::put('/settings', [SettingController::class, 'update'])
+            ->name('admin.settings.update');
 
    Route::get('/dashboard', function(){
     return view('admin.dashboard');
@@ -403,6 +411,10 @@ Route::get(
     [PurchaseController::class,'priceHistory']
 )->name('admin.purchases.price.history');
 
+
+Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
+
+Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
 });
 //admin login and logout
 Route::get('login', [LoginController::class, 'showLoginForm'])
@@ -532,7 +544,8 @@ Route::get('/cart',
 
 });
 
-
+Route::get('/contact', [ContactController::class, 'index'])
+    ->name('customer.contact');
 
 Route::get(
     '/search/products',
@@ -619,13 +632,7 @@ Route::get('/calendar', function () {
 })->name('calendar');
 
 // profile pages
-use App\Http\Controllers\Admin\ProfileController;
 
-Route::middleware('auth')->group(function () {
-
- 
-
-});
 
 // form pages
 Route::get('/form-elements', function () {

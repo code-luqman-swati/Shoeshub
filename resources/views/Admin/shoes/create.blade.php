@@ -104,34 +104,55 @@
         </div>
 
         {{-- Gender --}}
-        <div>
-            <label class="mb-2 block">Gender</label>
+        <option value="1" {{ old('status', 1) == 1 ? 'selected' : '' }}>
+    Active
+</option>
 
-            <select
-                name="gender"
-                class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
-
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="unisex">Unisex</option>
-
-            </select>
-        </div>
+<option value="0" {{ old('status') === '0' ? 'selected' : '' }}>
+    Inactive
+</option>
 
         {{-- Status --}}
-        <div>
-            <label class="mb-2 block">Status</label>
+      {{-- Status --}}
+<div>
+    <label class="mb-2 block">Status</label>
 
-            <select
-                name="status"
-                class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+    <select
+        name="status"
+        class="h-11 w-full rounded-lg border border-gray-300 px-4 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
 
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
+        <option value="1" {{ old('status', 1) == 1 ? 'selected' : '' }}>
+            Active
+        </option>
 
-            </select>
-        </div>
+        <option value="0" {{ old('status') === '0' ? 'selected' : '' }}>
+            Inactive
+        </option>
+
+    </select>
+</div>
+
+
+{{-- Featured --}}
+<div class="flex items-center gap-3 pt-8">
+
+    <input
+        type="checkbox"
+        name="is_featured"
+        value="1"
+        id="is_featured"
+        {{ old('is_featured') ? 'checked' : '' }}
+        class="h-4 w-4 rounded border-gray-300 text-brand-500 focus:ring-brand-500"
+    >
+
+    <label
+        for="is_featured"
+        class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+        Featured Shoe
+    </label>
+
+</div>
 
         {{-- Image --}}
         <div class="md:col-span-2">

@@ -106,28 +106,27 @@ public function store(StoreCategoryRequest $request)
         ->with('success', 'Category created successfully.');
 }
 
-    public function edit($id)
-    {  
-            $this->authorize('update', Category::class);
-           $category = Category::find($id);
+   public function edit($id)
+{
+    $category = Category::findOrFail($id);
 
-        return view('admin.categories.edit', compact('category'));
-    }
+    $this->authorize('update', $category);
 
-
-
-
+    return view('admin.categories.edit', compact('category'));
+}
 
 public function update(Request $request, $id)
 {
-        $this->authorize('update', Category::class);
-    $category = Category::findOrFail($id);
+          $category = Category::findOrFail($id);
+
+    $this->authorize('update', $category);
 
     $category->update([
         'name' => $request->name,
         'description' => $request->description,
         'status' => $request->status,
     ]);
+
 
     // Update image only if a new image is uploaded
     if ($request->hasFile('image')) {
@@ -151,10 +150,11 @@ public function update(Request $request, $id)
 
 public function destroy($id)
 {
-         $this->authorize('delete', Category::class);
+    $category = Category::findOrFail($id);
 
-       $category = Category::findorfail($id);
-         $category->delete();
+    $this->authorize('delete', $category);
+
+    $category->delete();
 
     return response()->json([
         'success' => 'Category deleted successfully.'

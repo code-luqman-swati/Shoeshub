@@ -10,33 +10,34 @@ use App\Models\Size;
 use App\Models\Color;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 
 class ProductController extends Controller
-{
-public function index(Request $request)
+{public function index(Request $request)
 {
     $query = Shoe::with([
         'category',
         'brand',
         'images'
     ])
-->withAvg('reviews','rating')
-->withCount('reviews');
+    ->withAvg('reviews', 'rating')
+    ->withCount('reviews');
+
 
     // Brand filter
-    if($request->filled('brand')) {
+    if ($request->filled('brand')) {
 
         $brand = Brand::where('slug', $request->brand)
             ->first();
 
-        if($brand) {
+        if ($brand) {
             $query->where('brand_id', $brand->id);
         }
     }
 
 
     // Minimum price
-    if($request->filled('min_price')) {
+    if ($request->filled('min_price')) {
 
         $query->where(
             'price',
@@ -47,7 +48,7 @@ public function index(Request $request)
 
 
     // Maximum price
-    if($request->filled('max_price')) {
+    if ($request->filled('max_price')) {
 
         $query->where(
             'price',
@@ -55,90 +56,116 @@ public function index(Request $request)
             $request->max_price
         );
     }
-    
+
+
     // Size filter
-if($request->filled('size')) {
+    if ($request->filled('size')) {
 
-    $size = Size::where('size', $request->size)->first();
+        $size = Size::where('size', $request->size)
+            ->first();
 
-    if($size){
+        if ($size) {
 
-        $query->whereHas('variants', function($q) use ($size){
+            $query->whereHas('variants', function ($q) use ($size) {
 
-            $q->where('size_id', $size->id);
+                $q->where('size_id', $size->id);
 
-        });
-
+            });
+        }
     }
 
-}
 
-// Color filter
-if($request->filled('color')) {
+    // Color filter
+    if ($request->filled('color')) {
 
-    $color = Color::where('name', $request->color)->first();
+        $color = Color::where('name', $request->color)
+            ->first();
 
-    if($color){
+        if ($color) {
 
-        $query->whereHas('variants', function($q) use ($color){
+            $query->whereHas('variants', function ($q) use ($color) {
 
-            $q->where('color_id', $color->id);
+                $q->where('color_id', $color->id);
 
-        });
-
+            });
+        }
     }
 
-}
 
-// Sorting
+    // Gender filter
+    if ($request->filled('gender')) {
 
-if($request->sort == 'price_low')
-{
+        $query->where('gender', $request->gender);
+    }
 
-    $query->orderBy('price','asc');
 
-}
-elseif($request->sort == 'price_high')
-{
+    // Sorting
+  if ($request->sort == 'price_low') {
 
-    $query->orderBy('price','desc');
+    $query->orderBy('price', 'asc');
 
-}
-else
-{
+} elseif ($request->sort == 'price_high') {
+
+    $query->orderBy('price', 'desc');
+
+} elseif ($request->sort == 'latest') {
 
     $query->latest();
 
+} elseif ($request->sort == 'discount') {
+
+    $query->whereNotNull('discount_price')
+          ->whereColumn('discount_price', '<', 'price')
+          ->orderByRaw('(price - discount_price) DESC');
+
+} else {
+
+    $query->latest();
 }
-$products = $query->paginate(12);
-$customerId = Auth::guard('customer')->id();
 
-$products->getCollection()->transform(function($shoe) use ($customerId){
 
-    $shoe->isWishlisted = false;
+    // Get products
+    $products = $query->paginate(12);
 
-    if($customerId){
 
-        $shoe->isWishlisted = $shoe->wishlists()
-            ->where('customer_id',$customerId)
-            ->exists();
+    // Customer wishlist status
+    $customerId = Auth::guard('customer')->id();
 
-    }
+    $products->getCollection()->transform(function ($shoe) use ($customerId) {
 
-    return $shoe;
+        $shoe->isWishlisted = false;
 
-});
+        if ($customerId) {
 
+            $shoe->isWishlisted = $shoe->wishlists()
+                ->where('customer_id', $customerId)
+                ->exists();
+        }
+
+        return $shoe;
+    });
+
+
+    // Footer / filter data
     $sizes = Size::all();
     $brands = Brand::all();
     $colors = Color::all();
+    $categories = Category::all();
+    $setting = Setting::first();
+
 
     return view(
         'customer.products.index',
-        compact('products','brands','sizes','colors')
+        compact(
+            'products',
+            'brands',
+            'sizes',
+            'colors',
+            'categories',
+            'setting'
+        )
     );
 }
-
 
 
  public function show(Shoe $shoe)

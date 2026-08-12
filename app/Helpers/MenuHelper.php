@@ -160,12 +160,17 @@ class MenuHelper
             [
                 'icon' => 'user-profile',
                 'name' => 'User Profile',
-                'path' => '/profile',
-                'permission' => 'profile.view'
+                'path' => '/profile'
+                
             ],
             
           
-        
+        [
+    'title' => 'Website Settings',
+    'icon' => 'settings',
+    'path' => '/settings',
+    'name' => 'Setting',
+]
         
         
         ];
@@ -213,6 +218,18 @@ class MenuHelper
 'shopping-bag' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M7 8V6C7 3.79 8.79 2 11 2H13C15.21 2 17 3.79 17 6V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 <path d="M5 8H19L18 20C17.95 21.1 17.05 22 15.95 22H8.05C6.95 22 6.05 21.1 6 20L5 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>',
+
+'settings' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z"
+        stroke="currentColor"
+        stroke-width="1.5"/>
+
+    <path d="M19.4 15C19.6 14.6 19.8 14.2 20 13.7L22 12L20 10.3C19.8 9.8 19.6 9.4 19.4 9L19.7 6.4L17.2 5.4L15.4 7C14.9 6.8 14.5 6.6 14 6.5L12.8 4H11.2L10 6.5C9.5 6.6 9.1 6.8 8.6 7L6.8 5.4L4.3 6.4L4.6 9C4.4 9.4 4.2 9.8 4 10.3L2 12L4 13.7C4.2 14.2 4.4 14.6 4.6 15L4.3 17.6L6.8 18.6L8.6 17C9.1 17.2 9.5 17.4 10 17.5L11.2 20H12.8L14 17.5C14.5 17.4 14.9 17.2 15.4 17L17.2 18.6L19.7 17.6L19.4 15Z"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
 </svg>',
 
 'shopping-cart' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

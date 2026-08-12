@@ -3,382 +3,532 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Shoe;
-use App\Models\Category;
 use App\Models\Brand;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-
+use App\Models\Category;
+use App\Models\Shoe;
 use App\Models\ShoeVariant;
-
-
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ShoeController extends Controller
 {
     /**
-     * Display all shoes
+     * Display all shoes.
      */
+    public function index(Request $request)
+    {
+        $shoes = Shoe::with([
+            'category',
+            'brand',
+            'images'
+        ]);
 
+        if ($request->ajax()) {
 
-public function index(Request $request)
-{
-    $shoes = Shoe::with([
-        'category',
-        'brand',
-        'images'
-    ]);
+            if ($request->filled('search')) {
 
-    if ($request->ajax()) {
+                $search = $request->search;
 
-        if ($request->filled('search')) {
+                $shoes->where(function ($query) use ($search) {
 
-            $search = $request->search;
+                    $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('price', 'like', "%{$search}%")
 
-            $shoes->where(function ($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%")
-                      ->orWhere('price', 'like', "%{$search}%")
-                      ->orWhereHas('category', function ($q) use ($search) {
-                          $q->where('name', 'like', "%{$search}%");
-                      })
-                      ->orWhereHas('brand', function ($q) use ($search) {
-                          $q->where('name', 'like', "%{$search}%");
-                      });
-            });
+                        ->orWhereHas('category', function ($q) use ($search) {
+                            $q->where('name', 'like', "%{$search}%");
+                        })
+
+                        ->orWhereHas('brand', function ($q) use ($search) {
+                            $q->where('name', 'like', "%{$search}%");
+                        });
+                });
+            }
+
+            $shoes = $shoes->latest()->get();
+
+            return view('admin.shoes.table', compact('shoes'));
         }
 
         $shoes = $shoes->latest()->get();
 
-        return view('admin.shoes.table', compact('shoes'));
+        return view('admin.shoes.index', compact('shoes'));
     }
-
-    $shoes = $shoes->latest()->get();
-
-    return view('admin.shoes.index', compact('shoes'));
-}
 
 
     /**
-     * Show create shoe form
+     * Show create shoe form.
      */
     public function create()
     {
-        $categories = Category::where('status',1)->get();
+        $categories = Category::where('status', 1)->get();
 
-        $brands = Brand::where('status',1)->get();
+        $brands = Brand::where('status', 1)->get();
 
-        return view('admin.shoes.create', compact(
-            'categories',
-            'brands'
-        ));
-    }
-
-
-    /**
-     * Store shoe
-     */
-public function store(Request $request)
-{
-    $request->validate([
-
-        'category_id' => 'required|exists:categories,id',
-        'brand_id' => 'required|exists:brands,id',
-        'name' => 'required|string|max:100',
-        'sku' => 'required|string|max:100|unique:shoes,sku',
-        'description' => 'nullable|string',
-        'price' => 'required|numeric',
-        'discount_price' => 'nullable|numeric',
-        'gender' => 'required|in:male,female,unisex',
-        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        'status' => 'required|boolean',
-
-    ]);
-
-
-    $data = $request->all();
-
-   
-   $slug = Str::slug($request->name);
-
-$count = Shoe::where('slug', 'like', $slug . '%')->count();
-
-if ($count > 0) {
-    $slug .= '-' . ($count + 1);
-}
-
-$data['slug'] = $slug;
-
-
-
-    // Upload Image
-    if($request->hasFile('image')){
-
-        $data['image'] = $request
-            ->file('image')
-            ->store('shoes','public');
-
-    }
-
-
-
-    Shoe::create($data);
-
-
-
-    return redirect()
-        ->route('admin.shoes.index')
-        ->with(
-            'success',
-            'Shoe created successfully.'
+        return view(
+            'admin.shoes.create',
+            compact('categories', 'brands')
         );
-}
+    }
 
 
     /**
-     * Show single shoe
+     * Store shoe.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+
+            'category_id' => 'required|exists:categories,id',
+
+            'brand_id' => 'required|exists:brands,id',
+
+            'name' => 'required|string|max:100',
+
+            'sku' => 'required|string|max:100|unique:shoes,sku',
+
+            'description' => 'nullable|string',
+
+            'price' => 'required|numeric|min:0',
+
+            'discount_price' =>
+                'nullable|numeric|min:0|lt:price',
+
+            'gender' =>
+                'required|in:male,female,unisex',
+
+            'image' =>
+                'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+
+            'status' => 'required|boolean',
+        ]);
+
+
+        $data = $request->except('image');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Generate Unique Slug
+        |--------------------------------------------------------------------------
+        */
+
+        $slug = Str::slug($request->name);
+
+        $originalSlug = $slug;
+
+        $count = 1;
+
+        while (Shoe::where('slug', $slug)->exists()) {
+
+            $slug = $originalSlug . '-' . $count++;
+
+        }
+
+        $data['slug'] = $slug;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Upload Image
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->hasFile('image')) {
+
+            $data['image'] =
+                $request
+                    ->file('image')
+                    ->store('shoes', 'public');
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Create Shoe
+        |--------------------------------------------------------------------------
+        */
+
+        Shoe::create($data);
+
+
+        return redirect()
+            ->route('admin.shoes.index')
+            ->with(
+                'success',
+                'Shoe created successfully.'
+            );
+    }
+
+
+    /**
+     * Show single shoe.
      */
     public function show(Shoe $shoe)
     {
-        return view('admin.shoes.show', compact('shoe'));
+        $shoe->load([
+            'category',
+            'brand',
+            'images',
+            'variants.size',
+            'variants.color',
+        ]);
+
+        return view(
+            'admin.shoes.show',
+            compact('shoe')
+        );
     }
 
 
+    /**
+     * Show edit shoe form.
+     */
+    public function edit($id)
+    {
+        $shoe = Shoe::with('images')
+            ->findOrFail($id);
+
+        $categories =
+            Category::where('status', 1)->get();
+
+        $brands =
+            Brand::where('status', 1)->get();
+
+        return view(
+            'admin.shoes.edit',
+            compact(
+                'shoe',
+                'categories',
+                'brands'
+            )
+        );
+    }
 
 
     /**
-     * Edit shoe
+     * Update shoe.
      */
+    public function update(
+        Request $request,
+        $id
+    ) {
+
+        $shoe = Shoe::findOrFail($id);
 
 
+        $request->validate([
 
-public function edit($id)
-{
-    $shoe = Shoe::with('images')->findOrFail($id);
+            'category_id' =>
+                'required|exists:categories,id',
 
-    $categories = Category::where('status',1)->get();
+            'brand_id' =>
+                'required|exists:brands,id',
 
-    $brands = Brand::where('status',1)->get();
+            'name' =>
+                'required|string|max:100',
 
+            'sku' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('shoes', 'sku')
+                    ->ignore($shoe->id),
+            ],
 
-    return view('admin.shoes.edit',compact(
-        'shoe',
-        'categories',
-        'brands'
-    ));
-}
+            'description' =>
+                'nullable|string',
 
-public function update(Request $request, $id)
-{
-    $shoe = Shoe::findOrFail($id);
+            'price' =>
+                'required|numeric|min:0',
 
+            'discount_price' =>
+                'nullable|numeric|min:0|lt:price',
 
-    $request->validate([
+            'gender' =>
+                'required|in:male,female,unisex',
 
-        'category_id' => 'required|exists:categories,id',
+            'image' =>
+                'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
 
-        'brand_id' => 'required|exists:brands,id',
-
-        'name' => 'required|string|max:255',
-
-        'sku' => [
-            'required',
-            'string',
-            'max:255',
-            Rule::unique('shoes', 'sku')->ignore($shoe->id),
-        ],
-
-        'description' => 'nullable|string',
-
-        'price' => 'required|numeric',
-
-        'discount_price' => 'nullable|numeric',
-
-        'gender' => 'required|in:male,female,unisex',
-
-        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-
-        'status' => 'required|boolean',
-
-    ]);
+            'status' =>
+                'required|boolean',
+        ]);
 
 
-
-    $data = $request->all();
-
-
-    // Generate slug
-    $data['slug'] = Str::slug($request->name);
+        $data = $request->except('image');
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | Generate Unique Slug
+        |--------------------------------------------------------------------------
+        */
 
-    // Upload new image
-    if($request->hasFile('image')){
+        $slug = Str::slug($request->name);
 
+        $originalSlug = $slug;
 
-        // Delete old image
-        if($shoe->image &&
-            Storage::disk('public')->exists($shoe->image)
-        ){
+        $count = 1;
 
-            Storage::disk('public')->delete($shoe->image);
+        while (
+            Shoe::where('slug', $slug)
+                ->where('id', '!=', $shoe->id)
+                ->exists()
+        ) {
+
+            $slug = $originalSlug . '-' . $count++;
 
         }
 
+        $data['slug'] = $slug;
 
 
-        // Store new image
-        $data['image'] = $request
-            ->file('image')
-            ->store('shoes','public');
+        /*
+        |--------------------------------------------------------------------------
+        | Upload New Image
+        |--------------------------------------------------------------------------
+        */
 
+        if ($request->hasFile('image')) {
+
+            // Delete old image
+
+            if (
+                $shoe->image &&
+                Storage::disk('public')
+                    ->exists($shoe->image)
+            ) {
+
+                Storage::disk('public')
+                    ->delete($shoe->image);
+            }
+
+
+            // Store new image
+
+            $data['image'] =
+                $request
+                    ->file('image')
+                    ->store('shoes', 'public');
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update Shoe
+        |--------------------------------------------------------------------------
+        */
+
+        $shoe->update($data);
+
+
+        return redirect()
+            ->route('admin.shoes.index')
+            ->with(
+                'success',
+                'Shoe updated successfully.'
+            );
     }
 
 
-
-    // Update record
-    $shoe->update($data);
-
-
-
-    return redirect()
-        ->route('admin.shoes.index')
-        ->with(
-            'success',
-            'Shoe updated successfully.'
-        );
-}
-
-
-
-
     /**
-     * Delete shoe
+     * Delete shoe.
      */
     public function destroy(Shoe $shoe)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Delete Main Image
+        |--------------------------------------------------------------------------
+        */
 
-        if($shoe->image &&
+        if (
+            $shoe->image &&
             Storage::disk('public')
-            ->exists($shoe->image)
-        ){
+                ->exists($shoe->image)
+        ) {
 
             Storage::disk('public')
-            ->delete($shoe->image);
-
+                ->delete($shoe->image);
         }
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Delete Shoe
+        |--------------------------------------------------------------------------
+        */
 
         $shoe->delete();
 
 
-
         return response()->json([
 
-            'message'=>'Shoe deleted successfully.'
+            'message' =>
+                'Shoe deleted successfully.'
 
         ]);
-
     }
 
+
+    /**
+     * AJAX store shoe with first variant.
+     */
     public function ajaxStore(Request $request)
-{
+    {
+        $request->validate([
 
-    $request->validate([
+            'name' =>
+                'required|string|max:100',
 
-        'name' => 'required',
-        'brand_id' => 'required',
-        'category_id' => 'required',
-        'gender' => 'required',
-        'price' => 'required',
-        'size_id' => 'required',
-        'color_id' => 'required',
+            'brand_id' =>
+                'required|exists:brands,id',
 
-    ]);
+            'category_id' =>
+                'required|exists:categories,id',
 
+            'gender' =>
+                'required|in:male,female,unisex',
 
-    DB::beginTransaction();
+            'price' =>
+                'required|numeric|min:0',
 
+            'size_id' =>
+                'required|exists:sizes,id',
 
-    try {
-
-
-        $slug = Str::slug($request->name);
-
-
-        $shoe = Shoe::create([
-
-            'category_id' => $request->category_id,
-
-            'brand_id' => $request->brand_id,
-
-            'name' => $request->name,
-
-            'slug' => $slug,
-
-            'sku' => 'SKU-'.time(),
-
-            'price' => $request->price,
-
-            'gender' => $request->gender,
-
-            'status' => 1,
-
+            'color_id' =>
+                'required|exists:colors,id',
         ]);
 
 
-
-        $variant = ShoeVariant::create([
-
-            'shoe_id' => $shoe->id,
-
-            'size_id' => $request->size_id,
-
-            'color_id' => $request->color_id,
-
-            'stock' => 0,
-
-            'sold_quantity' => 0,
-
-        ]);
+        DB::beginTransaction();
 
 
+        try {
 
-        DB::commit();
+            /*
+            |--------------------------------------------------------------------------
+            | Generate Unique Slug
+            |--------------------------------------------------------------------------
+            */
 
+            $slug = Str::slug($request->name);
 
+            $originalSlug = $slug;
 
-        return response()->json([
+            $count = 1;
 
-            'success'=>true,
+            while (Shoe::where('slug', $slug)->exists()) {
 
-            'shoe'=>$shoe,
-
-            'variant'=>$variant
-
-        ]);
-
-
-
-    } catch(\Exception $e){
-
-
-        DB::rollBack();
+                $slug =
+                    $originalSlug . '-' . $count++;
+            }
 
 
-        return response()->json([
+            /*
+            |--------------------------------------------------------------------------
+            | Generate SKU
+            |--------------------------------------------------------------------------
+            */
 
-            'success'=>false,
-
-            'message'=>$e->getMessage()
-
-        ],500);
+            $sku =
+                'SKU-' .
+                strtoupper(Str::random(8));
 
 
+            /*
+            |--------------------------------------------------------------------------
+            | Create Shoe
+            |--------------------------------------------------------------------------
+            */
+
+            $shoe = Shoe::create([
+
+                'category_id' =>
+                    $request->category_id,
+
+                'brand_id' =>
+                    $request->brand_id,
+
+                'name' =>
+                    $request->name,
+
+                'slug' =>
+                    $slug,
+
+                'sku' =>
+                    $sku,
+
+                'price' =>
+                    $request->price,
+
+                'gender' =>
+                    $request->gender,
+
+                'status' =>
+                    1,
+            ]);
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Create First Variant
+            |--------------------------------------------------------------------------
+            */
+
+            $variant = ShoeVariant::create([
+
+                'shoe_id' =>
+                    $shoe->id,
+
+                'size_id' =>
+                    $request->size_id,
+
+                'color_id' =>
+                    $request->color_id,
+
+                'stock' =>
+                    0,
+
+                'sold_quantity' =>
+                    0,
+            ]);
+
+
+            DB::commit();
+
+
+            return response()->json([
+
+                'success' =>
+                    true,
+
+                'shoe' =>
+                    $shoe,
+
+                'variant' =>
+                    $variant,
+
+            ]);
+
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+
+            return response()->json([
+
+                'success' =>
+                    false,
+
+                'message' =>
+                    $e->getMessage(),
+
+            ], 500);
+        }
     }
-
-}
-
 }

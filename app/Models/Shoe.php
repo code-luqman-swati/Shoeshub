@@ -18,7 +18,8 @@ protected $fillable=[
     'discount_price',
     'gender',
     'image',
-    'status'
+    'status',
+    'is_featured'
 ];
 
 

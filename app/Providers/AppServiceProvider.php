@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\View;
 use App\View\Composers\NavbarComposer;
 use App\Models\Brand;
 use Illuminate\Pagination\Paginator;
+use App\View\Composers\SettingComposer;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -27,13 +29,23 @@ public function register(): void
      */
 
 
-
 public function boot()
 {
     View::composer(
         'customer.layouts.navbar',
         NavbarComposer::class
     );
-     Paginator::useTailwind();
+
+    View::composer(
+        'customer.layouts.footer',
+        SettingComposer::class
+    );
+
+    View::composer(
+        'customer.contact',
+        SettingComposer::class
+    );
+
+    Paginator::useTailwind();
 }
 }

@@ -541,6 +541,13 @@ z-10
     ></span>
 </li>
 
+<li class="nav_items relative">
+    <a  href="{{ route('customer.contact') }}">CONTACT US</a>
+
+    <span
+        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"
+    ></span>
+</li>
 
 <li class="nav_items relative">
   <a href="{{ route('sale') }}">Sale</a>
@@ -559,163 +566,514 @@ z-10
           
 
       <!--? mobile Navbar -->
-      <div class="mobileNavbar">
-        <!--? navbar button -->
-        <div
-          style="box-shadow: 0 0 0.3rem lightgray"
-          class="z-10 bg-white w-96 lg:hidden flex justify-around items-center p-4 border rounded-t-xl fixed bottom-0 left-1/2 -translate-x-1/2 text-lg"
+    
+<!-- ================= MOBILE NAVBAR ================= -->
+
+<div class="mobileNavbar lg:hidden">
+
+    <!-- Bottom Navigation -->
+    <div
+        class="fixed bottom-0 left-1/2 -translate-x-1/2 z-30
+               w-full max-w-md
+               bg-white border-t shadow-lg
+               flex items-center justify-around
+               px-4 py-3 text-xl text-gray-600"
+    >
+
+        <!-- Menu -->
+        <button
+            id="openNavbarButton"
+            type="button"
+            class="hover:text-red-400 transition"
         >
-          <button id="openNavbarButton" type="button">
             <ion-icon name="menu-outline"></ion-icon>
-          </button>
+        </button>
 
-          <button class="relative" type="button">
-            <span
-              class="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full"
-            >
-              0
-            </span>
-            <ion-icon name="bag-handle-outline"></ion-icon>
-          </button>
 
-          <button type="button">
-            <ion-icon name="home-outline"></ion-icon>
-          </button>
-
-          <button class="relative" type="button">
-            <span
-              class="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full"
-            >
-              0
-            </span>
-            <ion-icon name="heart-outline"></ion-icon>
-          </button>
-
-          <button id="categoriesBtn" type="button">
-            <ion-icon name="grid-outline"></ion-icon>
-          </button>
-        </div>
-        <!--* overlay -->
-        <div
-          id="overlayNavbar"
-          class="hidden fixed top-0 left-0 w-screen h-screen bg-gray-500/30 z-10"
-        ></div>
-
-        <!--! sidebarNavbar -->
-        <div
-          class="fixed top-0 w-72 h-screen bg-white p-4 shadow-lg hidden flex-col justify-start gap-4 text-lg font-semibold overflow-auto z-20"
-          id="sidebarNavbar"
+        <!-- Cart -->
+        <a
+            href="{{ route('cart.index') }}"
+            class="relative hover:text-red-400 transition"
         >
-          <div class="flex justify-between border-b-2 py-4">
-            <h3 class="text-red-400">Menu</h3>
-            <button class="closeButton hover:text-red-500">
-              <ion-icon name="close-circle-outline"></ion-icon>
+
+            @if($cartCount > 0)
+                <span
+                    class="absolute -top-2 -right-2
+                           w-4 h-4 rounded-full
+                           bg-red-400 text-white
+                           text-[10px] font-semibold
+                           flex items-center justify-center"
+                >
+                    {{ $cartCount }}
+                </span>
+            @endif
+
+            <ion-icon name="bag-handle-outline"></ion-icon>
+
+        </a>
+
+
+        <!-- Home -->
+        <a
+            href="{{ route('customer.shop') }}"
+            class="hover:text-red-400 transition"
+        >
+            <ion-icon name="home-outline"></ion-icon>
+        </a>
+
+
+        <!-- Wishlist -->
+        <a
+            href="{{ route('wishlist.index') }}"
+            class="relative hover:text-red-400 transition"
+        >
+
+            @if($wishlistCount > 0)
+                <span
+                    class="absolute -top-2 -right-2
+                           w-4 h-4 rounded-full
+                           bg-red-400 text-white
+                           text-[10px] font-semibold
+                           flex items-center justify-center"
+                >
+                    {{ $wishlistCount }}
+                </span>
+            @endif
+
+            <ion-icon name="heart-outline"></ion-icon>
+
+        </a>
+
+
+        <!-- Categories -->
+        <button
+            id="categoriesBtn"
+            type="button"
+            class="hover:text-red-400 transition"
+        >
+            <ion-icon name="grid-outline"></ion-icon>
+        </button>
+
+    </div>
+
+
+
+    <!-- ================= OVERLAY ================= -->
+
+    <div
+        id="overlayNavbar"
+        class="hidden fixed inset-0 bg-gray-500/30 z-40"
+    ></div>
+
+
+
+    <!-- ================= MOBILE MENU SIDEBAR ================= -->
+
+    <div
+        id="sidebarNavbar"
+        class="hidden fixed top-0 left-0
+               w-80 max-w-[85%] h-screen
+               bg-white shadow-xl
+               p-6
+               flex-col
+               gap-4
+               overflow-y-auto
+               z-50"
+    >
+
+        <!-- Header -->
+        <div class="flex items-center justify-between border-b pb-4">
+
+            <h3 class="text-lg font-semibold text-red-400">
+                Menu
+            </h3>
+
+            <button
+                type="button"
+                class="closeButton text-xl hover:text-red-500"
+            >
+                <ion-icon name="close-circle-outline"></ion-icon>
             </button>
-          </div>
-          <div class="mobile_navbar_item border-b pb-3 text-gray-600">Home</div>
-          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
-            <details>
-          <a href="#">Sneakers</a>
-          <a href="#">Running Shoes</a>
-          <a href="#">Casual Shoes</a>
-          <a href="#">Formal Shoes</a>
-          <a href="#">Boots</a>
-          <a href="#">Sandals</a>
-              <summary>Men's</summary>
-            </details>
-          </div>
-          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
-    <details>
-        <a href="#">Sneakers</a>
-        <a href="#">Heels</a>
-        <a href="#">Flats</a>
-        <a href="#">Sandals</a>
-        <a href="#">Boots</a>
-        <a href="#">Formal Shoes</a>
-        <summary>Women's</summary>
-    </details>
-</div>
-          
-          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
-    <details>
-        <a href="#">Boys Shoes</a>
-        <a href="#">Girls Shoes</a>
-        <a href="#">School Shoes</a>
-        <a href="#">Sports Shoes</a>
-        <a href="#">Casual Shoes</a>
-        <summary>Kids</summary>
-    </details>
-</div><div class="mobile_navbar_item border-b pb-3 text-gray-600">
-    <details>
-        <a href="#">Running Shoes</a>
-        <a href="#">Football Shoes</a>
-        <a href="#">Basketball Shoes</a>
-        <a href="#">Gym Shoes</a>
-        <a href="#">Training Shoes</a>
-        <summary>Sports</summary>
-    </details>
-</div>
-        <div class="mobile_navbar_item border-b pb-3 text-gray-600">
-    <a href="#">New Arrivals</a>
-</div>
-          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
-    <a href="#">Sale</a>
-</div>
 
-<div class="mobile_navbar_item border-b pb-3 text-gray-600">
-    <details>
-        <a href="#">Nike</a>
-        <a href="#">Adidas</a>
-        <a href="#">Puma</a>
-        <a href="#">Bata</a>
-        <a href="#">Service</a>
-        <a href="#">Skechers</a>
-        <summary>Brands</summary>
-    </details>
-</div>
-
-          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
-            <details>
-              <div class="border rounded-xl shadow-xl flex flex-col items-start">
-                <a class="border-b w-full pb-2" href="#">English</a>
-                <a class="border-b w-full pb-2" href="#">Persian</a>
-              </div>
-              <summary>Language</summary>
-            </details>
-          </div>
-          <div class="mobile_navbar_item border-b pb-3 text-gray-600">
-            <details>
-              <div class="border rounded-xl shadow-xl flex flex-col items-start">
-             <select class="mr-2 p-1 px-2 text-sm font-semibold" id="currency">
-    <option value="PKR">PKR Rs</option>
-    <option value="USD">USD $</option>
-</select>
-              </div>
-              <summary>Currency</summary>
-            </details>
-          </div>
-
-          <div class="icons flex items-center justify-center gap-4">
-            <a
-              class="text-gray-900 bg-gray-300/50 p-2 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center"
-              href="#"
-            >
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-            <a
-              class="text-gray-900 bg-gray-300/50 p-2 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center"
-              href="#"
-            >
-              <ion-icon name="logo-linkedin"></ion-icon>
-            </a>
-            <a
-              class="text-gray-900 bg-gray-300/50 p-2 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center"
-              href="#"
-            >
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </div>
         </div>
+
+
+
+        <!-- HOME -->
+        <div class="border-b pb-3">
+
+            <a
+                href="{{ route('customer.shop') }}"
+                class="block text-gray-600 hover:text-red-400"
+            >
+                Home
+            </a>
+
+        </div>
+
+
+
+        <!-- MEN -->
+        <div class="border-b pb-3 text-gray-600">
+
+            <details>
+
+                <summary class="cursor-pointer hover:text-red-400">
+                    Men's Shoes
+                </summary>
+
+                <div class="flex flex-col gap-2 mt-3 pl-4 text-sm">
+
+                    @foreach($navCategories as $category)
+
+                        @if($category->slug == 'men')
+
+                            @foreach($category->children as $child)
+
+                                <a
+                                    href="{{ route('category.show', $child->slug) }}"
+                                    class="hover:text-red-400"
+                                >
+                                    {{ $child->name }}
+                                </a>
+
+                            @endforeach
+
+                        @endif
+
+                    @endforeach
+
+                </div>
+
+            </details>
+
+        </div>
+
+
+
+        <!-- WOMEN -->
+        <div class="border-b pb-3 text-gray-600">
+
+            <details>
+
+                <summary class="cursor-pointer hover:text-red-400">
+                    Women's Shoes
+                </summary>
+
+                <div class="flex flex-col gap-2 mt-3 pl-4 text-sm">
+
+                    @foreach($navCategories as $category)
+
+                        @if($category->slug == 'women')
+
+                            @foreach($category->children as $child)
+
+                                <a
+                                    href="{{ route('category.show', $child->slug) }}"
+                                    class="hover:text-red-400"
+                                >
+                                    {{ $child->name }}
+                                </a>
+
+                            @endforeach
+
+                        @endif
+
+                    @endforeach
+
+                </div>
+
+            </details>
+
+        </div>
+
+
+
+        <!-- KIDS -->
+        <div class="border-b pb-3 text-gray-600">
+
+            <details>
+
+                <summary class="cursor-pointer hover:text-red-400">
+                    Kids Shoes
+                </summary>
+
+                <div class="flex flex-col gap-2 mt-3 pl-4 text-sm">
+
+                    @foreach($navCategories as $category)
+
+                        @if($category->slug == 'children')
+
+                            @foreach($category->children as $child)
+
+                                <a
+                                    href="{{ route('category.show', $child->slug) }}"
+                                    class="hover:text-red-400"
+                                >
+                                    {{ $child->name }}
+                                </a>
+
+                            @endforeach
+
+                        @endif
+
+                    @endforeach
+
+                </div>
+
+            </details>
+
+        </div>
+
+
+
+        <!-- LANGUAGE -->
+        <div class="border-b pb-3 text-gray-600">
+
+            <details>
+
+                <summary class="cursor-pointer hover:text-red-400">
+                    Language
+                </summary>
+
+                <div class="flex flex-col mt-3 text-sm">
+
+                    <a
+                        href="#"
+                        class="border-b py-2 hover:text-red-400"
+                    >
+                        English
+                    </a>
+
+                    <a
+                        href="#"
+                        class="py-2 hover:text-red-400"
+                    >
+                        Persian
+                    </a>
+
+                </div>
+
+            </details>
+
+        </div>
+
+
+
+        <!-- CURRENCY -->
+        <div class="border-b pb-3 text-gray-600">
+
+            <details>
+
+                <summary class="cursor-pointer hover:text-red-400">
+                    Currency
+                </summary>
+
+                <div class="mt-3">
+
+                    <select
+                        id="currency"
+                        class="w-full p-2
+                               border rounded-lg
+                               text-sm font-semibold"
+                    >
+                        <option value="PKR">
+                            PKR Rs
+                        </option>
+
+                        <option value="USD">
+                            USD $
+                        </option>
+                    </select>
+
+                </div>
+
+            </details>
+
+        </div>
+
+
+
+        <!-- SOCIAL MEDIA -->
+        <div class="pt-2">
+
+            <h3 class="text-gray-600 mb-3">
+                Follow Us
+            </h3>
+
+            <div class="flex items-center gap-3">
+
+                <a
+                    href="#"
+                    class="p-2 rounded-md
+                           bg-gray-300/50
+                           hover:bg-red-400
+                           hover:text-white
+                           transition"
+                >
+                    <ion-icon name="logo-instagram"></ion-icon>
+                </a>
+
+                <a
+                    href="#"
+                    class="p-2 rounded-md
+                           bg-gray-300/50
+                           hover:bg-red-400
+                           hover:text-white
+                           transition"
+                >
+                    <ion-icon name="logo-linkedin"></ion-icon>
+                </a>
+
+                <a
+                    href="#"
+                    class="p-2 rounded-md
+                           bg-gray-300/50
+                           hover:bg-red-400
+                           hover:text-white
+                           transition"
+                >
+                    <ion-icon name="logo-github"></ion-icon>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= MOBILE CATEGORY SIDEBAR ================= -->
+
+    <div
+        id="sidebarCategories"
+        class="hidden fixed top-0 right-0
+               w-80 max-w-[85%] h-screen
+               bg-white shadow-xl
+               p-6
+               flex-col
+               overflow-y-auto
+               z-50"
+    >
+
+        <div class="flex items-center justify-between border-b pb-4">
+
+            <h2 class="text-lg font-semibold">
+                Categories
+            </h2>
+
+            <button
+                type="button"
+                class="closeButton text-xl hover:text-red-500"
+            >
+                <ion-icon name="close-circle-outline"></ion-icon>
+            </button>
+
+        </div>
+
+
+        <!-- MEN -->
+        <div class="py-4 border-b">
+
+            <h3 class="font-semibold text-gray-800 mb-3">
+                Men's Shoes
+            </h3>
+
+            <div class="flex flex-col gap-2 text-sm">
+
+                @foreach($navCategories as $category)
+
+                    @if($category->slug == 'men')
+
+                        @foreach($category->children as $child)
+
+                            <a
+                                href="{{ route('category.show', $child->slug) }}"
+                                class="hover:text-red-400"
+                            >
+                                {{ $child->name }}
+                            </a>
+
+                        @endforeach
+
+                    @endif
+
+                @endforeach
+
+            </div>
+
+        </div>
+
+
+        <!-- WOMEN -->
+        <div class="py-4 border-b">
+
+            <h3 class="font-semibold text-gray-800 mb-3">
+                Women's Shoes
+            </h3>
+
+            <div class="flex flex-col gap-2 text-sm">
+
+                @foreach($navCategories as $category)
+
+                    @if($category->slug == 'women')
+
+                        @foreach($category->children as $child)
+
+                            <a
+                                href="{{ route('category.show', $child->slug) }}"
+                                class="hover:text-red-400"
+                            >
+                                {{ $child->name }}
+                            </a>
+
+                        @endforeach
+
+                    @endif
+
+                @endforeach
+
+            </div>
+
+        </div>
+
+
+        <!-- KIDS -->
+        <div class="py-4 border-b">
+
+            <h3 class="font-semibold text-gray-800 mb-3">
+                Kids Shoes
+            </h3>
+
+            <div class="flex flex-col gap-2 text-sm">
+
+                @foreach($navCategories as $category)
+
+                    @if($category->slug == 'children')
+
+                        @foreach($category->children as $child)
+
+                            <a
+                                href="{{ route('category.show', $child->slug) }}"
+                                class="hover:text-red-400"
+                            >
+                                {{ $child->name }}
+                            </a>
+
+                        @endforeach
+
+                    @endif
+
+                @endforeach
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
         <!--todo sidebarCategories -->
         <div
@@ -1233,6 +1591,5 @@ Rs ${product.price}
 
 
 });
-
 
 </script>
