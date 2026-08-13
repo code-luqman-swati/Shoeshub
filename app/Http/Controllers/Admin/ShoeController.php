@@ -337,42 +337,23 @@ class ShoeController extends Controller
     /**
      * Delete shoe.
      */
-    public function destroy(Shoe $shoe)
+    public function destroy($id)
     {
-        /*
-        |--------------------------------------------------------------------------
-        | Delete Main Image
-        |--------------------------------------------------------------------------
-        */
-
+        $shoe = Shoe::findOrFail($id);
+       
         if (
             $shoe->image &&
-            Storage::disk('public')
-                ->exists($shoe->image)
-        ) {
-
-            Storage::disk('public')
-                ->delete($shoe->image);
-        }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Delete Shoe
-        |--------------------------------------------------------------------------
-        */
-
-        $shoe->delete();
-
-
-        return response()->json([
-
-            'message' =>
-                'Shoe deleted successfully.'
-
-        ]);
+        Storage::disk('public')->exists($shoe->image)
+    ) {
+        Storage::disk('public')->delete($shoe->image);
     }
 
+    $shoe->delete();
+
+    return response()->json([
+        'message' => 'Shoe deleted successfully.',
+    ]);
+}
 
     /**
      * AJAX store shoe with first variant.

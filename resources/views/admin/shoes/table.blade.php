@@ -298,12 +298,11 @@ $(document).ready(function(){
             },
 
             success:function(response){
-
-                $('#ajax-table').html(response);
-                    $('#shoesTable').DataTable({
-        responsive:true
-    });
-
+ $('#shoesTable').DataTable({
+    responsive: true,
+    autoWidth: false,
+    scrollX: true
+});
             }
 
         });

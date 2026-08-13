@@ -50,140 +50,112 @@
 
 
 
-
-
 @push('scripts')
-
 
 <script>
 
+$(document).ready(function () {
 
-$(document).ready(function(){
+    // --------------------------------------------------
+    // DataTable
+    // --------------------------------------------------
 
+    if (!$.fn.DataTable.isDataTable('#shoesTable')) {
 
-
-// DataTable
-
-if (!$.fn.DataTable.isDataTable('#shoesTable')) {
-
-    $('#shoesTable').DataTable();
-
-}
-
-
-
-
-// Ajax Delete
-
-
-$(document)
-
-.off('submit','.deleteShoeForm')
-
-.on('submit','.deleteShoeForm',function(e){
-
-
-e.preventDefault();
-
-
-
-let form = $(this);
-
-let id = form.data('id');
-
-
-
-if(!confirm('Are you sure you want to delete this shoe?')){
-
-    return;
-
-}
-
-
-
-$.ajax({
-
-
-url: form.attr('action'),
-
-type:'POST',
-
-
-data:{
-
-
-_token:$('meta[name="csrf-token"]').attr('content'),
-
-_method:'DELETE'
-
-
-},
-
-
-
-success:function(response){
-
-
-
-let table = $('#shoesTable').DataTable();
-
-
-
-table
-
-.row($('#shoe-'+id))
-
-.remove()
-
-.draw(false);
-
-
-
-
-
-$('#toast')
-
-.removeClass('hidden')
-
-.text(response.message || 'Shoe deleted successfully.')
-
-.fadeIn();
-
-
-
-setTimeout(function(){
-
-$('#toast').fadeOut();
-
-},3000);
-
-
-
-},
-
-
-
-
-error:function(){
-
-alert('Something went wrong.');
-
-}
-
-
-
+         $('#shoesTable').DataTable({
+    responsive: true,
+    autoWidth: false,
+    scrollX: true
 });
 
+    }
 
+
+    // --------------------------------------------------
+    // AJAX DELETE SHOE
+    // --------------------------------------------------
+
+    $(document)
+        .off('submit', '.deleteShoeForm')
+        .on('submit', '.deleteShoeForm', function (e) {
+
+            e.preventDefault();
+
+            let form = $(this);
+
+            // Confirmation
+            if (!confirm('Are you sure you want to delete this shoe?')) {
+                return;
+            }
+
+            // Debug
+            console.log('DELETE URL:', form.attr('action'));
+            console.log('FORM DATA:', form.serialize());
+
+
+            $.ajax({
+
+                url: form.attr('action'),
+
+                type: 'POST',
+
+                data: form.serialize(),
+
+
+                success: function (response) {
+
+                    console.log('DELETE SUCCESS:', response);
+
+
+                    let table = $('#shoesTable').DataTable();
+
+
+                    // Remove row from DataTable
+                    table
+                        .row(form.closest('tr'))
+                        .remove()
+                        .draw(false);
+
+
+                    // Show toast
+                    $('#toast')
+                        .removeClass('hidden')
+                        .text(
+                            response.message ||
+                            'Shoe deleted successfully.'
+                        )
+                        .fadeIn();
+
+
+                    setTimeout(function () {
+
+                        $('#toast').fadeOut();
+
+                    }, 3000);
+
+                },
+
+
+                error: function (xhr) {
+
+                    console.log('DELETE ERROR');
+                    console.log('STATUS:', xhr.status);
+                    console.log('RESPONSE:', xhr.responseText);
+
+
+                    alert(
+                        xhr.responseJSON?.message ||
+                        'Something went wrong while deleting the shoe.'
+                    );
+
+                }
+
+            });
+
+        });
 
 });
-
-
-
-});
-
 
 </script>
-
 
 @endpush
