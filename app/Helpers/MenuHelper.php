@@ -8,181 +8,156 @@ class MenuHelper
     {
         return [
             [
-    'icon' => 'dashboard',
-    'name' => 'Dashboard',
-    'path' => '/dashboard',
-    'permission' => 'dashboard.view'
-],
+                'icon' => 'dashboard',
+                'name' => 'Dashboard',
+                'path' => '/dashboard',
+                'permission' => 'dashboard.view',
+            ],
+            [
+                'icon' => 'user-profile',
+                'name' => 'Employees',
+                'permission' => 'employee.view',
+                'subItems' => [
                     [
-            'name' => 'Employees',
-            'icon' => 'user-profile',
-    'permission' => 'employee.view',
-            'subItems' => [
-                [
-                    'name' => 'Employee List',
-                    'path' => '/employees',
-                    'permission' => 'employee.view',
+                        'name' => 'Employee List',
+                        'path' => '/employees',
+                        'permission' => 'employee.view',
+                    ],
+                    [
+                        'name' => 'Add Employee',
+                        'path' => '/admin/employees/create',
+                        'permission' => 'employee.manage',
+                    ],
                 ],
-        [
-            'name' => 'Add Employee',
-            'path' => 'Admin/employees/create',
-            'permission' => 'employee.manage',
-        ],
-    ],
-],
-
-        [
-    'name' => 'Categories',
-    'icon' => 'catogories',
-    'permission' => 'category.view',
-    'subItems' => [
-        [
-            'name' => 'Categories List',
-            'path' => '/categories',
-            'permission' => 'category.view',
-        ],
-        [
-            'name' => 'Add New Categories',
-            'path' => '/Admin/categories/create',
-            'permission' => 'category.manage',
-        ],
-    ],
-],
-
-
-
-    [
-    'name' => 'Brands',
-    'icon' => 'brand',
-    'permission' => 'brand.view',
-    'subItems' => [
-        [
-            'name' => 'Brands List',
-            'path' => '/Brands',
-            'permission' => 'brand.view',
-        ],
-        [
-            'name' => 'Add New Brands',
-            'path' => '/Admin/Brands/create',
-            'permission' => 'brand.manage',
-        ],
-    ],
-],
-
-[
- 'name' => 'Shoes',
-    'icon' => 'shopping-bag',
-    'subItems' => [
-        [
-            'name' => 'Shoes List',
-            'path' => '/shoes',
-            'permission' => 'product.view',
-        ],
-        [
-            'name' => 'Add New Shoes',
-            'path' => '/Admin/shoes/create',
-            'permission' => 'product.manage',
-        ],
-    ],
-],
-
-[
-    'name' => 'Suppliers',
-    'path' => '/suppliers',
-    'route' => 'admin.suppliers.index',
-    'icon' => 'truck'
-],
-
-[
-    'name' => 'Purchases',
-    'path' => '/purchases',
-    'route' => 'admin.purchases.index',
-    'icon' => 'shopping-cart'
-],
-        [
-    'name' => 'Sizes',
-    'path' => '/index/sizes',
-    'route' => 'admin.sizes.index',
-    'icon' => 'ruler',
-    'permission' => 'size.view'
-],
-
-      [
-    'name' => 'Colour',
-    'path' => '/colours',
-    'route' => 'admin.colors.index',
-    'icon' => 'palette',
-    'permission' => 'color.view'
-],
-
-    [
-    'name' => 'Variants',
-    'path' => '/shoe-variants',
-    'icon' => 'layers',
-    'permission' => 'variant.view'
-],
-
-   [
-    'name' => 'Inventory',
-    'path' => '/inventory',
-    'icon' => 'archive',
-    'permission' => 'inventory.view'
-],
-
- [
-    'name' => 'Customers',
-    'path' => '/customers',
-    'icon' => 'users',
-    'permission' => 'customer.view'
-],
-
- [
-    'name' => 'Orders',
-    'path' => '/orders',
-    'icon' => 'clipboard-check',
-    'permission' => 'order.view'
-],
-
- [
-    'name' => 'Payments',
-    'path' => '/payments',
-    'icon' => 'credit-card',
-    'permission' => 'payment.view'
-],
-
- [
-    'name' => 'Sales Report',
-    'path' => '/sales-report',
-    'icon' => 'sales',
-    'permission' => 'sales.view'
-],
-            
+            ],
+            [
+                'icon' => 'categories',
+                'name' => 'Categories',
+                'permission' => 'category.view',
+                'subItems' => [
+                    [
+                        'name' => 'Categories List',
+                        'path' => '/categories',
+                        'permission' => 'category.view',
+                    ],
+                    [
+                        'name' => 'Add New Categories',
+                        'path' => '/admin/categories/create',
+                        'permission' => 'category.manage',
+                    ],
+                ],
+            ],
+            [
+                'icon' => 'brand',
+                'name' => 'Brands',
+                'permission' => 'brand.view',
+                'subItems' => [
+                    [
+                        'name' => 'Brands List',
+                        'path' => '/brands',
+                        'permission' => 'brand.view',
+                    ],
+                    [
+                        'name' => 'Add New Brands',
+                        'path' => '/admin/brands/create',
+                        'permission' => 'brand.manage',
+                    ],
+                ],
+            ],
+            [
+                'icon' => 'shopping-bag',
+                'name' => 'Shoes',
+                'subItems' => [
+                    [
+                        'name' => 'Shoes List',
+                        'path' => '/shoes',
+                        'permission' => 'product.view',
+                    ],
+                    [
+                        'name' => 'Add New Shoes',
+                        'path' => '/admin/shoes/create',
+                        'permission' => 'product.manage',
+                    ],
+                ],
+            ],
+            [
+                'icon' => 'truck',
+                'name' => 'Suppliers',
+                'path' => '/suppliers',
+                'route' => 'admin.suppliers.index',
+            ],
+            [
+                'icon' => 'shopping-cart',
+                'name' => 'Purchases',
+                'path' => '/purchases',
+                'route' => 'admin.purchases.index',
+            ],
+            [
+                'icon' => 'ruler',
+                'name' => 'Sizes',
+                'path' => '/index/sizes',
+                'route' => 'admin.sizes.index',
+                'permission' => 'size.view',
+            ],
+            [
+                'icon' => 'palette',
+                'name' => 'Colors',
+                'path' => '/colours',
+                'route' => 'admin.colors.index',
+                'permission' => 'color.view',
+            ],
+            [
+                'icon' => 'layers',
+                'name' => 'Variants',
+                'path' => '/shoe-variants',
+                'permission' => 'variant.view',
+            ],
+            [
+                'icon' => 'archive',
+                'name' => 'Inventory',
+                'path' => '/inventory',
+                'permission' => 'inventory.view',
+            ],
+            [
+                'icon' => 'users',
+                'name' => 'Customers',
+                'path' => '/customers',
+                'permission' => 'customer.view',
+            ],
+            [
+                'icon' => 'clipboard-check',
+                'name' => 'Orders',
+                'path' => '/orders',
+                'permission' => 'order.view',
+            ],
+            [
+                'icon' => 'credit-card',
+                'name' => 'Payments',
+                'path' => '/payments',
+                'permission' => 'payment.view',
+            ],
+            [
+                'icon' => 'sales',
+                'name' => 'Sales Report',
+                'path' => '/sales-report',
+                'permission' => 'sales.view',
+            ],
             [
                 'icon' => 'user-profile',
                 'name' => 'User Profile',
-                'path' => '/profile'
-                
+                'path' => '/profile',
             ],
-            
-          
-        [
-    'title' => 'Website Settings',
-    'icon' => 'settings',
-    'path' => '/settings',
-    'name' => 'Setting',
-]
-        
-        
+            [
+                'icon' => 'settings',
+                'name' => 'Website Settings',
+                'path' => '/settings',
+            ],
         ];
     }
 
     public static function getOthersItems()
     {
-        return [
-       
-     
-          
-        ];
+        return [];
     }
 
     public static function getMenuGroups()
@@ -190,9 +165,8 @@ class MenuHelper
         return [
             [
                 'title' => 'Menu',
-                'items' => self::getFilteredMainNavItems()
+                'items' => self::getFilteredMainNavItems(),
             ],
-           
         ];
     }
 
@@ -205,8 +179,8 @@ class MenuHelper
     {
         $icons = [
             'dashboard' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 3.25C4.25736 3.25 3.25 4.25736 3.25 5.5V8.99998C3.25 10.2426 4.25736 11.25 5.5 11.25H9C10.2426 11.25 11.25 10.2426 11.25 8.99998V5.5C11.25 4.25736 10.2426 3.25 9 3.25H5.5ZM4.75 5.5C4.75 5.08579 5.08579 4.75 5.5 4.75H9C9.41421 4.75 9.75 5.08579 9.75 5.5V8.99998C9.75 9.41419 9.41421 9.74998 9 9.74998H5.5C5.08579 9.74998 4.75 9.41419 4.75 8.99998V5.5ZM5.5 12.75C4.25736 12.75 3.25 13.7574 3.25 15V18.5C3.25 19.7426 4.25736 20.75 5.5 20.75H9C10.2426 20.75 11.25 19.7427 11.25 18.5V15C11.25 13.7574 10.2426 12.75 9 12.75H5.5ZM4.75 15C4.75 14.5858 5.08579 14.25 5.5 14.25H9C9.41421 14.25 9.75 14.5858 9.75 15V18.5C9.75 18.9142 9.41421 19.25 9 19.25H5.5C5.08579 19.25 4.75 18.9142 4.75 18.5V15ZM12.75 5.5C12.75 4.25736 13.7574 3.25 15 3.25H18.5C19.7426 3.25 20.75 4.25736 20.75 5.5V8.99998C20.75 10.2426 19.7426 11.25 18.5 11.25H15C13.7574 11.25 12.75 10.2426 12.75 8.99998V5.5ZM15 4.75C14.5858 4.75 14.25 5.08579 14.25 5.5V8.99998C14.25 9.41419 14.5858 9.74998 15 9.74998H18.5C18.9142 9.74998 19.25 9.41419 19.25 8.99998V5.5C19.25 5.08579 18.9142 4.75 18.5 4.75H15ZM15 12.75C13.7574 12.75 12.75 13.7574 12.75 15V18.5C12.75 19.7426 13.7574 20.75 15 20.75H18.5C19.7426 20.75 20.75 19.7427 20.75 18.5V15C20.75 13.7574 19.7426 12.75 18.5 12.75H15ZM14.25 15C14.25 14.5858 14.5858 14.25 15 14.25H18.5C18.9142 14.25 19.25 14.5858 19.25 15V18.5C19.25 18.9142 18.9142 19.25 18.5 19.25H15C14.5858 19.25 14.25 18.9142 14.25 18.5V15Z" fill="currentColor"></path></svg>',
-                 
-            'catogories' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+            'categories' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 14H20V20H14V14Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
 </svg>',
 
@@ -316,62 +290,58 @@ class MenuHelper
 
             'support-ticket' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 17.0518V12C20 7.58174 16.4183 4 12 4C7.58168 4 3.99994 7.58174 3.99994 12V17.0518M19.9998 14.041V19.75C19.9998 20.5784 19.3282 21.25 18.4998 21.25H13.9998M6.5 18.75H5.5C4.67157 18.75 4 18.0784 4 17.25V13.75C4 12.9216 4.67157 12.25 5.5 12.25H6.5C7.32843 12.25 8 12.9216 8 13.75V17.25C8 18.0784 7.32843 18.75 6.5 18.75ZM17.4999 18.75H18.4999C19.3284 18.75 19.9999 18.0784 19.9999 17.25V13.75C19.9999 12.9216 19.3284 12.25 18.4999 12.25H17.4999C16.6715 12.25 15.9999 12.9216 15.9999 13.75V17.25C15.9999 18.0784 16.6715 18.75 17.4999 18.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
 
-            'email' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 8.187V17.25C3.5 17.6642 3.83579 18 4.25 18H19.75C20.1642 18 20.5 17.6642 20.5 17.25V8.18747L13.2873 13.2171C12.5141 13.7563 11.4866 13.7563 10.7134 13.2171L3.5 8.187ZM20.5 6.2286C20.5 6.23039 20.5 6.23218 20.5 6.23398V6.24336C20.4976 6.31753 20.4604 6.38643 20.3992 6.42905L12.4293 11.9867C12.1716 12.1664 11.8291 12.1664 11.5713 11.9867L3.60116 6.42885C3.538 6.38481 3.50035 6.31268 3.50032 6.23568C3.50028 6.10553 3.60577 6 3.73592 6H20.2644C20.3922 6 20.4963 6.10171 20.5 6.2286ZM22 6.25648V17.25C22 18.4926 20.9926 19.5 19.75 19.5H4.25C3.00736 19.5 2 18.4926 2 17.25V6.23398C2 6.22371 2.00021 6.2135 2.00061 6.20333C2.01781 5.25971 2.78812 4.5 3.73592 4.5H20.2644C21.2229 4.5 22 5.27697 22.0001 6.23549C22.0001 6.24249 22.0001 6.24949 22 6.25648Z" fill="currentColor"></path></svg>',
+            'email' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 8.187V17.25C3.5 17.6642 3.83579 18 4.25 18H19.75C20.1642 18 20.5 17.6642 20.5 17.25V8.18747L13.2873 13.2171C12.5141 13.7563 11.4866 13.7563 10.7134 13.2171L3.5 8.187ZM20.5 6.2286C20.5 6.23039 20.5 6.23218 20.5 6.23398V6.24336C20.4976 6.31753 20.4604 6.38643 20.3992 6.42905L12.4293 11.9867C12.1716 12.1664 11.8291 12.1664 11.5713 11.9867L3.60116 6.42885C3.538 6.38481 3.50035 6.31268 3.50032 6.23568C3.50028 6.10553 3.60577 6 3.73592 6H20.2644C20.3922 6 20.4963 6.10171 20.5 6.2286ZM22 6.25648V17.25C22 18.4926 20.9926 19.5 19.75 19.5H4.25C3.00736 19.5 2 18.4926 2 17.25V6.23398C2 6.22371 2.00021 6.2135 2.00061 6.20333C2.01781 5.25971 2.78812 4.5 3.73592 4.5H20.2644C21.2229 4.5 22 5.27697 22.0001 6.23549C22.0001 6.24249 22 6.24949 22 6.25648Z" fill="currentColor"></path></svg>',
         ];
 
         return $icons[$iconName] ?? '<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>';
     }
 
+    /**
+     * Filter a nav tree by the current user's permissions.
+     *
+     * Sub-items are permission-filtered first (in a map pass), and the
+     * *filtered* result is what's kept on the item. A parent with
+     * subItems is then only kept if at least one sub-item survived.
+     */
     public static function filterByPermission($items)
-{
-    if(!auth()->check()){
-        return [];
+    {
+        if (! auth()->check()) {
+            return [];
+        }
+
+        return collect($items)
+            ->map(function ($item) {
+                if (isset($item['subItems'])) {
+                    $item['subItems'] = collect($item['subItems'])
+                        ->filter(function ($sub) {
+                            return ! isset($sub['permission'])
+                                || auth()->user()->hasPermission($sub['permission']);
+                        })
+                        ->values()
+                        ->toArray();
+                }
+
+                return $item;
+            })
+            ->filter(function ($item) {
+                if (isset($item['permission']) && ! auth()->user()->hasPermission($item['permission'])) {
+                    return false;
+                }
+
+                if (isset($item['subItems'])) {
+                    return count($item['subItems']) > 0;
+                }
+
+                return true;
+            })
+            ->values()
+            ->toArray();
     }
 
-
-    return collect($items)->filter(function($item){
-
-        // Check main menu permission
-        if(isset($item['permission'])){
-
-            if(!auth()->user()->hasPermission($item['permission'])){
-                return false;
-            }
-
-        }
-
-
-        // Check sub menus
-        if(isset($item['subItems'])){
-
-            $item['subItems'] = collect($item['subItems'])
-                ->filter(function($sub){
-
-                    return !isset($sub['permission']) 
-                    || auth()->user()->hasPermission($sub['permission']);
-
-                })
-                ->values()
-                ->toArray();
-
-
-            return count($item['subItems']) > 0;
-
-        }
-
-
-        return true;
-
-
-    })
-    ->values()
-    ->toArray();
-}
-
-public static function getFilteredMainNavItems()
-{
-    return self::filterByPermission(
-        self::getMainNavItems()
-    );
-}
+    public static function getFilteredMainNavItems()
+    {
+        return self::filterByPermission(
+            self::getMainNavItems()
+        );
+    }
 }
