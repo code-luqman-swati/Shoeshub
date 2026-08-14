@@ -64,8 +64,7 @@ $(document).ready(function () {
 
          $('#shoesTable').DataTable({
     responsive: true,
-    autoWidth: false,
-    scrollX: true
+    autoWidth: false
 });
 
     }
