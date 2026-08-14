@@ -63,4 +63,26 @@ public function index(Request $request)
     );
 }
 
+public function edit($id)
+{
+    $variant = $this->inventoryService
+        ->getInventoryById($id);
+
+    return view(
+        'admin.inventory.edit',
+        compact('variant')
+    );
+}
+
+
+public function update(Request $request, $id)
+{
+    $this->inventoryService
+        -> updateStock($id, $stock = $request->stock);
+
+    return redirect()
+        ->route('admin.inventory.index')
+        ->with('success', 'Inventory updated successfully.');
+}
+
 }

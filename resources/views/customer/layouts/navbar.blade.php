@@ -264,11 +264,12 @@
                 <a href="{{ route('customer.contact') }}" class="py-2 inline-block hover:text-red-400 transition-colors">CONTACT US</a>
                 <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all duration-300 group-hover:w-full"></span>
             </li>
-
-            <li class="nav_items relative group">
-                <a href="{{ route('sale') }}" class="py-2 inline-block text-red-400 hover:text-red-500 transition-colors">SALE</a>
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all duration-300 group-hover:w-full"></span>
-            </li>
+<li class="nav_items relative group">
+    <a href="{{ route('sale') }}" class="py-2 inline-block hover:text-red-400 transition-colors">
+        SALE
+    </a>
+    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all duration-300 group-hover:w-full"></span>
+</li>
 
             <li class="nav_items relative group">
                 <a href="{{ route('customer.orders') }}" class="py-2 inline-block hover:text-red-400 transition-colors">MY ORDER</a>
