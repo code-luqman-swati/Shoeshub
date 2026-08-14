@@ -554,12 +554,12 @@ Route::get(
 ->name('search.products');
 //customer home page routes
 
-Route::get('/', [HomeController::class,'index'])
-    ->name('customer.home');
+// Route::get('/', [HomeController::class,'index'])
+//     ->name('customer.home');
 
 //customer product
 
-Route::get('/products',
+Route::get('/',
 [ProductController::class,'index'])
 ->name('customer.shop');
 
